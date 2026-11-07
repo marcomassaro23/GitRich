@@ -1,0 +1,27 @@
+package it.unicam.cs.mpgc.rpg130481.model.core.partita.selettori;
+
+import it.unicam.cs.mpgc.rpg130481.model.core.metriche.StatisticheAzienda;
+import it.unicam.cs.mpgc.rpg130481.model.core.partita.Turno;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.selettori.SelettoreEventi;
+
+import java.util.List;
+
+/**
+ * La classe SelettoreEventiDeterministico implementa l'interfaccia SelettoreEventi e fornisce un metodo per selezionare
+ * il prossimo evento da un mazzo di eventi in modo deterministico. Se non ci sono eventi attivabili, seleziona un evento
+ * basato sul numero del turno corrente.
+ */
+public class SelettoreEventiDeterministico implements SelettoreEventi {
+    @Override
+    public Evento selezionaProssimo(List<Evento> mazzoEventi, StatisticheAzienda statistiche, Turno turno) {
+        if (mazzoEventi == null || mazzoEventi.isEmpty() || statistiche == null || turno == null) {
+            throw new IllegalArgumentException("I parametri per la selezione dell'evento non possono essere nulli o vuoti.");
+        }
+
+        return mazzoEventi.stream()
+                .filter(e -> e.isAttivabile(statistiche))
+                .findFirst()
+                .orElseGet(() -> mazzoEventi.get((turno.numeroCorrente() - 1) % mazzoEventi.size()));
+    }
+}

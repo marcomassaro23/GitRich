@@ -1,8 +1,10 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita;
 
 import it.unicam.cs.mpgc.rpg130481.model.core.metriche.StatisticheAzienda;
+import it.unicam.cs.mpgc.rpg130481.model.core.partita.selettori.SelettoreEventiDeterministico;
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.stati.StatoInCorso;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.selettori.SelettoreEventi;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.StatoPartita;
 
 import java.util.List;
@@ -12,8 +14,9 @@ import java.util.List;
  * Fornisce metodi per eseguire scelte, avanzare i turni e ottenere informazioni sullo stato della partita.
  */
 public class Partita {
-    private final StatisticheAzienda statistiche;
+private final StatisticheAzienda statistiche;
     private final List<Evento> mazzoEventi;
+    private final SelettoreEventi selettoreEventi;
     private Turno turno;
     private Evento eventoCorrente;
     private StatoPartita stato;
@@ -24,17 +27,36 @@ public class Partita {
      * @param statistiche le statistiche dell'azienda
      * @param mazzoEventi il mazzo di eventi
      * @param turniMassimi il numero massimo di turni
+     * @param selettoreEventi il selettore di eventi
+     * @throws IllegalArgumentException se le statistiche o il mazzo eventi sono null o vuoti
+     */
+    public Partita(StatisticheAzienda statistiche, List<Evento> mazzoEventi, int turniMassimi, SelettoreEventi selettoreEventi) {
+        if (statistiche == null || mazzoEventi == null || mazzoEventi.isEmpty()) {
+            throw new IllegalArgumentException("Statistiche e mazzo eventi non possono essere nulli o vuoti.");
+        }
+        if (selettoreEventi == null) {
+            throw new IllegalArgumentException("Il selettore eventi non può essere nullo.");
+        }
+
+        this.statistiche = statistiche;
+        this.mazzoEventi = List.copyOf(mazzoEventi);
+        this.selettoreEventi = selettoreEventi;
+        this.turno = new Turno(1, turniMassimi);
+        this.stato = new StatoInCorso();
+        aggiornaEventoCorrente();
+    }
+
+    /**
+     * Costruisce una nuova partita con le statistiche dell'azienda, il mazzo di eventi e il numero massimo di turni.
+     * Utilizza un selettore di eventi deterministico per la selezione degli eventi.
+     *
+     * @param statistiche le statistiche dell'azienda
+     * @param mazzoEventi il mazzo di eventi
+     * @param turniMassimi il numero massimo di turni
      * @throws IllegalArgumentException se le statistiche o il mazzo eventi sono null o vuoti
      */
     public Partita(StatisticheAzienda statistiche, List<Evento> mazzoEventi, int turniMassimi) {
-        if (statistiche == null || mazzoEventi == null || mazzoEventi.isEmpty()) {
-            throw new IllegalArgumentException("Statistiche e mazzo eventi devono essere validi e non vuoti.");
-        }
-        this.statistiche = statistiche;
-        this.mazzoEventi = List.copyOf(mazzoEventi);
-        this.turno = new Turno(1, turniMassimi);
-        this.stato = new StatoInCorso();
-        selezionaEventoCorrente();
+        this(statistiche, mazzoEventi, turniMassimi, new SelettoreEventiDeterministico());
     }
 
     /**
@@ -55,7 +77,7 @@ public class Partita {
     public void avanzaTurno() {
         if (!turno.isUltimoTurno()) {
             this.turno = turno.successivo();
-            selezionaEventoCorrente();
+            aggiornaEventoCorrente();
         }
     }
 
@@ -63,11 +85,8 @@ public class Partita {
      * Seleziona l'evento corrente dalla lista degli eventi disponibili in base alle statistiche dell'azienda.
      * Se non ci sono eventi attivabili, seleziona un evento casuale dal mazzo.
      */
-    private void selezionaEventoCorrente() {
-        this.eventoCorrente = mazzoEventi.stream()
-                .filter(e -> e.isAttivabile(statistiche))
-                .findFirst()
-                .orElse(mazzoEventi.get((turno.numeroCorrente() - 1) % mazzoEventi.size()));
+    private void aggiornaEventoCorrente() {
+        this.eventoCorrente = selettoreEventi.selezionaProssimo(mazzoEventi, statistiche, turno);
     }
 
     /**
