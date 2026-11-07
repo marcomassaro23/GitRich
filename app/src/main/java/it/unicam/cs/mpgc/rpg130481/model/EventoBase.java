@@ -2,11 +2,23 @@ package it.unicam.cs.mpgc.rpg130481.model;
 
 import java.util.List;
 
+/**
+ * Classe astratta che rappresenta un evento di base nel gioco.
+ * Contiene il titolo, la descrizione e le opzioni disponibili per l'evento.
+ */
 public abstract class EventoBase implements Evento {
     private final String titolo;
     private final String descrizione;
     private final List<OpzioneEvento> opzioni;
 
+    /**
+     * Costruttore per creare un evento di base.
+     *
+     * @param titolo      il titolo dell'evento
+     * @param descrizione la descrizione dell'evento
+     * @param opzioni     le opzioni disponibili per l'evento
+     * @throws IllegalArgumentException se titolo o descrizione sono nulli o vuoti, o se la lista delle opzioni è nulla o vuota
+     */
     public EventoBase(String titolo, String descrizione, List<OpzioneEvento> opzioni) {
         if (titolo == null || titolo.isBlank() || descrizione == null || descrizione.isBlank()) {
             throw new IllegalArgumentException("Titolo e descrizione non possono essere vuoti.");

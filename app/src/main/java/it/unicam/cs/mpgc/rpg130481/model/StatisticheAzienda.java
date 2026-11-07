@@ -2,9 +2,18 @@ package it.unicam.cs.mpgc.rpg130481.model;
 
 import java.util.List;
 
+/**
+ * Implementazione dell'interfaccia {@link StatisticheAziendaLeggibili} che rappresenta le statistiche di un'azienda.
+ */
 public class StatisticheAzienda implements StatisticheAziendaLeggibili {
     private final List<Metrica> metriche;
 
+    /**
+     * Costruisce un nuovo oggetto StatisticheAzienda con la lista di metriche specificata.
+     *
+     * @param metriche la lista di metriche dell'azienda
+     * @throws IllegalArgumentException se la lista delle metriche è nulla o vuota
+     */
     public StatisticheAzienda(List<Metrica> metriche) {
         if (metriche == null || metriche.isEmpty()) {
             throw new IllegalArgumentException("La lista delle metriche non può essere nulla o vuota.");
@@ -28,6 +37,14 @@ public class StatisticheAzienda implements StatisticheAziendaLeggibili {
                 .orElseThrow(() -> new IllegalArgumentException("Metrica non trovata: " + nome));
     }
 
+    /**
+     * Applica una variazione alla metrica specificata dal nome.
+     *
+     * @param nome  il nome della metrica
+     * @param delta la variazione da applicare
+     * @return la metrica aggiornata
+     * @throws IllegalArgumentException se la metrica non viene trovata
+     */
     public Metrica applicaVariazione(String nome, int delta) {
         Metrica metrica = getMetrica(nome);
         metrica.applicaVariazione(delta);

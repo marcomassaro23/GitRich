@@ -1,9 +1,19 @@
 package it.unicam.cs.mpgc.rpg130481.model;
 
+/**
+ * Implementazione generica dell'interfaccia {@link Metrica}.
+ */
 public class MetricaGenerica implements Metrica {
     private final String nome;
     private int valore;
 
+    /**
+     * Costruisce una nuova metrica generica con il nome specificato e il valore iniziale.
+     *
+     * @param nome          il nome della metrica
+     * @param valoreIniziale il valore iniziale della metrica
+     * @throws IllegalArgumentException se il nome è nullo o vuoto
+     */
     public MetricaGenerica(String nome, int valoreIniziale) {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Il nome della metrica non può essere nullo o vuoto.");
