@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg134081.model;
+package it.unicam.cs.mpgc.rpg130481.model;
 
 public class MetricaGenerica implements Metrica {
     private final String nome;
