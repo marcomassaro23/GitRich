@@ -1,5 +1,7 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita;
 
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.TurnoLeggibile;
+
 /**
  * Rappresenta un turno di gioco in una partita.
  * Contiene informazioni sul numero del turno corrente e sul numero massimo di turni.
@@ -7,7 +9,7 @@ package it.unicam.cs.mpgc.rpg130481.model.core.partita;
  * @param numeroCorrente il numero del turno corrente
  * @param numeroMassimo il numero massimo di turni nella partita
  */
-public record Turno(int numeroCorrente, int numeroMassimo) {
+public record Turno(int numeroCorrente, int numeroMassimo) implements TurnoLeggibile {
     /**
      * Costruisce un nuovo turno.
      *
@@ -32,11 +34,7 @@ public record Turno(int numeroCorrente, int numeroMassimo) {
         return new Turno(numeroCorrente + 1, numeroMassimo);
     }
 
-    /**
-     * Verifica se il turno corrente è l'ultimo turno della partita.
-     *
-     * @return true se il turno corrente è l'ultimo turno, false altrimenti
-     */
+    @Override
     public boolean isUltimoTurno() {
         return numeroCorrente == numeroMassimo;
     }
