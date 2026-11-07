@@ -1,6 +1,6 @@
-# 📌 Nome del Progetto
-Breve descrizione del progetto (2-3 righe):
-Spiega cosa fa il programma e a cosa serve.
+# 📌 GitRich
+**GitRich** è un RPG gestionale a turni in cui il giocatore guida una startup software al successo, bilanciando decisioni strategiche e risorse aziendali per evitarne il fallimento.
+
 ---
 ## 🚀 Come eseguire il progetto
 ### Prerequisiti
@@ -8,8 +8,8 @@ Spiega cosa fa il programma e a cosa serve.
 - Gradle
 ### Istruzioni
 ```bash
-git clone <url-del-repository>
-cd <nome-cartella>
+git clone https://github.com/marcomassaro23/GitRich.git
+cd GitRich
 ```
 ### Build del progetto
 ```bash
