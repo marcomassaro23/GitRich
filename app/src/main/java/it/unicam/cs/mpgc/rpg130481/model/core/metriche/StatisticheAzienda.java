@@ -1,6 +1,10 @@
-package it.unicam.cs.mpgc.rpg130481.model;
+package it.unicam.cs.mpgc.rpg130481.model.core.metriche;
 
 import java.util.List;
+
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.Metrica;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.MetricaLeggibile;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaLeggibili;
 
 /**
  * Implementazione dell'interfaccia {@link StatisticheAziendaLeggibili} che rappresenta le statistiche di un'azienda.

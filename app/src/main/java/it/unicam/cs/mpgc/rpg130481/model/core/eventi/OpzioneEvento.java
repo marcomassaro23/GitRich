@@ -1,6 +1,9 @@
-package it.unicam.cs.mpgc.rpg130481.model;
+package it.unicam.cs.mpgc.rpg130481.model.core.eventi;
 
 import java.util.List;
+
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.ModificaMetrica;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.OpzioneEventoLeggibile;
 
 /**
  * Classe che rappresenta un'opzione di un evento nel gioco.

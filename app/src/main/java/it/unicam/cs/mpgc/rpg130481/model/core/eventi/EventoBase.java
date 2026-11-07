@@ -1,6 +1,11 @@
-package it.unicam.cs.mpgc.rpg130481.model;
+package it.unicam.cs.mpgc.rpg130481.model.core.eventi;
 
 import java.util.List;
+
+import it.unicam.cs.mpgc.rpg130481.model.core.metriche.StatisticheAzienda;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.OpzioneEventoLeggibile;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaLeggibili;
 
 /**
  * Classe astratta che rappresenta un evento di base nel gioco.

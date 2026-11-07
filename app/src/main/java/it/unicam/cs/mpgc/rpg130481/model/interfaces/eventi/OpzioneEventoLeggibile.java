@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg130481.model;
+package it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface OpzioneEventoLeggibile {
      * @return il testo dell'opzione
      */
     String getTesto();
-    
+
     /**
      * Restituisce la lista delle modifiche alle metriche associate all'opzione.
      *

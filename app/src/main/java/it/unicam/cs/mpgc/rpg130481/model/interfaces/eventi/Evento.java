@@ -1,4 +1,7 @@
-package it.unicam.cs.mpgc.rpg130481.model;
+package it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi;
+
+import it.unicam.cs.mpgc.rpg130481.model.core.metriche.StatisticheAzienda;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaLeggibili;
 
 /**
  * Rappresenta un evento nel gioco di ruolo. Un evento può avere un testo descrittivo e una lista di opzioni tra cui il giocatore può scegliere.

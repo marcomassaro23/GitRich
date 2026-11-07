@@ -1,4 +1,6 @@
-package it.unicam.cs.mpgc.rpg130481.model;
+package it.unicam.cs.mpgc.rpg130481.model.core.metriche;
+
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.Metrica;
 
 /**
  * Implementazione generica dell'interfaccia {@link Metrica}.

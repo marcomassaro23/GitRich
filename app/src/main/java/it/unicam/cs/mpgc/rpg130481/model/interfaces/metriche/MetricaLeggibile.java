@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg130481.model;
+package it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche;
 
 /**
  * Interfaccia per le metriche leggibili.
@@ -27,7 +27,7 @@ public interface MetricaLeggibile {
      * @return il valore massimo della metrica
      */
     int getValoreMassimo();
-    
+
     /**
      * Verifica se il valore della metrica è al minimo.
      * @return true se il valore è al minimo, false altrimenti

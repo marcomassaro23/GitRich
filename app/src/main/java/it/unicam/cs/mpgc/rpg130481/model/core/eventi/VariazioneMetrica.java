@@ -1,4 +1,6 @@
-package it.unicam.cs.mpgc.rpg130481.model;
+package it.unicam.cs.mpgc.rpg130481.model.core.eventi;
+
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.ModificaMetrica;
 
 /**
  * Record che rappresenta una variazione di una metrica.
