@@ -3,6 +3,8 @@ package it.unicam.cs.mpgc.rpg130481.repository.xml;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
 import it.unicam.cs.mpgc.rpg130481.repository.interfaces.EventoRepository;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
 
@@ -43,13 +45,29 @@ public class XmlEventoRepository implements EventoRepository {
 
     @Override
     public List<Evento> carica() {
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream(percorsoFileXml)) {
+        InputStream is = null;
+        try {
+            is = getClass().getClassLoader().getResourceAsStream(percorsoFileXml);
             if (is == null) {
-                throw new IllegalStateException("Impossibile trovare il file XML nel classpath: " + percorsoFileXml);
+                File file = new File(percorsoFileXml);
+                if (file.exists()) {
+                    is = new FileInputStream(file);
+                }
             }
+
+            if (is == null) {
+                throw new IllegalStateException("File XML non trovato: " + percorsoFileXml);
+            }
+
             return mapper.parse(is);
         } catch (Exception e) {
             throw new RuntimeException("Errore durante il caricamento degli eventi XML: " + percorsoFileXml, e);
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (Exception ignored) {}
+            }
         }
     }
 }
