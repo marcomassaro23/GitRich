@@ -1,6 +1,7 @@
-package it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato;
+package it.unicam.cs.mpgc.rpg130481.model.interfaces.partita;
 
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.Partita;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 
 /**
  * Interfaccia che rappresenta una regola di stato per una partita.

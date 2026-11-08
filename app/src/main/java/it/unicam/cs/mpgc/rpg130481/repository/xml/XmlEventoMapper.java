@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg130481.repository;
+package it.unicam.cs.mpgc.rpg130481.repository.xml;
 
 import it.unicam.cs.mpgc.rpg130481.model.core.eventi.EventoGenerico;
 import it.unicam.cs.mpgc.rpg130481.model.core.eventi.OpzioneEvento;

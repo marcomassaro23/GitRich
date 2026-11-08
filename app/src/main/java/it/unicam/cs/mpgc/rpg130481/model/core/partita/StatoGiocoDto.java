@@ -2,7 +2,7 @@ package it.unicam.cs.mpgc.rpg130481.model.core.partita;
 
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoLeggibile;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaLeggibili;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.StatoPartita;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 
 /**
  * Rappresenta lo stato della partita in un formato leggibile.

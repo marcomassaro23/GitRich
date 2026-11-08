@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato;
+package it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati;
 
 /**
  * Interfaccia che rappresenta lo stato di una partita.

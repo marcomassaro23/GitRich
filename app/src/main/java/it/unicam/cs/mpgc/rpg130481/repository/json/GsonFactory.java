@@ -1,9 +1,10 @@
-package it.unicam.cs.mpgc.rpg130481.repository;
+package it.unicam.cs.mpgc.rpg130481.repository.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.RegolaStato;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.StatoPartita;
+
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita.stati;
 
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.StatoPartita;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 
 /**
  * Rappresenta lo stato di una partita in bancarotta.

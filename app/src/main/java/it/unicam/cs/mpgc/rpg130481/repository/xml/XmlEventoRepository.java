@@ -1,6 +1,7 @@
-package it.unicam.cs.mpgc.rpg130481.repository;
+package it.unicam.cs.mpgc.rpg130481.repository.xml;
 
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
+import it.unicam.cs.mpgc.rpg130481.repository.interfaces.EventoRepository;
 
 import java.io.InputStream;
 import java.util.List;

@@ -1,9 +1,9 @@
-package it.unicam.cs.mpgc.rpg130481.repository;
+package it.unicam.cs.mpgc.rpg130481.repository.json;
 
 import com.google.gson.Gson;
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.StatoGiocoDto;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.RegolaStato;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.StatoPartita;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 import it.unicam.cs.mpgc.rpg130481.repository.interfaces.StatoPartitaRepository;
 
 import java.io.FileReader;

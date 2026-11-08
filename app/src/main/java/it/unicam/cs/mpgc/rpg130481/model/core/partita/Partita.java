@@ -5,7 +5,7 @@ import it.unicam.cs.mpgc.rpg130481.model.core.partita.selettori.SelettoreEventiD
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.stati.StatoInCorso;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.selettori.SelettoreEventi;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.StatoPartita;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 
 import java.util.List;
 

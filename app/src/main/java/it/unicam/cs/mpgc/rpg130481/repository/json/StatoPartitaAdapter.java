@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg130481.repository;
+package it.unicam.cs.mpgc.rpg130481.repository.json;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,8 +9,8 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.RegolaStato;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.StatoPartita;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 
 /**
  * Adapter personalizzato per la serializzazione e deserializzazione di oggetti StatoPartita.

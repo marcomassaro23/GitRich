@@ -2,8 +2,8 @@ package it.unicam.cs.mpgc.rpg130481.model.core.partita.regole;
 
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.Partita;
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.stati.StatoVittoria;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.RegolaStato;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.StatoPartita;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 
 /**
  * La classe RegolaVittoria rappresenta la regola di vittoria per una partita.

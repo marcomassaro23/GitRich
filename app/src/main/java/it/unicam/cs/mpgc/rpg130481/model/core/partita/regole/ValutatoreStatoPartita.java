@@ -2,7 +2,7 @@ package it.unicam.cs.mpgc.rpg130481.model.core.partita.regole;
 
 import java.util.List;
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.Partita;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stato.RegolaStato;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
 
 /**
  * La classe ValutatoreStatoPartita valuta lo stato di una partita in base alle regole di bancarotta e vittoria.
