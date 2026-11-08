@@ -1,0 +1,26 @@
+{
+  "turno": {
+    "numeroCorrente": 1,
+    "numeroMassimo": 10
+  },
+  "statistiche": {
+    "metriche": [
+      {
+        "nome": "BUDGET",
+        "valore": 50
+      },
+      {
+        "nome": "REPUTAZIONE",
+        "valore": 50
+      },
+      {
+        "nome": "STRESS",
+        "valore": 10
+      }
+    ]
+  },
+  "statoPartita": {
+    "tipoStato": "IN_CORSO"
+  },
+  "isTerminata": false
+}
