@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg130481.model;
+package it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche;
 
 import java.util.List;
 
