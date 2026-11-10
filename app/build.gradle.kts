@@ -8,11 +8,17 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+}
+
+javafx {
+    version = "26"
+    modules = listOf("javafx.controls", "javafx.fxml")
 }
 
 dependencies {
@@ -36,7 +42,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "org.example.App"
+    mainClass = "it.unicam.cs.mpgc.rpg130481.App"
 }
 
 tasks.named<Test>("test") {
