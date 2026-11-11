@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita.selettori;
 
-import it.unicam.cs.mpgc.rpg130481.model.core.metriche.StatisticheAzienda;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaLeggibili;
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.Turno;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.selettori.SelettoreEventi;
@@ -14,14 +14,17 @@ import java.util.List;
  */
 public class SelettoreEventiDeterministico implements SelettoreEventi {
     @Override
-    public Evento selezionaProssimo(List<Evento> mazzoEventi, StatisticheAzienda statistiche, Turno turno) {
+    public Evento selezionaProssimo(List<Evento> mazzoEventi, StatisticheAziendaLeggibili statistiche, Turno turno) {
         if (mazzoEventi == null || mazzoEventi.isEmpty() || statistiche == null || turno == null) {
             throw new IllegalArgumentException("I parametri per la selezione dell'evento non possono essere nulli o vuoti.");
         }
 
-        return mazzoEventi.stream()
-                .filter(e -> e.isAttivabile(statistiche))
-                .findFirst()
-                .orElseGet(() -> mazzoEventi.get((turno.numeroCorrente() - 1) % mazzoEventi.size()));
+        List<Evento> eventiAttivabili = mazzoEventi.stream()
+                .filter(evento -> evento.isAttivabile(statistiche))
+                .toList();
+
+        List<Evento> listaRiferimento = eventiAttivabili.isEmpty() ? mazzoEventi : eventiAttivabili;
+        int indiceSelezionato = (turno.numeroCorrente() - 1) % listaRiferimento.size();
+        return listaRiferimento.get(indiceSelezionato);
     }
 }

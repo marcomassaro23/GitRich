@@ -2,7 +2,7 @@ package it.unicam.cs.mpgc.rpg130481.model.core.eventi;
 
 import java.util.List;
 
-import it.unicam.cs.mpgc.rpg130481.model.core.metriche.StatisticheAzienda;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.OpzioneEventoLeggibile;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaLeggibili;
@@ -53,7 +53,7 @@ public abstract class EventoBase implements Evento {
     }
 
     @Override
-    public void eseguiOpzione(int indiceOpzione, StatisticheAzienda statistiche) {
+    public void eseguiOpzione(int indiceOpzione, StatisticheAziendaModificabili statistiche) {
         if (statistiche == null) {
             throw new IllegalArgumentException("Le statistiche aziendali non possono essere nulle.");
         }

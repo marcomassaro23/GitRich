@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi;
 
-import it.unicam.cs.mpgc.rpg130481.model.core.metriche.StatisticheAzienda;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaLeggibili;
 
 /**
@@ -22,5 +22,5 @@ public interface Evento extends EventoLeggibile {
      * @param indiceOpzione l'indice dell'opzione selezionata
      * @param statistiche le statistiche dell'azienda
      */
-    void eseguiOpzione(int indiceOpzione, StatisticheAzienda statistiche);
+    void eseguiOpzione(int indiceOpzione, StatisticheAziendaModificabili statistiche);
 }

@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita;
 
-import it.unicam.cs.mpgc.rpg130481.model.core.metriche.StatisticheAzienda;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.selettori.SelettoreEventiDeterministico;
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.stati.StatoInCorso;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
@@ -14,7 +14,7 @@ import java.util.List;
  * Fornisce metodi per eseguire scelte, avanzare i turni e ottenere informazioni sullo stato della partita.
  */
 public class Partita {
-private final StatisticheAzienda statistiche;
+private final StatisticheAziendaModificabili statistiche;
     private final List<Evento> mazzoEventi;
     private final SelettoreEventi selettoreEventi;
     private Turno turno;
@@ -30,7 +30,7 @@ private final StatisticheAzienda statistiche;
      * @param selettoreEventi il selettore di eventi
      * @throws IllegalArgumentException se le statistiche o il mazzo eventi sono null o vuoti
      */
-    public Partita(StatisticheAzienda statistiche, List<Evento> mazzoEventi, int turniMassimi, SelettoreEventi selettoreEventi) {
+    public Partita(StatisticheAziendaModificabili statistiche, List<Evento> mazzoEventi, int turniMassimi, SelettoreEventi selettoreEventi) {
         if (statistiche == null || mazzoEventi == null || mazzoEventi.isEmpty()) {
             throw new IllegalArgumentException("Statistiche e mazzo eventi non possono essere nulli o vuoti.");
         }
@@ -55,7 +55,7 @@ private final StatisticheAzienda statistiche;
      * @param turniMassimi il numero massimo di turni
      * @throws IllegalArgumentException se le statistiche o il mazzo eventi sono null o vuoti
      */
-    public Partita(StatisticheAzienda statistiche, List<Evento> mazzoEventi, int turniMassimi) {
+    public Partita(StatisticheAziendaModificabili statistiche, List<Evento> mazzoEventi, int turniMassimi) {
         this(statistiche, mazzoEventi, turniMassimi, new SelettoreEventiDeterministico());
     }
 
@@ -102,7 +102,7 @@ private final StatisticheAzienda statistiche;
         this.stato = nuovoStato;
     }
 
-    public StatisticheAzienda getStatistiche() { return statistiche; }
+    public StatisticheAziendaModificabili getStatistiche() { return statistiche; }
     public Turno getTurno() { return turno; }
     public Evento getEventoCorrente() { return eventoCorrente; }
     public boolean isTerminata() { return stato.isTerminata(); }
