@@ -14,7 +14,7 @@ import java.util.List;
  * Fornisce metodi per eseguire scelte, avanzare i turni e ottenere informazioni sullo stato della partita.
  */
 public class Partita {
-private final StatisticheAziendaModificabili statistiche;
+    private final StatisticheAziendaModificabili statistiche;
     private final List<Evento> mazzoEventi;
     private final SelettoreEventi selettoreEventi;
     private Turno turno;
@@ -22,28 +22,35 @@ private final StatisticheAziendaModificabili statistiche;
     private StatoPartita stato;
 
     /**
-     * Costruisce una nuova partita con le statistiche dell'azienda, il mazzo di eventi e il numero massimo di turni.
+     * Crea una partita specificando il turno iniziale e il selettore di eventi.
      *
-     * @param statistiche le statistiche dell'azienda
-     * @param mazzoEventi il mazzo di eventi
-     * @param turniMassimi il numero massimo di turni
+     * @param statistiche     le statistiche dell'azienda
+     * @param mazzoEventi     il mazzo di eventi disponibili
+     * @param turno           il turno di partenza della partita
      * @param selettoreEventi il selettore di eventi
      * @throws IllegalArgumentException se le statistiche o il mazzo eventi sono null o vuoti
      */
-    public Partita(StatisticheAziendaModificabili statistiche, List<Evento> mazzoEventi, int turniMassimi, SelettoreEventi selettoreEventi) {
+    public Partita(StatisticheAziendaModificabili statistiche, List<Evento> mazzoEventi, Turno turno, SelettoreEventi selettoreEventi) {
         if (statistiche == null || mazzoEventi == null || mazzoEventi.isEmpty()) {
             throw new IllegalArgumentException("Statistiche e mazzo eventi non possono essere nulli o vuoti.");
         }
-        if (selettoreEventi == null) {
-            throw new IllegalArgumentException("Il selettore eventi non può essere nullo.");
+        if (turno == null || selettoreEventi == null) {
+            throw new IllegalArgumentException("Turno e SelettoreEventi non possono essere nulli.");
         }
 
         this.statistiche = statistiche;
         this.mazzoEventi = List.copyOf(mazzoEventi);
+        this.turno = turno;
         this.selettoreEventi = selettoreEventi;
-        this.turno = new Turno(1, turniMassimi);
         this.stato = new StatoInCorso();
         aggiornaEventoCorrente();
+    }
+
+    /**
+     * Costruisce una nuova partita iniziando dal primo turno (Turno 1 di turniMassimi).
+     */
+    public Partita(StatisticheAziendaModificabili statistiche, List<Evento> mazzoEventi, int turniMassimi, SelettoreEventi selettoreEventi) {
+        this(statistiche, mazzoEventi, new Turno(1, turniMassimi), selettoreEventi);
     }
 
     /**
