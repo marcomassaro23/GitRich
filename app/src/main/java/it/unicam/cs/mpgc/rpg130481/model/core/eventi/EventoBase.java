@@ -14,7 +14,7 @@ import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaL
 public abstract class EventoBase implements Evento {
     private final String titolo;
     private final String descrizione;
-    private final List<OpzioneEvento> opzioni;
+    private final List<OpzioneEventoLeggibile> opzioni;
 
     /**
      * Costruttore per creare un evento di base.
@@ -24,7 +24,7 @@ public abstract class EventoBase implements Evento {
      * @param opzioni     le opzioni disponibili per l'evento
      * @throws IllegalArgumentException se titolo o descrizione sono nulli o vuoti, o se la lista delle opzioni è nulla o vuota
      */
-    public EventoBase(String titolo, String descrizione, List<OpzioneEvento> opzioni) {
+    public EventoBase(String titolo, String descrizione, List<? extends OpzioneEventoLeggibile> opzioni) {
         if (titolo == null || titolo.isBlank() || descrizione == null || descrizione.isBlank()) {
             throw new IllegalArgumentException("Titolo e descrizione non possono essere vuoti.");
         }
@@ -61,7 +61,7 @@ public abstract class EventoBase implements Evento {
             throw new IllegalArgumentException("Indice opzione non valido: " + indiceOpzione);
         }
 
-        OpzioneEvento opzione = opzioni.get(indiceOpzione);
+        OpzioneEventoLeggibile opzione = opzioni.get(indiceOpzione);
         opzione.getModifiche().forEach(modifica ->
                 statistiche.applicaVariazione(modifica.nomeMetrica(), modifica.variazione())
         );

@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita;
 
-import it.unicam.cs.mpgc.rpg130481.model.core.metriche.StatisticheAzienda;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.selettori.SelettoreEventi;
 
@@ -19,7 +19,7 @@ public class InizializzatorePartitaDaDto {
      * @param turniMassimi il numero massimo di turni per la partita
      * @return un'istanza di Partita creata con i dati forniti
      */
-    public Partita creaPartita(StatisticheAzienda statisticheIniziali, List<Evento> mazzoEventi, int turniMassimi) {
+    public Partita creaPartita(StatisticheAziendaModificabili statisticheIniziali, List<Evento> mazzoEventi, int turniMassimi) {
         return new Partita(statisticheIniziali, mazzoEventi, turniMassimi);
     }
 
@@ -32,7 +32,7 @@ public class InizializzatorePartitaDaDto {
      * @param selettoreEventi il selettore di eventi da utilizzare per determinare l'evento corrente
      * @return un'istanza di Partita creata con i dati forniti
      */
-    public Partita creaPartita(StatisticheAzienda statisticheIniziali, List<Evento> mazzoEventi, int turniMassimi, SelettoreEventi selettoreEventi) {
+    public Partita creaPartita(StatisticheAziendaModificabili statisticheIniziali, List<Evento> mazzoEventi, int turniMassimi, SelettoreEventi selettoreEventi) {
         return new Partita(statisticheIniziali, mazzoEventi, turniMassimi, selettoreEventi);
     }
 }

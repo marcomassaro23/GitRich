@@ -11,7 +11,7 @@ import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.OpzioneEventoLeggibil
  */
 public class OpzioneEvento implements OpzioneEventoLeggibile {
     private final String testo;
-    private final List<VariazioneMetrica> modifiche;
+    private final List<ModificaMetrica> modifiche;
 
     /**
      * Costruttore per creare un'opzione di un evento.
@@ -20,7 +20,7 @@ public class OpzioneEvento implements OpzioneEventoLeggibile {
      * @param modifiche le modifiche alle metriche associate all'opzione
      * @throws IllegalArgumentException se il testo è nullo o vuoto, o se la lista delle modifiche è nulla
      */
-    public OpzioneEvento(String testo, List<VariazioneMetrica> modifiche) {
+    public OpzioneEvento(String testo, List<? extends ModificaMetrica> modifiche) {
         if (testo == null || testo.isBlank()) {
             throw new IllegalArgumentException("Il testo dell'opzione non può essere nullo o vuoto.");
         }
