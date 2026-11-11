@@ -5,6 +5,7 @@ import it.unicam.cs.mpgc.rpg130481.repository.interfaces.EventoRepository;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -28,10 +29,7 @@ public class XmlEventoRepository implements EventoRepository {
             throw new IllegalArgumentException("Il percorso XML non può essere nullo o vuoto.");
         }
         this.percorsoFileXml = percorsoFileXml;
-        if (mapper == null) {
-            new XmlEventoRepository(percorsoFileXml);
-        }
-        this.mapper = mapper;
+        this.mapper = (mapper != null) ? mapper : new XmlEventoMapper();
     }
 
     /**
@@ -45,29 +43,31 @@ public class XmlEventoRepository implements EventoRepository {
 
     @Override
     public List<Evento> carica() {
-        InputStream is = null;
-        try {
-            is = getClass().getClassLoader().getResourceAsStream(percorsoFileXml);
-            if (is == null) {
-                File file = new File(percorsoFileXml);
-                if (file.exists()) {
-                    is = new FileInputStream(file);
-                }
-            }
-
-            if (is == null) {
-                throw new IllegalStateException("File XML non trovato: " + percorsoFileXml);
-            }
-
+        try (InputStream is = apriFlussoInput()) {
             return mapper.parse(is);
         } catch (Exception e) {
             throw new RuntimeException("Errore durante il caricamento degli eventi XML: " + percorsoFileXml, e);
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (Exception ignored) {}
-            }
         }
+    }
+
+    /**
+     * Apre un flusso di input per leggere il file XML.
+     * Cerca prima nel classpath e poi nel file system.
+     *
+     * @return un InputStream per leggere il file XML
+     * @throws IOException se si verifica un errore durante l'apertura del flusso
+     */
+    private InputStream apriFlussoInput() throws IOException {
+        InputStream is = getClass().getClassLoader().getResourceAsStream(percorsoFileXml);
+        if (is != null) {
+            return is;
+        }
+
+        File file = new File(percorsoFileXml);
+        if (file.exists()) {
+            return new FileInputStream(file);
+        }
+
+        throw new IllegalStateException("File XML non trovato né nel classpath né nel file system: " + percorsoFileXml);
     }
 }
