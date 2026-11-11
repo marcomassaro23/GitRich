@@ -5,6 +5,7 @@ import it.unicam.cs.mpgc.rpg130481.model.core.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 import it.unicam.cs.mpgc.rpg130481.repository.interfaces.StatoPartitaRepository;
+import it.unicam.cs.mpgc.rpg130481.utility.PathResolver;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,6 +13,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.io.File;
 
 /**
  * Implementazione di StatoPartitaRepository che utilizza un file JSON per la persistenza dello stato della partita.
@@ -57,14 +59,15 @@ public class JsonStatoPartitaRepository implements StatoPartitaRepository {
 
     @Override
     public StatoGiocoDto carica() {
-        try (Reader reader = new FileReader(percorsoFileJson, StandardCharsets.UTF_8)) {
-            StatoGiocoDto dto = gson.fromJson(reader, StatoGiocoDto.class);
-            if (dto == null) {
-                throw new IllegalStateException("File JSON vuoto o non valido.");
-            }
-            return dto;
+        File file = PathResolver.trovaFileLettura(percorsoFileJson);
+        if (file == null || !file.exists()) {
+            throw new RuntimeException("Impossibile trovare il file di stato: " + percorsoFileJson);
+        }
+
+        try (Reader reader = new FileReader(file, StandardCharsets.UTF_8)) {
+            return gson.fromJson(reader, StatoGiocoDto.class);
         } catch (Exception e) {
-            throw new RuntimeException("Errore durante il caricamento dello stato da JSON: " + percorsoFileJson, e);
+            throw new RuntimeException("Errore durante il caricamento dello stato da file JSON: " + percorsoFileJson, e);
         }
     }
 
@@ -73,10 +76,17 @@ public class JsonStatoPartitaRepository implements StatoPartitaRepository {
         if (stato == null) {
             throw new IllegalArgumentException("Lo stato da salvare non può essere nullo.");
         }
-        try (Writer writer = new FileWriter(percorsoFileJson, StandardCharsets.UTF_8)) {
+
+        File file = PathResolver.risolviFileScrittura(percorsoFileJson);
+        File parent = file.getParentFile();
+        if (parent != null && !parent.exists()) {
+            parent.mkdirs();
+        }
+
+        try (Writer writer = new FileWriter(file, StandardCharsets.UTF_8)) {
             gson.toJson(stato, writer);
         } catch (Exception e) {
-            throw new RuntimeException("Errore durante il salvataggio dello stato su JSON: " + percorsoFileJson, e);
+            throw new RuntimeException("Errore durante il salvataggio dello stato su JSON: " + file.getPath(), e);
         }
     }
 }
