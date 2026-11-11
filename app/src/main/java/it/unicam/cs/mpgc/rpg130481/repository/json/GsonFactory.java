@@ -3,7 +3,7 @@ package it.unicam.cs.mpgc.rpg130481.repository.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoLeggibile;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaLeggibili;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Factory per creare istanze di Gson configurate con serializer e deserializer personalizzati.
  * Fornisce metodi per ottenere un'istanza di Gson configurata per serializzare e deserializzare
- * oggetti di tipo StatoPartita, EventoLeggibile e StatisticheAziendaLeggibili
+ * oggetti di tipo StatoPartita, EventoLeggibile e StatisticheAziendaModificabili
  */
 public class GsonFactory {
     /**
@@ -26,7 +26,7 @@ public class GsonFactory {
         return new GsonBuilder()
                 .registerTypeAdapter(StatoPartita.class, new StatoPartitaSerializer())
                 .registerTypeAdapter(StatoPartita.class, new StatoPartitaDeserializer(statoDefault, regole))
-                .registerTypeAdapter(StatisticheAziendaLeggibili.class, new StatisticheAziendaDeserializer())
+                .registerTypeAdapter(StatisticheAziendaModificabili.class, new StatisticheAziendaDeserializer())
                 .registerTypeAdapter(EventoLeggibile.class, new EventoDeserializer())
                 .setPrettyPrinting()
                 .create();
