@@ -1,12 +1,12 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita;
 
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAzienda;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 
 public record StatoGiocoDto(
-    TurnoBase turno,
-    StatisticheAziendaModificabili statistiche,
+    Turno turno,
+    StatisticheAzienda statistiche,
     Evento eventoCorrente,
     StatoPartita statoPartita,
     boolean isTerminata

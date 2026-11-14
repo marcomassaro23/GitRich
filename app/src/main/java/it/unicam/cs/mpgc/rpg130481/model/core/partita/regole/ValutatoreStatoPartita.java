@@ -1,8 +1,10 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita.regole;
 
-import it.unicam.cs.mpgc.rpg130481.model.core.partita.PartitaBase;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.Partita;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 import java.util.List;
+import java.util.Optional;
 
 public class ValutatoreStatoPartita {
 
@@ -15,16 +17,15 @@ public class ValutatoreStatoPartita {
         this.regole = List.copyOf(regole);
     }
 
-    public void valutaStatoPartita(PartitaBase partita) {
+    public Optional<StatoPartita> determinaProssimoStato(Partita partita) {
         if (partita == null) {
             throw new IllegalArgumentException("La partita non può essere nulla.");
         }
 
-        for (RegolaStato regola : regole) {
-            if (regola.isRispettata(partita)) {
-                partita.setStato(regola.getStatoAssociato());
-                return;
-            }
-        }
+        return regole
+            .stream()
+            .filter(regola -> regola.isSoddisfattaDa(partita))
+            .map(RegolaStato::getStatoRisultante)
+            .findFirst();
     }
 }

@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita.selettori;
 
-import it.unicam.cs.mpgc.rpg130481.model.core.partita.TurnoBase;
+import it.unicam.cs.mpgc.rpg130481.model.core.partita.Turno;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoEseguibile;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAzienda;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.selettori.SelettoreEventi;
@@ -12,7 +12,7 @@ public class SelettoreEventiDeterministico implements SelettoreEventi {
     public EventoEseguibile selezionaProssimo(
         List<EventoEseguibile> mazzoEventi,
         StatisticheAzienda statistiche,
-        TurnoBase turno
+        Turno turno
     ) {
         if (mazzoEventi == null || mazzoEventi.isEmpty() || statistiche == null || turno == null) {
             throw new IllegalArgumentException(
@@ -22,11 +22,15 @@ public class SelettoreEventiDeterministico implements SelettoreEventi {
 
         List<EventoEseguibile> eventiAttivabili = mazzoEventi
             .stream()
-            .filter(evento -> evento.isAttivabile(statistiche))
+            .filter(evento -> evento.isAttivabileCon(statistiche))
             .toList();
 
-        List<EventoEseguibile> listaRiferimento = eventiAttivabili.isEmpty() ? mazzoEventi : eventiAttivabili;
-        int indiceSelezionato = (turno.numeroCorrente() - 1) % listaRiferimento.size();
-        return listaRiferimento.get(indiceSelezionato);
+        List<EventoEseguibile> candidati = eventiAttivabili.isEmpty() ? mazzoEventi : eventiAttivabili;
+        int indiceEvento = calcolaIndiceCiclico(turno, candidati.size());
+        return candidati.get(indiceEvento);
+    }
+
+    private int calcolaIndiceCiclico(Turno turno, int dimensioneMazzo) {
+        return (turno.corrente() - 1) % dimensioneMazzo;
     }
 }

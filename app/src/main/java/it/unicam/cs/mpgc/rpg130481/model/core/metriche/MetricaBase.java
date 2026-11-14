@@ -7,9 +7,16 @@ public class MetricaBase implements MetricaModificabile {
     private final String nome;
     private final int valoreMinimo;
     private final int valoreMassimo;
+    private final boolean criticaAlMassimo;
     private int valore;
 
-    public MetricaBase(String nome, int valoreIniziale, int valoreMinimo, int valoreMassimo) {
+    public MetricaBase(
+        String nome,
+        int valoreIniziale,
+        int valoreMinimo,
+        int valoreMassimo,
+        boolean criticaAlMassimo
+    ) {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Il nome della metrica non può essere nullo o vuoto.");
         }
@@ -19,11 +26,16 @@ public class MetricaBase implements MetricaModificabile {
         this.nome = nome;
         this.valoreMinimo = valoreMinimo;
         this.valoreMassimo = valoreMassimo;
+        this.criticaAlMassimo = criticaAlMassimo;
         this.valore = Math.clamp(valoreIniziale, valoreMinimo, valoreMassimo);
     }
 
+    public MetricaBase(String nome, int valoreIniziale, int valoreMinimo, int valoreMassimo) {
+        this(nome, valoreIniziale, valoreMinimo, valoreMassimo, false);
+    }
+
     public MetricaBase(String nome, int valoreIniziale) {
-        this(nome, valoreIniziale, 0, 100);
+        this(nome, valoreIniziale, 0, 100, false);
     }
 
     @Override
@@ -47,18 +59,18 @@ public class MetricaBase implements MetricaModificabile {
     }
 
     @Override
-    public boolean isCritica() {
-        return isMin();
+    public boolean isInStatoCritico() {
+        return criticaAlMassimo ? isMax() : isMin();
     }
 
     @Override
-    public int applicaVariazione(int delta) {
-        this.valore = Math.clamp(this.valore + delta, valoreMinimo, valoreMassimo);
+    public int applicaVariazione(int variazione) {
+        this.valore = Math.clamp(this.valore + variazione, valoreMinimo, valoreMassimo);
         return this.valore;
     }
 
     @Override
-    public void setValoreAssoluto(int nuovoValore) {
+    public void setValore(int nuovoValore) {
         this.valore = Math.clamp(nuovoValore, valoreMinimo, valoreMassimo);
     }
 }

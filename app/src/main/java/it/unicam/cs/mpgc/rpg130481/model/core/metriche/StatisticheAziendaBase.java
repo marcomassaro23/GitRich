@@ -26,25 +26,25 @@ public class StatisticheAziendaBase implements StatisticheAziendaModificabili {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Il nome della metrica non può essere nullo o vuoto.");
         }
-        return trovaMetricaInterna(nome);
+        return cercaMetricaPerNome(nome);
     }
 
     @Override
     public Metrica applicaVariazione(String nome, int delta) {
-        MetricaModificabile metrica = trovaMetricaInterna(nome);
+        MetricaModificabile metrica = cercaMetricaPerNome(nome);
         metrica.applicaVariazione(delta);
         return metrica;
     }
 
     @Override
-    public boolean haMetricheCritiche() {
-        return metriche.stream().anyMatch(Metrica::isCritica);
+    public boolean hasMetricheCritiche() {
+        return metriche.stream().anyMatch(Metrica::isInStatoCritico);
     }
 
-    private MetricaModificabile trovaMetricaInterna(String nome) {
+    private MetricaModificabile cercaMetricaPerNome(String nome) {
         return metriche
             .stream()
-            .filter(m -> m.getNome().equals(nome))
+            .filter(metrica -> metrica.getNome().equals(nome))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("Metrica con nome '" + nome + "' non trovata."));
     }

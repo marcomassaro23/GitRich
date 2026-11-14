@@ -1,14 +1,11 @@
 package it.unicam.cs.mpgc.rpg130481.model.interfaces.partita;
 
-import it.unicam.cs.mpgc.rpg130481.model.core.partita.PartitaBase;
+import it.unicam.cs.mpgc.rpg130481.model.core.partita.GestoreStatoPartita;
+import it.unicam.cs.mpgc.rpg130481.model.core.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoEseguibile;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
 import java.util.List;
 
 public interface InizializzatorePartita {
-    PartitaBase creaPartita(
-        StatisticheAziendaModificabili statisticheIniziali,
-        List<EventoEseguibile> mazzoEventi,
-        int turniMassimi
-    );
+    GestoreStatoPartita creaNuovaPartita(StatoGiocoDto statoIniziale, List<EventoEseguibile> mazzoEventi);
+    GestoreStatoPartita ripristinaPartita(StatoGiocoDto statoSalvato, List<EventoEseguibile> mazzoEventi);
 }

@@ -14,5 +14,5 @@ public interface Metrica {
         return getValore() >= getValoreMassimo();
     }
 
-    boolean isCritica();
+    boolean isInStatoCritico();
 }

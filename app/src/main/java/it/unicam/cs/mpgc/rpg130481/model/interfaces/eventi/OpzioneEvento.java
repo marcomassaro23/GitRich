@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface OpzioneEvento {
     String getTesto();
-    List<VariazioneMetrica> getModifiche();
+    List<VariazioneMetrica> getVariazioni();
 }

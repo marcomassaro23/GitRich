@@ -13,7 +13,7 @@ public class EventoBase implements EventoEseguibile {
     private final List<OpzioneEvento> opzioni;
 
     public EventoBase(String titolo, String descrizione, List<? extends OpzioneEvento> opzioni) {
-        if (titolo == null || titolo.isBlank() || descrizione == null || descrizione.isBlank()) {
+        if (isTestoAssente(titolo) || isTestoAssente(descrizione)) {
             throw new IllegalArgumentException("Titolo e descrizione non possono essere vuoti.");
         }
         if (opzioni == null || opzioni.isEmpty()) {
@@ -40,7 +40,7 @@ public class EventoBase implements EventoEseguibile {
     }
 
     @Override
-    public boolean isAttivabile(StatisticheAzienda statistiche) {
+    public boolean isAttivabileCon(StatisticheAzienda statistiche) {
         if (statistiche == null) {
             throw new IllegalArgumentException("Le statistiche aziendali non possono essere nulle.");
         }
@@ -52,13 +52,21 @@ public class EventoBase implements EventoEseguibile {
         if (statistiche == null) {
             throw new IllegalArgumentException("Le statistiche aziendali non possono essere nulle.");
         }
-        if (indiceOpzione < 0 || indiceOpzione >= opzioni.size()) {
+        if (isIndiceFuoriIntervallo(indiceOpzione)) {
             throw new IllegalArgumentException("Indice opzione non valido: " + indiceOpzione);
         }
 
-        OpzioneEvento opzione = opzioni.get(indiceOpzione);
-        opzione
-            .getModifiche()
-            .forEach(modifica -> statistiche.applicaVariazione(modifica.nomeMetrica(), modifica.variazione()));
+        OpzioneEvento opzioneScelta = opzioni.get(indiceOpzione);
+        opzioneScelta
+            .getVariazioni()
+            .forEach(variazione -> statistiche.applicaVariazione(variazione.nomeMetrica(), variazione.variazione()));
+    }
+
+    private boolean isTestoAssente(String testo) {
+        return testo == null || testo.isBlank();
+    }
+
+    private boolean isIndiceFuoriIntervallo(int indice) {
+        return indice < 0 || indice >= opzioni.size();
     }
 }

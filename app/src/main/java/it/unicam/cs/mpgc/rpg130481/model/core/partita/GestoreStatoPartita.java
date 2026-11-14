@@ -15,20 +15,20 @@ public class GestoreStatoPartita {
         this.valutatoreStato = valutatoreStato;
     }
 
-    public void eseguiTurno(int indiceOpzione) {
+    public void giocaTurnoConScelta(int indiceOpzione) {
         if (partita.isTerminata()) {
             throw new IllegalStateException("Impossibile avanzare: la partita è terminata.");
         }
 
-        partita.eseguiScelta(indiceOpzione);
-        valutatoreStato.valutaStatoPartita(partita);
+        partita.applicaScelta(indiceOpzione);
+        valutatoreStato.determinaProssimoStato(partita).ifPresent(partita::setStato);
 
         if (!partita.isTerminata()) {
             partita.avanzaTurno();
         }
     }
 
-    public StatoGiocoDto getStatoCorrente() {
+    public StatoGiocoDto getStatoAttuale() {
         return partita.toDto();
     }
 }
