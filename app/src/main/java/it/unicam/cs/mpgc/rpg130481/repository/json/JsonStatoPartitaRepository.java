@@ -1,6 +1,7 @@
 package it.unicam.cs.mpgc.rpg130481.repository.json;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
@@ -13,29 +14,30 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Objects;
 
 public class JsonStatoPartitaRepository implements StatoPartitaRepository {
 
     private final String percorsoFile;
     private final Gson gson;
+    private final SalvataggioPartitaMapper mapper;
 
     public JsonStatoPartitaRepository(String percorsoFile, StatoPartita statoDefault, List<RegolaStato> regole) {
         if (percorsoFile == null || percorsoFile.isBlank()) {
             throw new IllegalArgumentException("Il percorso del file JSON non può essere nullo o vuoto.");
         }
         this.percorsoFile = percorsoFile;
-        this.gson = GsonFactory.costruisciSerializerPartita(statoDefault, regole);
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
+        this.mapper = new SalvataggioPartitaMapper(statoDefault, regole);
     }
 
-    public JsonStatoPartitaRepository(String percorsoFile, Gson gson) {
+    public JsonStatoPartitaRepository(String percorsoFile, Gson gson, SalvataggioPartitaMapper mapper) {
         if (percorsoFile == null || percorsoFile.isBlank()) {
             throw new IllegalArgumentException("Il percorso del file JSON non può essere nullo o vuoto.");
         }
-        if (gson == null) {
-            throw new IllegalArgumentException("L'istanza di Gson non può essere nulla.");
-        }
         this.percorsoFile = percorsoFile;
-        this.gson = gson;
+        this.gson = Objects.requireNonNull(gson, "L'istanza di Gson non può essere nulla.");
+        this.mapper = Objects.requireNonNull(mapper, "Il mapper non può essere nullo.");
     }
 
     @Override
@@ -46,7 +48,8 @@ public class JsonStatoPartitaRepository implements StatoPartitaRepository {
         }
 
         try (Reader reader = new FileReader(sorgente, StandardCharsets.UTF_8)) {
-            return gson.fromJson(reader, StatoGiocoDto.class);
+            DatiSalvataggioPartita dati = gson.fromJson(reader, DatiSalvataggioPartita.class);
+            return mapper.versoDto(dati);
         } catch (Exception e) {
             throw new RuntimeException("Errore durante il caricamento dello stato da file JSON: " + percorsoFile, e);
         }
@@ -62,7 +65,8 @@ public class JsonStatoPartitaRepository implements StatoPartitaRepository {
         assicuraCartellaEsistente(destinazione);
 
         try (Writer writer = new FileWriter(destinazione, StandardCharsets.UTF_8)) {
-            gson.toJson(stato, writer);
+            DatiSalvataggioPartita dati = mapper.daDto(stato);
+            gson.toJson(dati, writer);
         } catch (Exception e) {
             throw new RuntimeException(
                 "Errore durante il salvataggio dello stato su JSON: " + destinazione.getPath(),

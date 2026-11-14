@@ -1,7 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita;
 
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.stati.StatoInCorso;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoEseguibile;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAzienda;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
@@ -9,7 +8,6 @@ import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.Partita;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.selettori.SelettoreEventi;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 import java.util.List;
-import java.util.Optional;
 
 public class PartitaBase implements Partita {
 
@@ -25,7 +23,7 @@ public class PartitaBase implements Partita {
         List<EventoEseguibile> mazzoEventi,
         Turno turno,
         SelettoreEventi selettoreEventi,
-        Evento eventoSalvato,
+        EventoEseguibile eventoIniziale,
         StatoPartita statoIniziale
     ) {
         if (statistiche == null || mazzoEventi == null || mazzoEventi.isEmpty()) {
@@ -40,7 +38,7 @@ public class PartitaBase implements Partita {
         this.turno = turno;
         this.selettoreEventi = selettoreEventi;
         this.stato = statoIniziale != null ? statoIniziale : new StatoInCorso();
-        this.eventoCorrente = ripristinaOSelezionaEvento(eventoSalvato);
+        this.eventoCorrente = eventoIniziale != null ? eventoIniziale : selezionaProssimoEvento();
     }
 
     public PartitaBase(
@@ -92,19 +90,9 @@ public class PartitaBase implements Partita {
         return stato.isTerminata();
     }
 
-    public StatoGiocoDto toDto() {
-        return new StatoGiocoDto(turno, statistiche, eventoCorrente, stato, stato.isTerminata());
-    }
-
-    private EventoEseguibile ripristinaOSelezionaEvento(Evento eventoSalvato) {
-        if (eventoSalvato == null) {
-            return selezionaProssimoEvento();
-        }
-        return cercaEventoPerTitolo(eventoSalvato.getTitolo()).orElseGet(this::selezionaProssimoEvento);
-    }
-
-    private Optional<EventoEseguibile> cercaEventoPerTitolo(String titolo) {
-        return mazzoEventi.stream().filter(evento -> evento.getTitolo().equals(titolo)).findFirst();
+    @Override
+    public StatoPartita getStato() {
+        return stato;
     }
 
     private EventoEseguibile selezionaProssimoEvento() {
