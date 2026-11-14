@@ -3,7 +3,7 @@ package it.unicam.cs.mpgc.rpg130481.model.core.partita;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.selettori.SelettoreEventiDeterministico;
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.stati.StatoInCorso;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoEseguibile;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.selettori.SelettoreEventi;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 
@@ -13,12 +13,12 @@ import java.util.List;
  * Rappresenta una partita del gioco, gestendo lo stato della partita, le statistiche dell'azienda e il mazzo di eventi.
  * Fornisce metodi per eseguire scelte, avanzare i turni e ottenere informazioni sullo stato della partita.
  */
-public class Partita {
+public class PartitaBase {
     private final StatisticheAziendaModificabili statistiche;
-    private final List<Evento> mazzoEventi;
+    private final List<EventoEseguibile> mazzoEventi;
     private final SelettoreEventi selettoreEventi;
-    private Turno turno;
-    private Evento eventoCorrente;
+    private TurnoBase turno;
+    private EventoEseguibile eventoCorrente;
     private StatoPartita stato;
 
     /**
@@ -30,7 +30,7 @@ public class Partita {
      * @param selettoreEventi il selettore di eventi
      * @throws IllegalArgumentException se le statistiche o il mazzo eventi sono null o vuoti
      */
-    public Partita(StatisticheAziendaModificabili statistiche, List<Evento> mazzoEventi, Turno turno, SelettoreEventi selettoreEventi) {
+    public PartitaBase(StatisticheAziendaModificabili statistiche, List<EventoEseguibile> mazzoEventi, TurnoBase turno, SelettoreEventi selettoreEventi) {
         if (statistiche == null || mazzoEventi == null || mazzoEventi.isEmpty()) {
             throw new IllegalArgumentException("Statistiche e mazzo eventi non possono essere nulli o vuoti.");
         }
@@ -49,8 +49,8 @@ public class Partita {
     /**
      * Costruisce una nuova partita iniziando dal primo turno (Turno 1 di turniMassimi).
      */
-    public Partita(StatisticheAziendaModificabili statistiche, List<Evento> mazzoEventi, int turniMassimi, SelettoreEventi selettoreEventi) {
-        this(statistiche, mazzoEventi, new Turno(1, turniMassimi), selettoreEventi);
+    public PartitaBase(StatisticheAziendaModificabili statistiche, List<EventoEseguibile> mazzoEventi, int turniMassimi, SelettoreEventi selettoreEventi) {
+        this(statistiche, mazzoEventi, new TurnoBase(1, turniMassimi), selettoreEventi);
     }
 
     /**
@@ -62,7 +62,7 @@ public class Partita {
      * @param turniMassimi il numero massimo di turni
      * @throws IllegalArgumentException se le statistiche o il mazzo eventi sono null o vuoti
      */
-    public Partita(StatisticheAziendaModificabili statistiche, List<Evento> mazzoEventi, int turniMassimi) {
+    public PartitaBase(StatisticheAziendaModificabili statistiche, List<EventoEseguibile> mazzoEventi, int turniMassimi) {
         this(statistiche, mazzoEventi, turniMassimi, new SelettoreEventiDeterministico());
     }
 
@@ -110,8 +110,8 @@ public class Partita {
     }
 
     public StatisticheAziendaModificabili getStatistiche() { return statistiche; }
-    public Turno getTurno() { return turno; }
-    public Evento getEventoCorrente() { return eventoCorrente; }
+    public TurnoBase getTurno() { return turno; }
+    public EventoEseguibile getEventoCorrente() { return eventoCorrente; }
     public boolean isTerminata() { return stato.isTerminata(); }
 
     /**

@@ -4,7 +4,7 @@ package it.unicam.cs.mpgc.rpg130481.model.interfaces.partita;
  * Interfaccia che rappresenta un turno leggibile di una partita.
  * Contiene metodi per ottenere il numero corrente del turno, il numero massimo di turni e verificare se è l'ultimo turno.
  */
-public interface TurnoLeggibile {
+public interface Turno {
     /**
      * Restituisce il numero corrente del turno.
      *

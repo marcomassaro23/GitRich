@@ -5,13 +5,13 @@ import java.util.List;
 /**
  * Interfaccia che rappresenta le statistiche di un'azienda.
  */
-public interface StatisticheAziendaLeggibili {
+public interface StatisticheAzienda {
     /**
      * Restituisce la lista delle metriche dell'azienda.
      *
      * @return la lista delle metriche
      */
-    List<MetricaLeggibile> getMetriche();
+    List<Metrica> getMetriche();
 
     /**
      * Restituisce la metrica corrispondente al nome specificato.
@@ -20,7 +20,7 @@ public interface StatisticheAziendaLeggibili {
      * @return la metrica corrispondente al nome
      * @throws IllegalArgumentException se la metrica non viene trovata
      */
-    MetricaLeggibile getMetrica(String nome);
+    Metrica getMetrica(String nome);
 
     /**
      * Verifica se l'azienda ha metriche critiche.

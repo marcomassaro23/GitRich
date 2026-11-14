@@ -2,7 +2,7 @@ package it.unicam.cs.mpgc.rpg130481.repository.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoLeggibile;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
@@ -27,7 +27,7 @@ public class GsonFactory {
                 .registerTypeAdapter(StatoPartita.class, new StatoPartitaSerializer())
                 .registerTypeAdapter(StatoPartita.class, new StatoPartitaDeserializer(statoDefault, regole))
                 .registerTypeAdapter(StatisticheAziendaModificabili.class, new StatisticheAziendaDeserializer())
-                .registerTypeAdapter(EventoLeggibile.class, new EventoDeserializer())
+                .registerTypeAdapter(Evento.class, new EventoDeserializer())
                 .setPrettyPrinting()
                 .create();
     }

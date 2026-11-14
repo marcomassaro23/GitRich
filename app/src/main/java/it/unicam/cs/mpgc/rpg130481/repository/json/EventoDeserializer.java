@@ -7,9 +7,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import it.unicam.cs.mpgc.rpg130481.model.core.eventi.EventoGenerico;
-import it.unicam.cs.mpgc.rpg130481.model.core.eventi.OpzioneEvento;
+import it.unicam.cs.mpgc.rpg130481.model.core.eventi.OpzioneEventoBase;
 import it.unicam.cs.mpgc.rpg130481.model.core.eventi.VariazioneMetrica;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoLeggibile;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -19,10 +19,10 @@ import java.util.List;
  * Deserializer personalizzato per deserializzare oggetti di tipo EventoLeggibile da JSON.
  * Estende JsonDeserializer<EventoLeggibile> e implementa il metodo deserialize per convertire un oggetto JSON in un'istanza di EventoLeggibile.
  */
-public class EventoDeserializer implements JsonDeserializer<EventoLeggibile> {
+public class EventoDeserializer implements JsonDeserializer<Evento> {
 
     @Override
-    public EventoLeggibile deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Evento deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         if (json == null || !json.isJsonObject()) {
             return null;
         }
@@ -50,7 +50,7 @@ public class EventoDeserializer implements JsonDeserializer<EventoLeggibile> {
             return null;
         }
 
-        List<OpzioneEvento> listaOpzioni = new ArrayList<>();
+        List<OpzioneEventoBase> listaOpzioni = new ArrayList<>();
         for (JsonElement elementoOpzione : arrayOpzioniJson) {
             if (elementoOpzione.isJsonObject()) {
                 listaOpzioni.add(estraiOpzioneDaJson(elementoOpzione.getAsJsonObject()));
@@ -66,7 +66,7 @@ public class EventoDeserializer implements JsonDeserializer<EventoLeggibile> {
      * @param opzioneJsonObj L'oggetto JSON rappresentante l'opzione.
      * @return Un'istanza di OpzioneEvento.
      */
-    private OpzioneEvento estraiOpzioneDaJson(JsonObject opzioneJsonObj) {
+    private OpzioneEventoBase estraiOpzioneDaJson(JsonObject opzioneJsonObj) {
         String testo = "";
         if (opzioneJsonObj.has("testo")) {
             testo = opzioneJsonObj.get("testo").getAsString();
@@ -82,7 +82,7 @@ public class EventoDeserializer implements JsonDeserializer<EventoLeggibile> {
             }
         }
 
-        return new OpzioneEvento(testo, listaModifiche);
+        return new OpzioneEventoBase(testo, listaModifiche);
     }
 
     /**

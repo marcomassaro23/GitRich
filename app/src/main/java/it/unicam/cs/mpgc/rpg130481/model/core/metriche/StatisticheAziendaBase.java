@@ -2,15 +2,15 @@ package it.unicam.cs.mpgc.rpg130481.model.core.metriche;
 
 import java.util.List;
 
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.MetricaModificabile;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.Metrica;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.MetricaLeggibile;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
 
 /**
  * Implementazione dell'interfaccia {@link StatisticheAziendaModificabili} che rappresenta le statistiche di un'azienda.
  */
-public class StatisticheAzienda implements StatisticheAziendaModificabili {
-    private final List<Metrica> metriche;
+public class StatisticheAziendaBase implements StatisticheAziendaModificabili {
+    private final List<MetricaModificabile> metriche;
 
     /**
      * Costruisce un nuovo oggetto StatisticheAzienda con la lista di metriche specificata.
@@ -18,7 +18,7 @@ public class StatisticheAzienda implements StatisticheAziendaModificabili {
      * @param metriche la lista di metriche dell'azienda
      * @throws IllegalArgumentException se la lista delle metriche è nulla o vuota
      */
-    public StatisticheAzienda(List<Metrica> metriche) {
+    public StatisticheAziendaBase(List<MetricaModificabile> metriche) {
         if (metriche == null || metriche.isEmpty()) {
             throw new IllegalArgumentException("La lista delle metriche non può essere nulla o vuota.");
         }
@@ -26,12 +26,12 @@ public class StatisticheAzienda implements StatisticheAziendaModificabili {
     }
 
     @Override
-    public List<MetricaLeggibile> getMetriche() {
+    public List<Metrica> getMetriche() {
         return List.copyOf(this.metriche);
     }
 
     @Override
-    public MetricaLeggibile getMetrica(String nome) {
+    public Metrica getMetrica(String nome) {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Il nome della metrica non può essere nullo o vuoto.");
         }
@@ -46,15 +46,15 @@ public class StatisticheAzienda implements StatisticheAziendaModificabili {
      * @return la metrica aggiornata
      * @throws IllegalArgumentException se la metrica non viene trovata
      */
-    public MetricaLeggibile applicaVariazione(String nome, int delta) {
-        Metrica metrica = trovaMetricaInterna(nome);
+    public Metrica applicaVariazione(String nome, int delta) {
+        MetricaModificabile metrica = trovaMetricaInterna(nome);
         metrica.applicaVariazione(delta);
         return metrica;
     }
 
     @Override
     public boolean haMetricheCritiche() {
-        return metriche.stream().anyMatch(MetricaLeggibile::isCritica);
+        return metriche.stream().anyMatch(Metrica::isCritica);
     }
 
     /**
@@ -64,7 +64,7 @@ public class StatisticheAzienda implements StatisticheAziendaModificabili {
      * @return la metrica trovata
      * @throws IllegalArgumentException se la metrica non viene trovata
      */
-    private Metrica trovaMetricaInterna(String nome) {
+    private MetricaModificabile trovaMetricaInterna(String nome) {
         return metriche.stream()
                 .filter(m -> m.getNome().equals(nome))
                 .findFirst()

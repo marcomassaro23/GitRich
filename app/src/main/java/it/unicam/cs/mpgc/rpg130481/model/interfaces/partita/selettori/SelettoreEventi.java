@@ -1,8 +1,8 @@
 package it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.selettori;
 
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaLeggibili;
-import it.unicam.cs.mpgc.rpg130481.model.core.partita.Turno;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAzienda;
+import it.unicam.cs.mpgc.rpg130481.model.core.partita.TurnoBase;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoEseguibile;
 
 import java.util.List;
 
@@ -21,5 +21,5 @@ public interface SelettoreEventi {
      * @return l'evento selezionato
      * @throws IllegalArgumentException se i parametri sono nulli o vuoti
      */
-    Evento selezionaProssimo(List<Evento> mazzoEventi, StatisticheAziendaLeggibili statistiche, Turno turno);
+    EventoEseguibile selezionaProssimo(List<EventoEseguibile> mazzoEventi, StatisticheAzienda statistiche, TurnoBase turno);
 }

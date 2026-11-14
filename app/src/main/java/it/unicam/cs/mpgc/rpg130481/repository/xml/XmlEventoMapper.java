@@ -1,9 +1,9 @@
 package it.unicam.cs.mpgc.rpg130481.repository.xml;
 
 import it.unicam.cs.mpgc.rpg130481.model.core.eventi.EventoGenerico;
-import it.unicam.cs.mpgc.rpg130481.model.core.eventi.OpzioneEvento;
+import it.unicam.cs.mpgc.rpg130481.model.core.eventi.OpzioneEventoBase;
 import it.unicam.cs.mpgc.rpg130481.model.core.eventi.VariazioneMetrica;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoEseguibile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -28,7 +28,7 @@ public class XmlEventoMapper {
      * @return Una lista di oggetti Evento creati a partire dai dati XML.
      * @throws RuntimeException se si verifica un errore durante il parsing del flusso XML.
      */
-    public List<Evento> parse(InputStream inputStream) {
+    public List<EventoEseguibile> parse(InputStream inputStream) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -50,11 +50,11 @@ public class XmlEventoMapper {
      * @param elEvento L'elemento XML rappresentante un evento.
      * @return L'oggetto Evento corrispondente all'elemento XML.
      */
-    private Evento toEvento(Element elEvento) {
+    private EventoEseguibile toEvento(Element elEvento) {
         String titolo = getTestoTag(elEvento, "titolo");
         String descrizione = getTestoTag(elEvento, "descrizione");
 
-        List<OpzioneEvento> opzioni = estraiElementi(elEvento.getElementsByTagName("opzione"))
+        List<OpzioneEventoBase> opzioni = estraiElementi(elEvento.getElementsByTagName("opzione"))
                 .map(this::toOpzione)
                 .toList();
 
@@ -67,14 +67,14 @@ public class XmlEventoMapper {
      * @param elOpzione L'elemento XML rappresentante un'opzione di evento.
      * @return L'oggetto OpzioneEvento corrispondente all'elemento XML.
      */
-    private OpzioneEvento toOpzione(Element elOpzione) {
+    private OpzioneEventoBase toOpzione(Element elOpzione) {
         String testo = getTestoTag(elOpzione, "testo");
 
         List<VariazioneMetrica> modifiche = estraiElementi(elOpzione.getElementsByTagName("modificaMetrica"))
                 .map(this::toVariazioneMetrica)
                 .toList();
 
-        return new OpzioneEvento(testo, modifiche);
+        return new OpzioneEventoBase(testo, modifiche);
     }
 
     /**

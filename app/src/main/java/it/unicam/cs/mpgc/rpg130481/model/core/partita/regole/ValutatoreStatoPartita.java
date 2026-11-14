@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita.regole;
 
 import java.util.List;
-import it.unicam.cs.mpgc.rpg130481.model.core.partita.Partita;
+import it.unicam.cs.mpgc.rpg130481.model.core.partita.PartitaBase;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
 
 /**
@@ -31,7 +31,7 @@ public class ValutatoreStatoPartita {
      * @param partita la partita da valutare
      * @throws IllegalArgumentException se la partita è nulla
      */
-    public void valutaStatoPartita(Partita partita) {
+    public void valutaStatoPartita(PartitaBase partita) {
         if (partita == null) {
             throw new IllegalArgumentException("La partita non può essere nulla.");
         }

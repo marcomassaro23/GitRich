@@ -1,11 +1,11 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.metriche;
 
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.Metrica;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.MetricaModificabile;
 
 /**
- * Implementazione generica dell'interfaccia {@link Metrica}.
+ * Implementazione generica dell'interfaccia {@link MetricaModificabile}.
  */
-public class MetricaGenerica implements Metrica {
+public class MetricaBase implements MetricaModificabile {
     private final String nome;
     private final int valoreMinimo;
     private final int valoreMassimo;
@@ -19,7 +19,7 @@ public class MetricaGenerica implements Metrica {
      * @param valoreMassimo  il valore massimo consentito per la metrica
      * @throws IllegalArgumentException se il nome è nullo o vuoto, o se il valore minimo è maggiore o uguale al valore massimo
      */
-    public MetricaGenerica(String nome, int valoreIniziale, int valoreMinimo, int valoreMassimo) {
+    public MetricaBase(String nome, int valoreIniziale, int valoreMinimo, int valoreMassimo) {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Il nome della metrica non può essere nullo o vuoto.");
         }
@@ -38,7 +38,7 @@ public class MetricaGenerica implements Metrica {
      * @param nome          il nome della metrica
      * @param valoreIniziale il valore iniziale della metrica
      */
-    public MetricaGenerica(String nome, int valoreIniziale) {
+    public MetricaBase(String nome, int valoreIniziale) {
         this(nome, valoreIniziale, 0, 100);
     }
 

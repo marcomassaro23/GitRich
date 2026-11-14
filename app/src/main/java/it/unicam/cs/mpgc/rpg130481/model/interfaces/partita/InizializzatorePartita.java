@@ -1,8 +1,8 @@
 package it.unicam.cs.mpgc.rpg130481.model.interfaces.partita;
 
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
-import it.unicam.cs.mpgc.rpg130481.model.core.partita.Partita;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
+import it.unicam.cs.mpgc.rpg130481.model.core.partita.PartitaBase;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoEseguibile;
 import java.util.List;
 
 /**
@@ -18,5 +18,5 @@ public interface InizializzatorePartita {
      * @param turniMassimi il numero massimo di turni della partita
      * @return la nuova partita creata
      */
-    Partita creaPartita(StatisticheAziendaModificabili statisticheIniziali, List<Evento> mazzoEventi, int turniMassimi);
+    PartitaBase creaPartita(StatisticheAziendaModificabili statisticheIniziali, List<EventoEseguibile> mazzoEventi, int turniMassimi);
 }

@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita;
 
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.TurnoLeggibile;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.Turno;
 
 /**
  * Rappresenta un turno di gioco in una partita.
@@ -9,14 +9,14 @@ import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.TurnoLeggibile;
  * @param numeroCorrente il numero del turno corrente
  * @param numeroMassimo il numero massimo di turni nella partita
  */
-public record Turno(int numeroCorrente, int numeroMassimo) implements TurnoLeggibile {
+public record TurnoBase(int numeroCorrente, int numeroMassimo) implements Turno {
     /**
      * Costruisce un nuovo turno.
      *
      * @param numeroCorrente il numero del turno corrente
      * @param numeroMassimo il numero massimo di turni nella partita
      */
-    public Turno {
+    public TurnoBase {
         if (numeroCorrente <= 0) {
             throw new IllegalArgumentException("Il numero del turno corrente deve essere positivo.");
         }
@@ -30,8 +30,8 @@ public record Turno(int numeroCorrente, int numeroMassimo) implements TurnoLeggi
      *
      * @return il turno successivo
      */
-    public Turno successivo() {
-        return new Turno(numeroCorrente + 1, numeroMassimo);
+    public TurnoBase successivo() {
+        return new TurnoBase(numeroCorrente + 1, numeroMassimo);
     }
 
     @Override

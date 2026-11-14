@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.repository.xml;
 
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoEseguibile;
 import it.unicam.cs.mpgc.rpg130481.repository.interfaces.EventoRepository;
 
 import java.io.File;
@@ -42,7 +42,7 @@ public class XmlEventoRepository implements EventoRepository {
     }
 
     @Override
-    public List<Evento> carica() {
+    public List<EventoEseguibile> carica() {
         try (InputStream is = apriFlussoInput()) {
             return mapper.parse(is);
         } catch (Exception e) {

@@ -1,21 +1,48 @@
 package it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche;
 
 /**
- * Interfaccia che rappresenta una metrica del gioco.
+ * Interfaccia per le metriche leggibili.
  */
-public interface Metrica extends MetricaLeggibile {
+public interface Metrica {
     /**
-     * Applica una variazione alla metrica.
-     *
-     * @param delta la variazione da applicare
-     * @return il nuovo valore della metrica dopo l'applicazione della variazione
+     * Restituisce il nome della metrica.
+     * @return il nome della metrica
      */
-    int applicaVariazione(int delta);
+    String getNome();
 
     /**
-     * Imposta un nuovo valore assoluto per la metrica.
-     *
-     * @param nuovoValore il nuovo valore da impostare
+     * Restituisce il valore della metrica.
+     * @return il valore della metrica
      */
-    void setValoreAssoluto(int nuovoValore);
+    int getValore();
+
+    /**
+     * Restituisce il valore minimo della metrica.
+     * @return il valore minimo della metrica
+     */
+    int getValoreMinimo();
+
+    /**
+     * Restituisce il valore massimo della metrica.
+     * @return il valore massimo della metrica
+     */
+    int getValoreMassimo();
+
+    /**
+     * Verifica se il valore della metrica è al minimo.
+     * @return true se il valore è al minimo, false altrimenti
+     */
+    default boolean isMin() { return getValore() <= getValoreMinimo(); }
+
+    /**
+     * Verifica se il valore della metrica è al massimo.
+     * @return true se il valore è al massimo, false altrimenti
+     */
+    default boolean isMax() { return getValore() >= getValoreMassimo(); }
+
+    /**
+     * Verifica se la metrica è critica.
+     * @return true se la metrica è critica, false altrimenti
+     */
+    boolean isCritica();
 }

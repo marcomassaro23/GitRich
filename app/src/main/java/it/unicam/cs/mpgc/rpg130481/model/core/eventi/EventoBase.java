@@ -3,18 +3,18 @@ package it.unicam.cs.mpgc.rpg130481.model.core.eventi;
 import java.util.List;
 
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.OpzioneEventoLeggibile;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaLeggibili;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoEseguibile;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.OpzioneEvento;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAzienda;
 
 /**
  * Classe astratta che rappresenta un evento di base nel gioco.
  * Contiene il titolo, la descrizione e le opzioni disponibili per l'evento.
  */
-public abstract class EventoBase implements Evento {
+public abstract class EventoBase implements EventoEseguibile {
     private final String titolo;
     private final String descrizione;
-    private final List<OpzioneEventoLeggibile> opzioni;
+    private final List<OpzioneEvento> opzioni;
 
     /**
      * Costruttore per creare un evento di base.
@@ -24,7 +24,7 @@ public abstract class EventoBase implements Evento {
      * @param opzioni     le opzioni disponibili per l'evento
      * @throws IllegalArgumentException se titolo o descrizione sono nulli o vuoti, o se la lista delle opzioni è nulla o vuota
      */
-    public EventoBase(String titolo, String descrizione, List<? extends OpzioneEventoLeggibile> opzioni) {
+    public EventoBase(String titolo, String descrizione, List<? extends OpzioneEvento> opzioni) {
         if (titolo == null || titolo.isBlank() || descrizione == null || descrizione.isBlank()) {
             throw new IllegalArgumentException("Titolo e descrizione non possono essere vuoti.");
         }
@@ -40,12 +40,12 @@ public abstract class EventoBase implements Evento {
     @Override public String getDescrizione() { return descrizione; }
 
     @Override
-    public List<OpzioneEventoLeggibile> getOpzioniLeggibili() {
+    public List<OpzioneEvento> getOpzioniLeggibili() {
         return List.copyOf(this.opzioni);
     }
 
     @Override
-    public boolean isAttivabile(StatisticheAziendaLeggibili statistiche) {
+    public boolean isAttivabile(StatisticheAzienda statistiche) {
         if (statistiche == null) {
             throw new IllegalArgumentException("Le statistiche aziendali non possono essere nulle.");
         }
@@ -61,7 +61,7 @@ public abstract class EventoBase implements Evento {
             throw new IllegalArgumentException("Indice opzione non valido: " + indiceOpzione);
         }
 
-        OpzioneEventoLeggibile opzione = opzioni.get(indiceOpzione);
+        OpzioneEvento opzione = opzioni.get(indiceOpzione);
         opzione.getModifiche().forEach(modifica ->
                 statistiche.applicaVariazione(modifica.nomeMetrica(), modifica.variazione())
         );

@@ -3,13 +3,13 @@ package it.unicam.cs.mpgc.rpg130481.model.core.eventi;
 import java.util.List;
 
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.ModificaMetrica;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.OpzioneEventoLeggibile;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.OpzioneEvento;
 
 /**
  * Classe che rappresenta un'opzione di un evento nel gioco.
  * Contiene il testo dell'opzione e le modifiche alle metriche associate all'opzione.
  */
-public class OpzioneEvento implements OpzioneEventoLeggibile {
+public class OpzioneEventoBase implements OpzioneEvento {
     private final String testo;
     private final List<ModificaMetrica> modifiche;
 
@@ -20,7 +20,7 @@ public class OpzioneEvento implements OpzioneEventoLeggibile {
      * @param modifiche le modifiche alle metriche associate all'opzione
      * @throws IllegalArgumentException se il testo è nullo o vuoto, o se la lista delle modifiche è nulla
      */
-    public OpzioneEvento(String testo, List<? extends ModificaMetrica> modifiche) {
+    public OpzioneEventoBase(String testo, List<? extends ModificaMetrica> modifiche) {
         if (testo == null || testo.isBlank()) {
             throw new IllegalArgumentException("Il testo dell'opzione non può essere nullo o vuoto.");
         }

@@ -1,8 +1,8 @@
 package it.unicam.cs.mpgc.rpg130481.repository.json;
 
-import it.unicam.cs.mpgc.rpg130481.model.core.metriche.MetricaGenerica;
-import it.unicam.cs.mpgc.rpg130481.model.core.metriche.StatisticheAzienda;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.Metrica;
+import it.unicam.cs.mpgc.rpg130481.model.core.metriche.MetricaBase;
+import it.unicam.cs.mpgc.rpg130481.model.core.metriche.StatisticheAziendaBase;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.MetricaModificabile;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
 
 import java.lang.reflect.Type;
@@ -27,13 +27,13 @@ public class StatisticheAziendaDeserializer implements JsonDeserializer<Statisti
         JsonObject oggettoJson = jsonElemento.getAsJsonObject();
         JsonArray arrayMetricheJson = oggettoJson.getAsJsonArray("metriche");
 
-        List<Metrica> listaMetriche = new ArrayList<>();
+        List<MetricaModificabile> listaMetriche = new ArrayList<>();
 
         for (JsonElement elementoMetrica : arrayMetricheJson) {
             listaMetriche.add(estraiMetricaDaJson(elementoMetrica.getAsJsonObject()));
         }
 
-        return new StatisticheAzienda(listaMetriche);
+        return new StatisticheAziendaBase(listaMetriche);
     }
 
     /**
@@ -42,16 +42,16 @@ public class StatisticheAziendaDeserializer implements JsonDeserializer<Statisti
      * @param metricaJsonObj L'oggetto JSON rappresentante la metrica.
      * @return Un'istanza di Metrica corrispondente ai dati del JSON.
      */
-    private Metrica estraiMetricaDaJson(JsonObject metricaJsonObj) {
+    private MetricaModificabile estraiMetricaDaJson(JsonObject metricaJsonObj) {
         String nomeMetrica = metricaJsonObj.get("nome").getAsString();
         int valoreMetrica = metricaJsonObj.get("valore").getAsInt();
 
         if (metricaJsonObj.has("valoreMinimo") && metricaJsonObj.has("valoreMassimo")) {
             int min = metricaJsonObj.get("valoreMinimo").getAsInt();
             int max = metricaJsonObj.get("valoreMassimo").getAsInt();
-            return new MetricaGenerica(nomeMetrica, valoreMetrica, min, max);
+            return new MetricaBase(nomeMetrica, valoreMetrica, min, max);
         }
 
-        return new MetricaGenerica(nomeMetrica, valoreMetrica);
+        return new MetricaBase(nomeMetrica, valoreMetrica);
     }
 }

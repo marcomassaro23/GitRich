@@ -7,7 +7,7 @@ import it.unicam.cs.mpgc.rpg130481.model.core.partita.regole.ValutatoreStatoPart
  * Utilizza un ValutatoreStatoPartita per determinare se la partita è terminata o meno.
  */
 public class GestoreStatoPartita {
-    private final Partita partita;
+    private final PartitaBase partita;
     private final ValutatoreStatoPartita valutatoreStato;
 
     /**
@@ -17,7 +17,7 @@ public class GestoreStatoPartita {
      * @param valutatoreStato il valutatore di stato da utilizzare per determinare lo stato della partita
      * @throws IllegalArgumentException se la partita o il valutatore di stato sono nulli
      */
-    public GestoreStatoPartita(Partita partita, ValutatoreStatoPartita valutatoreStato) {
+    public GestoreStatoPartita(PartitaBase partita, ValutatoreStatoPartita valutatoreStato) {
         if (partita == null || valutatoreStato == null) {
             throw new IllegalArgumentException("Partita e ValutatoreStato non possono essere nulli.");
         }

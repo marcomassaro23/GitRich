@@ -6,7 +6,7 @@ import java.util.List;
  * Interfaccia che rappresenta un'opzione di un evento leggibile nel gioco.
  * Contiene metodi per ottenere il testo dell'opzione e le modifiche alle metriche associate all'opzione.
  */
-public interface OpzioneEventoLeggibile {
+public interface OpzioneEvento {
     /**
      * Restituisce il testo dell'opzione.
      *

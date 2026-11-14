@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita.regole;
 
-import it.unicam.cs.mpgc.rpg130481.model.core.partita.Partita;
+import it.unicam.cs.mpgc.rpg130481.model.core.partita.PartitaBase;
 import it.unicam.cs.mpgc.rpg130481.model.core.partita.stati.StatoVittoria;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
@@ -12,7 +12,7 @@ import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 public class RegolaVittoria implements RegolaStato {
 
     @Override
-    public boolean isRispettata(Partita partita) {
+    public boolean isRispettata(PartitaBase partita) {
         if (partita == null) {
             throw new IllegalArgumentException("La partita non può essere nulla.");
         }

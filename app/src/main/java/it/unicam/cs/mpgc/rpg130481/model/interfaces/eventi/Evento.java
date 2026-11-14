@@ -1,26 +1,30 @@
 package it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi;
 
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaLeggibili;
+import java.util.List;
 
 /**
- * Rappresenta un evento nel gioco di ruolo. Un evento può avere un testo descrittivo e una lista di opzioni tra cui il giocatore può scegliere.
- * Ogni opzione può avere delle modifiche alle metriche del giocatore.
+ * Interfaccia che rappresenta un evento leggibile nel gioco.
+ * Contiene metodi per ottenere il titolo, la descrizione e le opzioni disponibili per l'evento.
  */
-public interface Evento extends EventoLeggibile {
+public interface Evento {
     /**
-     * Verifica se l'evento è attivabile in base alle statistiche dell'azienda.
+     * Restituisce il titolo dell'evento.
      *
-     * @param statistiche le statistiche dell'azienda
-     * @return true se l'evento è attivabile, false altrimenti
+     * @return il titolo dell'evento
      */
-    boolean isAttivabile(StatisticheAziendaLeggibili statistiche);
+    String getTitolo();
 
     /**
-     * Esegue l'opzione selezionata dall'utente, applicando le modifiche alle statistiche dell'azienda.
+     * Restituisce la descrizione dell'evento.
      *
-     * @param indiceOpzione l'indice dell'opzione selezionata
-     * @param statistiche le statistiche dell'azienda
+     * @return la descrizione dell'evento
      */
-    void eseguiOpzione(int indiceOpzione, StatisticheAziendaModificabili statistiche);
+    String getDescrizione();
+
+    /**
+     * Restituisce la lista delle opzioni disponibili per l'evento.
+     *
+     * @return la lista delle opzioni disponibili per l'evento
+     */
+    List<OpzioneEvento> getOpzioniLeggibili();
 }

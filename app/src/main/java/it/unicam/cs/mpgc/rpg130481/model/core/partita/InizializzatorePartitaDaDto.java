@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.partita;
 
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoEseguibile;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.selettori.SelettoreEventi;
 
 import java.util.List;
@@ -19,8 +19,8 @@ public class InizializzatorePartitaDaDto {
      * @param turniMassimi il numero massimo di turni per la partita
      * @return un'istanza di Partita creata con i dati forniti
      */
-    public Partita creaPartita(StatisticheAziendaModificabili statisticheIniziali, List<Evento> mazzoEventi, int turniMassimi) {
-        return new Partita(statisticheIniziali, mazzoEventi, turniMassimi);
+    public PartitaBase creaPartita(StatisticheAziendaModificabili statisticheIniziali, List<EventoEseguibile> mazzoEventi, int turniMassimi) {
+        return new PartitaBase(statisticheIniziali, mazzoEventi, turniMassimi);
     }
 
     /**
@@ -32,7 +32,7 @@ public class InizializzatorePartitaDaDto {
      * @param selettoreEventi il selettore di eventi da utilizzare per determinare l'evento corrente
      * @return un'istanza di Partita creata con i dati forniti
      */
-    public Partita creaPartita(StatisticheAziendaModificabili statisticheIniziali, List<Evento> mazzoEventi, int turniMassimi, SelettoreEventi selettoreEventi) {
-        return new Partita(statisticheIniziali, mazzoEventi, turniMassimi, selettoreEventi);
+    public PartitaBase creaPartita(StatisticheAziendaModificabili statisticheIniziali, List<EventoEseguibile> mazzoEventi, int turniMassimi, SelettoreEventi selettoreEventi) {
+        return new PartitaBase(statisticheIniziali, mazzoEventi, turniMassimi, selettoreEventi);
     }
 }

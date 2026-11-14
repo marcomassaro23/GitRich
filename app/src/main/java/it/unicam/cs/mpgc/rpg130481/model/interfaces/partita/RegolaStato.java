@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.interfaces.partita;
 
-import it.unicam.cs.mpgc.rpg130481.model.core.partita.Partita;
+import it.unicam.cs.mpgc.rpg130481.model.core.partita.PartitaBase;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 
 /**
@@ -14,7 +14,7 @@ public interface RegolaStato {
      * @param partita la partita da verificare
      * @return true se la regola è rispettata, false altrimenti
      */
-    boolean isRispettata(Partita partita);
+    boolean isRispettata(PartitaBase partita);
 
     /**
      * Restituisce lo stato associato alla regola.

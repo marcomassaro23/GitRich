@@ -15,7 +15,7 @@ public class EventoGenerico extends EventoBase {
      * @param opzioni     le opzioni disponibili per l'evento
      * @throws IllegalArgumentException se titolo o descrizione sono nulli o vuoti, o se la lista delle opzioni è nulla o vuota
      */
-    public EventoGenerico(String titolo, String descrizione, List<OpzioneEvento> opzioni) {
+    public EventoGenerico(String titolo, String descrizione, List<OpzioneEventoBase> opzioni) {
         super(titolo, descrizione, opzioni);
     }
 }
