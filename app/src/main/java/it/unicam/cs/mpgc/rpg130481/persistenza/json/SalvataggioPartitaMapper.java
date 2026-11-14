@@ -1,39 +1,13 @@
 package it.unicam.cs.mpgc.rpg130481.persistenza.json;
 
-import it.unicam.cs.mpgc.rpg130481.eventi.Evento;
-import it.unicam.cs.mpgc.rpg130481.eventi.EventoBase;
-import it.unicam.cs.mpgc.rpg130481.eventi.OpzioneEvento;
-import it.unicam.cs.mpgc.rpg130481.metriche.MetricaBase;
-import it.unicam.cs.mpgc.rpg130481.metriche.MetricaModificabile;
-import it.unicam.cs.mpgc.rpg130481.metriche.StatisticheAziendaBase;
-import it.unicam.cs.mpgc.rpg130481.partita.RegolaStato;
 import it.unicam.cs.mpgc.rpg130481.partita.StatoGiocoDto;
-import it.unicam.cs.mpgc.rpg130481.partita.Turno;
-import it.unicam.cs.mpgc.rpg130481.partita.stati.StatoPartita;
-import it.unicam.cs.mpgc.rpg130481.persistenza.json.DatiSalvataggioPartita.DatiMetrica;
-import it.unicam.cs.mpgc.rpg130481.persistenza.json.DatiSalvataggioPartita.DatiTurno;
-
-import java.util.ArrayList;
+import it.unicam.cs.mpgc.rpg130481.persistenza.DatiSalvataggioPartita;
+import it.unicam.cs.mpgc.rpg130481.persistenza.DatiSalvataggioPartita.DatiMetrica;
+import it.unicam.cs.mpgc.rpg130481.persistenza.DatiSalvataggioPartita.DatiTurno;
 import java.util.List;
 import java.util.Objects;
 
 public class SalvataggioPartitaMapper {
-
-    private final List<StatoPartita> statiRegistrati;
-
-    public SalvataggioPartitaMapper(StatoPartita statoDefault, List<RegolaStato> regole) {
-        Objects.requireNonNull(statoDefault, "Lo stato di default non può essere nullo.");
-        List<StatoPartita> stati = new ArrayList<>();
-        stati.add(statoDefault);
-        if (regole != null) {
-            regole.stream()
-                .filter(Objects::nonNull)
-                .map(RegolaStato::getStatoRisultante)
-                .filter(Objects::nonNull)
-                .forEach(stati::add);
-        }
-        this.statiRegistrati = List.copyOf(stati);
-    }
 
     public DatiSalvataggioPartita daDto(StatoGiocoDto dto) {
         Objects.requireNonNull(dto, "Lo StatoGiocoDto non può essere nullo.");
@@ -59,45 +33,10 @@ public class SalvataggioPartitaMapper {
         );
     }
 
-    public StatoGiocoDto versoDto(DatiSalvataggioPartita dati) {
+    public DatiSalvataggioPartita valida(DatiSalvataggioPartita dati) {
         if (dati == null || dati.turno() == null || dati.metriche() == null) {
             throw new IllegalArgumentException("Dati di salvataggio incompleti o corrotti.");
         }
-
-        Turno turno = new Turno(dati.turno().corrente(), dati.turno().massimo());
-        List<MetricaModificabile> metriche = dati.metriche().stream()
-            .map(this::ricostruisciMetrica)
-            .toList();
-
-        StatoPartita stato = risolviStato(dati.codiceStato());
-        Evento segnapostoEvento = creaSegnapostoEvento(dati.titoloEventoCorrente());
-
-        return new StatoGiocoDto(
-            turno,
-            new StatisticheAziendaBase(metriche),
-            segnapostoEvento,
-            stato,
-            stato.isTerminata()
-        );
-    }
-
-    private MetricaModificabile ricostruisciMetrica(DatiMetrica dati) {
-        int min = dati.valoreMassimo() == 0 && dati.valoreMinimo() == 0 ? 0 : dati.valoreMinimo();
-        int max = dati.valoreMassimo() == 0 && dati.valoreMinimo() == 0 ? 100 : dati.valoreMassimo();
-        return new MetricaBase(dati.nome(), dati.valore(), min, max, dati.criticaAlMassimo());
-    }
-
-    private StatoPartita risolviStato(String codiceStato) {
-        return statiRegistrati.stream()
-            .filter(s -> s.getCodice().equalsIgnoreCase(codiceStato))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("Stato partita non riconosciuto: " + codiceStato));
-    }
-
-    private Evento creaSegnapostoEvento(String titolo) {
-        if (titolo == null || titolo.isBlank()) {
-            return null;
-        }
-        return new EventoBase(titolo, "Evento salvato", List.of(new OpzioneEvento("Continua", List.of())));
+        return dati;
     }
 }

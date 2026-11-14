@@ -12,8 +12,7 @@ public final class StatoGiocoMapper {
             partita.getTurno(),
             partita.getStatistiche(),
             partita.getEventoCorrente(),
-            partita.getStato(),
-            partita.isTerminata()
+            partita.getStato()
         );
     }
 }

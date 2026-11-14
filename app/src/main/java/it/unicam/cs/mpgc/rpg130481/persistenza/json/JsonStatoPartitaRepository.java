@@ -2,19 +2,15 @@ package it.unicam.cs.mpgc.rpg130481.persistenza.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import it.unicam.cs.mpgc.rpg130481.partita.RegolaStato;
 import it.unicam.cs.mpgc.rpg130481.partita.StatoGiocoDto;
-import it.unicam.cs.mpgc.rpg130481.partita.stati.StatoPartita;
+import it.unicam.cs.mpgc.rpg130481.persistenza.DatiSalvataggioPartita;
 import it.unicam.cs.mpgc.rpg130481.persistenza.StatoPartitaRepository;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Objects;
 
 public class JsonStatoPartitaRepository implements StatoPartitaRepository {
@@ -23,13 +19,8 @@ public class JsonStatoPartitaRepository implements StatoPartitaRepository {
     private final Gson gson;
     private final SalvataggioPartitaMapper mapper;
 
-    public JsonStatoPartitaRepository(String percorsoFile, StatoPartita statoDefault, List<RegolaStato> regole) {
-        if (percorsoFile == null || percorsoFile.isBlank()) {
-            throw new IllegalArgumentException("Il percorso del file JSON non può essere nullo o vuoto.");
-        }
-        this.percorsoFile = percorsoFile;
-        this.gson = new GsonBuilder().setPrettyPrinting().create();
-        this.mapper = new SalvataggioPartitaMapper(statoDefault, regole);
+    public JsonStatoPartitaRepository(String percorsoFile) {
+        this(percorsoFile, new GsonBuilder().setPrettyPrinting().create(), new SalvataggioPartitaMapper());
     }
 
     public JsonStatoPartitaRepository(String percorsoFile, Gson gson, SalvataggioPartitaMapper mapper) {
@@ -42,7 +33,7 @@ public class JsonStatoPartitaRepository implements StatoPartitaRepository {
     }
 
     @Override
-    public StatoGiocoDto carica() {
+    public DatiSalvataggioPartita carica() {
         File sorgente = RisolutorePercorsi.cercaFileEsistente(percorsoFile);
         if (sorgente == null || !sorgente.exists()) {
             throw new RuntimeException("Impossibile trovare il file di stato: " + percorsoFile);
@@ -50,7 +41,7 @@ public class JsonStatoPartitaRepository implements StatoPartitaRepository {
 
         try (Reader reader = new FileReader(sorgente, StandardCharsets.UTF_8)) {
             DatiSalvataggioPartita dati = gson.fromJson(reader, DatiSalvataggioPartita.class);
-            return mapper.versoDto(dati);
+            return mapper.valida(dati);
         } catch (Exception e) {
             throw new RuntimeException("Errore durante il caricamento dello stato da file JSON: " + percorsoFile, e);
         }

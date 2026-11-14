@@ -2,16 +2,11 @@ package it.unicam.cs.mpgc.rpg130481.persistenza;
 
 import it.unicam.cs.mpgc.rpg130481.eventi.EventoEseguibile;
 import it.unicam.cs.mpgc.rpg130481.partita.StatoGiocoDto;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class GestorePersistenzaPartitaBase implements GestorePersistenzaPartita {
-
-    private static final Logger LOGGER = Logger.getLogger(GestorePersistenzaPartitaBase.class.getName());
 
     private final StatoPartitaRepository salvataggioRepository;
     private final SorgenteStatoPartita sorgenteDefault;
@@ -33,21 +28,20 @@ public class GestorePersistenzaPartitaBase implements GestorePersistenzaPartita 
     @Override
     public boolean hasSalvataggioRiprendibile() {
         try {
-            StatoGiocoDto stato = salvataggioRepository.carica();
-            return stato != null && stato.statoPartita() != null && !stato.isTerminata();
+            DatiSalvataggioPartita dati = salvataggioRepository.carica();
+            return dati != null && dati.codiceStato() != null && !dati.terminata();
         } catch (Exception e) {
-            LOGGER.log(Level.FINE, "Nessuna partita salvata valida trovata", e);
             return false;
         }
     }
 
     @Override
-    public StatoGiocoDto caricaStatoIniziale() {
+    public DatiSalvataggioPartita caricaStatoIniziale() {
         return sorgenteDefault.carica();
     }
 
     @Override
-    public StatoGiocoDto caricaStatoSalvato() {
+    public DatiSalvataggioPartita caricaStatoSalvato() {
         return salvataggioRepository.carica();
     }
 

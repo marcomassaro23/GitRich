@@ -8,12 +8,15 @@ public record StatoGiocoDto(
     Turno turno,
     StatisticheAzienda statistiche,
     Evento eventoCorrente,
-    StatoPartita statoPartita,
-    boolean isTerminata
+    StatoPartita statoPartita
 ) {
     public StatoGiocoDto {
         if (turno == null || statistiche == null || statoPartita == null) {
             throw new IllegalArgumentException("I campi obbligatori del DTO non possono essere nulli.");
         }
+    }
+
+    public boolean isTerminata() {
+        return statoPartita.isTerminata();
     }
 }

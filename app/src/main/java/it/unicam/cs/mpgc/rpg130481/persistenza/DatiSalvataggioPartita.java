@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg130481.persistenza.json;
+package it.unicam.cs.mpgc.rpg130481.persistenza;
 
 import java.util.List;
 
