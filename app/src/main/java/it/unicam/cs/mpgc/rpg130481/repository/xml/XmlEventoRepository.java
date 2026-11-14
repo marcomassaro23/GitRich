@@ -27,22 +27,22 @@ public class XmlEventoRepository implements EventoRepository {
 
     @Override
     public List<EventoEseguibile> carica() {
-        try (InputStream is = apriFlussoInput()) {
-            return mapper.parse(is);
+        try (InputStream stream = apriStreamSorgente()) {
+            return mapper.leggiEventi(stream);
         } catch (Exception e) {
             throw new RuntimeException("Errore durante il caricamento degli eventi XML: " + percorsoFileXml, e);
         }
     }
 
-    private InputStream apriFlussoInput() throws IOException {
-        InputStream is = getClass().getClassLoader().getResourceAsStream(percorsoFileXml);
-        if (is != null) {
-            return is;
+    private InputStream apriStreamSorgente() throws IOException {
+        InputStream risorsaClasspath = getClass().getClassLoader().getResourceAsStream(percorsoFileXml);
+        if (risorsaClasspath != null) {
+            return risorsaClasspath;
         }
 
-        File file = new File(percorsoFileXml);
-        if (file.exists()) {
-            return new FileInputStream(file);
+        File fileLocale = new File(percorsoFileXml);
+        if (fileLocale.exists()) {
+            return new FileInputStream(fileLocale);
         }
 
         throw new IllegalStateException("File XML non trovato né nel classpath né nel file system: " + percorsoFileXml);

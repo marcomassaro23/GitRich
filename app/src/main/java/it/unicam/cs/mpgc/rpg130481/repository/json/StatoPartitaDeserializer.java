@@ -13,44 +13,42 @@ import java.util.List;
 
 public class StatoPartitaDeserializer implements JsonDeserializer<StatoPartita> {
 
-    private final List<StatoPartita> statiDisponibili;
+    private final List<StatoPartita> statiRegistrati;
 
     public StatoPartitaDeserializer(StatoPartita statoDefault, List<RegolaStato> regole) {
         if (statoDefault == null) {
             throw new IllegalArgumentException("Lo stato di default non può essere nullo.");
         }
 
-        List<StatoPartita> lista = new ArrayList<>();
-        lista.add(statoDefault);
+        List<StatoPartita> stati = new ArrayList<>();
+        stati.add(statoDefault);
 
         if (regole != null) {
             for (RegolaStato regola : regole) {
-                if (regola != null && regola.getStatoAssociato() != null) {
-                    lista.add(regola.getStatoAssociato());
+                if (regola != null && regola.getStatoRisultante() != null) {
+                    stati.add(regola.getStatoRisultante());
                 }
             }
         }
 
-        this.statiDisponibili = List.copyOf(lista);
+        this.statiRegistrati = List.copyOf(stati);
     }
 
     @Override
-    public StatoPartita deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public StatoPartita deserialize(JsonElement json, Type tipo, JsonDeserializationContext contesto)
         throws JsonParseException {
-        JsonObject jsonObject = json.getAsJsonObject();
+        JsonObject jsonStato = json.getAsJsonObject();
 
-        if (!jsonObject.has("tipoStato")) {
+        if (!jsonStato.has("tipoStato")) {
             throw new JsonParseException("Campo 'tipoStato' mancante nel JSON.");
         }
 
-        String tipoStato = jsonObject.get("tipoStato").getAsString();
+        String codiceStato = jsonStato.get("tipoStato").getAsString();
 
-        for (StatoPartita stato : statiDisponibili) {
-            if (stato.getNomeStato().equalsIgnoreCase(tipoStato)) {
-                return stato;
-            }
-        }
-
-        throw new JsonParseException("Stato partita non riconosciuto: " + tipoStato);
+        return statiRegistrati
+            .stream()
+            .filter(stato -> stato.getCodice().equalsIgnoreCase(codiceStato))
+            .findFirst()
+            .orElseThrow(() -> new JsonParseException("Stato partita non riconosciuto: " + codiceStato));
     }
 }

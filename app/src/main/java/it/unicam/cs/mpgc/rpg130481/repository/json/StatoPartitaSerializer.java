@@ -11,12 +11,12 @@ import java.lang.reflect.Type;
 public class StatoPartitaSerializer implements JsonSerializer<StatoPartita> {
 
     @Override
-    public JsonElement serialize(StatoPartita src, Type typeOfSrc, JsonSerializationContext context) {
-        if (src == null) {
+    public JsonElement serialize(StatoPartita stato, Type tipo, JsonSerializationContext contesto) {
+        if (stato == null) {
             return JsonNull.INSTANCE;
         }
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("tipoStato", src.getNomeStato());
-        return jsonObject;
+        JsonObject jsonStato = new JsonObject();
+        jsonStato.addProperty("tipoStato", stato.getCodice());
+        return jsonStato;
     }
 }

@@ -16,75 +16,63 @@ import java.util.List;
 public class EventoDeserializer implements JsonDeserializer<EventoBase> {
 
     @Override
-    public EventoBase deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public EventoBase deserialize(JsonElement json, Type tipo, JsonDeserializationContext contesto)
         throws JsonParseException {
         if (json == null || !json.isJsonObject()) {
             return null;
         }
 
-        JsonObject oggettoJson = json.getAsJsonObject();
+        JsonObject jsonEvento = json.getAsJsonObject();
+        String titolo = leggiTesto(jsonEvento, "titolo", "Evento");
+        String descrizione = leggiTesto(jsonEvento, "descrizione", "");
 
-        String titolo = "Evento";
-        if (oggettoJson.has("titolo")) {
-            titolo = oggettoJson.get("titolo").getAsString();
-        }
-
-        String descrizione = "";
-        if (oggettoJson.has("descrizione")) {
-            descrizione = oggettoJson.get("descrizione").getAsString();
-        }
-
-        JsonArray arrayOpzioniJson = null;
-        if (oggettoJson.has("opzioni")) {
-            arrayOpzioniJson = oggettoJson.getAsJsonArray("opzioni");
-        } else if (oggettoJson.has("opzioniLeggibili")) {
-            arrayOpzioniJson = oggettoJson.getAsJsonArray("opzioniLeggibili");
-        }
-
-        if (arrayOpzioniJson == null || arrayOpzioniJson.isEmpty()) {
+        JsonArray opzioniJson = estraiArrayOpzioni(jsonEvento);
+        if (opzioniJson == null || opzioniJson.isEmpty()) {
             return null;
         }
 
-        List<OpzioneEventoBase> listaOpzioni = new ArrayList<>();
-        for (JsonElement elementoOpzione : arrayOpzioniJson) {
-            if (elementoOpzione.isJsonObject()) {
-                listaOpzioni.add(estraiOpzioneDaJson(elementoOpzione.getAsJsonObject()));
+        List<OpzioneEventoBase> opzioni = new ArrayList<>();
+        for (JsonElement elemento : opzioniJson) {
+            if (elemento.isJsonObject()) {
+                opzioni.add(leggiOpzione(elemento.getAsJsonObject()));
             }
         }
 
-        return new EventoBase(titolo, descrizione, listaOpzioni);
+        return new EventoBase(titolo, descrizione, opzioni);
     }
 
-    private OpzioneEventoBase estraiOpzioneDaJson(JsonObject opzioneJsonObj) {
-        String testo = "";
-        if (opzioneJsonObj.has("testo")) {
-            testo = opzioneJsonObj.get("testo").getAsString();
+    private JsonArray estraiArrayOpzioni(JsonObject jsonEvento) {
+        if (jsonEvento.has("opzioni")) {
+            return jsonEvento.getAsJsonArray("opzioni");
         }
+        if (jsonEvento.has("opzioniLeggibili")) {
+            return jsonEvento.getAsJsonArray("opzioniLeggibili");
+        }
+        return null;
+    }
 
-        List<VariazioneMetrica> listaModifiche = new ArrayList<>();
-        if (opzioneJsonObj.has("modifiche")) {
-            JsonArray arrayModificheJson = opzioneJsonObj.getAsJsonArray("modifiche");
-            for (JsonElement elementoModifica : arrayModificheJson) {
-                if (elementoModifica.isJsonObject()) {
-                    listaModifiche.add(estraiVariazioneMetricaDaJson(elementoModifica.getAsJsonObject()));
+    private OpzioneEventoBase leggiOpzione(JsonObject jsonOpzione) {
+        String testo = leggiTesto(jsonOpzione, "testo", "");
+        List<VariazioneMetrica> variazioni = new ArrayList<>();
+
+        if (jsonOpzione.has("modifiche")) {
+            for (JsonElement elemento : jsonOpzione.getAsJsonArray("modifiche")) {
+                if (elemento.isJsonObject()) {
+                    variazioni.add(leggiVariazioneMetrica(elemento.getAsJsonObject()));
                 }
             }
         }
 
-        return new OpzioneEventoBase(testo, listaModifiche);
+        return new OpzioneEventoBase(testo, variazioni);
     }
 
-    private VariazioneMetrica estraiVariazioneMetricaDaJson(JsonObject modificaJsonObj) {
-        String nomeMetrica = "";
-        if (modificaJsonObj.has("nomeMetrica")) {
-            nomeMetrica = modificaJsonObj.get("nomeMetrica").getAsString();
-        }
+    private VariazioneMetrica leggiVariazioneMetrica(JsonObject jsonVariazione) {
+        String nomeMetrica = leggiTesto(jsonVariazione, "nomeMetrica", "");
+        int delta = jsonVariazione.has("variazione") ? jsonVariazione.get("variazione").getAsInt() : 0;
+        return new VariazioneMetrica(nomeMetrica, delta);
+    }
 
-        int variazione = 0;
-        if (modificaJsonObj.has("variazione")) {
-            variazione = modificaJsonObj.get("variazione").getAsInt();
-        }
-
-        return new VariazioneMetrica(nomeMetrica, variazione);
+    private String leggiTesto(JsonObject sorgente, String chiave, String valorePredefinito) {
+        return sorgente.has(chiave) ? sorgente.get(chiave).getAsString() : valorePredefinito;
     }
 }

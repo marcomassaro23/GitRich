@@ -16,65 +16,56 @@ import org.w3c.dom.NodeList;
 
 public class XmlEventoMapper {
 
-    public List<EventoEseguibile> parse(InputStream inputStream) {
+    public List<EventoEseguibile> leggiEventi(InputStream sorgente) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(inputStream);
-            document.getDocumentElement().normalize();
+            Document documento = builder.parse(sorgente);
+            documento.getDocumentElement().normalize();
 
-            NodeList eventiNodi = document.getElementsByTagName("evento");
-            return estraiElementi(eventiNodi).map(this::toEvento).toList();
+            NodeList nodiEvento = documento.getElementsByTagName("evento");
+            return estraiElementi(nodiEvento).map(this::mappaEvento).toList();
         } catch (Exception e) {
             throw new RuntimeException("Errore durante il parsing del flusso XML degli eventi", e);
         }
     }
 
-    private EventoEseguibile toEvento(Element elEvento) {
-        String titolo = getTestoTag(elEvento, "titolo");
-        String descrizione = getTestoTag(elEvento, "descrizione");
+    private EventoEseguibile mappaEvento(Element elementoEvento) {
+        String titolo = leggiContenutoTag(elementoEvento, "titolo");
+        String descrizione = leggiContenutoTag(elementoEvento, "descrizione");
 
-        List<OpzioneEventoBase> opzioni = estraiElementi(elEvento.getElementsByTagName("opzione"))
-            .map(this::toOpzione)
+        List<OpzioneEventoBase> opzioni = estraiElementi(elementoEvento.getElementsByTagName("opzione"))
+            .map(this::mappaOpzione)
             .toList();
 
         return new EventoBase(titolo, descrizione, opzioni);
     }
 
-    private OpzioneEventoBase toOpzione(Element elOpzione) {
-        String testo = getTestoTag(elOpzione, "testo");
+    private OpzioneEventoBase mappaOpzione(Element elementoOpzione) {
+        String testo = leggiContenutoTag(elementoOpzione, "testo");
 
-        List<VariazioneMetrica> modifiche = estraiElementi(elOpzione.getElementsByTagName("modificaMetrica"))
-            .map(this::toVariazioneMetrica)
+        List<VariazioneMetrica> variazioni = estraiElementi(elementoOpzione.getElementsByTagName("modificaMetrica"))
+            .map(this::mappaVariazione)
             .toList();
 
-        return new OpzioneEventoBase(testo, modifiche);
+        return new OpzioneEventoBase(testo, variazioni);
     }
 
-    private VariazioneMetrica toVariazioneMetrica(Element elModifica) {
-        String metrica = elModifica.getAttribute("statistica");
-        int valore = Integer.parseInt(elModifica.getAttribute("valore"));
-        return new VariazioneMetrica(metrica, valore);
+    private VariazioneMetrica mappaVariazione(Element elementoModifica) {
+        String nomeMetrica = elementoModifica.getAttribute("statistica");
+        int delta = Integer.parseInt(elementoModifica.getAttribute("valore"));
+        return new VariazioneMetrica(nomeMetrica, delta);
     }
 
-    /**
-     * Estrae gli elementi XML da un NodeList e li restituisce come uno Stream di Element.
-     *
-     * @param nodi Il NodeList contenente gli elementi XML.
-     * @return Uno Stream di Element estratti dal NodeList.
-     */
     private Stream<Element> estraiElementi(NodeList nodi) {
         return IntStream.range(0, nodi.getLength())
             .mapToObj(nodi::item)
-            .filter(node -> node instanceof Element)
-            .map(node -> (Element) node);
+            .filter(Element.class::isInstance)
+            .map(Element.class::cast);
     }
 
-    private String getTestoTag(Element elemento, String tagName) {
-        NodeList nodi = elemento.getElementsByTagName(tagName);
-        if (nodi.getLength() > 0) {
-            return nodi.item(0).getTextContent();
-        }
-        return "";
+    private String leggiContenutoTag(Element genitore, String nomeTag) {
+        NodeList nodi = genitore.getElementsByTagName(nomeTag);
+        return nodi.getLength() > 0 ? nodi.item(0).getTextContent() : "";
     }
 }

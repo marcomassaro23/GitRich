@@ -5,7 +5,7 @@ import it.unicam.cs.mpgc.rpg130481.model.core.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 import it.unicam.cs.mpgc.rpg130481.repository.interfaces.StatoPartitaRepository;
-import it.unicam.cs.mpgc.rpg130481.utility.PathResolver;
+import it.unicam.cs.mpgc.rpg130481.utility.RisolutorePercorsi;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -16,42 +16,39 @@ import java.util.List;
 
 public class JsonStatoPartitaRepository implements StatoPartitaRepository {
 
-    private final String percorsoFileJson;
+    private final String percorsoFile;
     private final Gson gson;
 
-    public JsonStatoPartitaRepository(String percorsoFileJson, StatoPartita statoDefault, List<RegolaStato> regole) {
-        if (percorsoFileJson == null || percorsoFileJson.isBlank()) {
+    public JsonStatoPartitaRepository(String percorsoFile, StatoPartita statoDefault, List<RegolaStato> regole) {
+        if (percorsoFile == null || percorsoFile.isBlank()) {
             throw new IllegalArgumentException("Il percorso del file JSON non può essere nullo o vuoto.");
         }
-        this.percorsoFileJson = percorsoFileJson;
-        this.gson = GsonFactory.creaGsonConfigurato(statoDefault, regole);
+        this.percorsoFile = percorsoFile;
+        this.gson = GsonFactory.costruisciSerializerPartita(statoDefault, regole);
     }
 
-    public JsonStatoPartitaRepository(String percorsoFileJson, Gson gson) {
-        if (percorsoFileJson == null || percorsoFileJson.isBlank()) {
+    public JsonStatoPartitaRepository(String percorsoFile, Gson gson) {
+        if (percorsoFile == null || percorsoFile.isBlank()) {
             throw new IllegalArgumentException("Il percorso del file JSON non può essere nullo o vuoto.");
         }
         if (gson == null) {
             throw new IllegalArgumentException("L'istanza di Gson non può essere nulla.");
         }
-        this.percorsoFileJson = percorsoFileJson;
+        this.percorsoFile = percorsoFile;
         this.gson = gson;
     }
 
     @Override
     public StatoGiocoDto carica() {
-        File file = PathResolver.trovaFileLettura(percorsoFileJson);
-        if (file == null || !file.exists()) {
-            throw new RuntimeException("Impossibile trovare il file di stato: " + percorsoFileJson);
+        File sorgente = RisolutorePercorsi.cercaFileEsistente(percorsoFile);
+        if (sorgente == null || !sorgente.exists()) {
+            throw new RuntimeException("Impossibile trovare il file di stato: " + percorsoFile);
         }
 
-        try (Reader reader = new FileReader(file, StandardCharsets.UTF_8)) {
+        try (Reader reader = new FileReader(sorgente, StandardCharsets.UTF_8)) {
             return gson.fromJson(reader, StatoGiocoDto.class);
         } catch (Exception e) {
-            throw new RuntimeException(
-                "Errore durante il caricamento dello stato da file JSON: " + percorsoFileJson,
-                e
-            );
+            throw new RuntimeException("Errore durante il caricamento dello stato da file JSON: " + percorsoFile, e);
         }
     }
 
@@ -61,16 +58,23 @@ public class JsonStatoPartitaRepository implements StatoPartitaRepository {
             throw new IllegalArgumentException("Lo stato da salvare non può essere nullo.");
         }
 
-        File file = PathResolver.risolviFileScrittura(percorsoFileJson);
-        File parent = file.getParentFile();
-        if (parent != null && !parent.exists()) {
-            parent.mkdirs();
-        }
+        File destinazione = RisolutorePercorsi.risolviPercorsoDestinazione(percorsoFile);
+        assicuraCartellaEsistente(destinazione);
 
-        try (Writer writer = new FileWriter(file, StandardCharsets.UTF_8)) {
+        try (Writer writer = new FileWriter(destinazione, StandardCharsets.UTF_8)) {
             gson.toJson(stato, writer);
         } catch (Exception e) {
-            throw new RuntimeException("Errore durante il salvataggio dello stato su JSON: " + file.getPath(), e);
+            throw new RuntimeException(
+                "Errore durante il salvataggio dello stato su JSON: " + destinazione.getPath(),
+                e
+            );
+        }
+    }
+
+    private void assicuraCartellaEsistente(File file) {
+        File cartellaPadre = file.getParentFile();
+        if (cartellaPadre != null && !cartellaPadre.exists()) {
+            cartellaPadre.mkdirs();
         }
     }
 }

@@ -9,41 +9,41 @@ import com.google.gson.JsonParseException;
 import it.unicam.cs.mpgc.rpg130481.model.core.metriche.MetricaBase;
 import it.unicam.cs.mpgc.rpg130481.model.core.metriche.StatisticheAziendaBase;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.MetricaModificabile;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAzienda;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatisticheAziendaDeserializer implements JsonDeserializer<StatisticheAziendaModificabili> {
+public class StatisticheAziendaDeserializer implements JsonDeserializer<StatisticheAzienda> {
 
+    private static final int MINIMO_DEFAULT = 0;
+    private static final int MASSIMO_DEFAULT = 100;
     @Override
-    public StatisticheAziendaModificabili deserialize(
-        JsonElement jsonElemento,
-        Type tipoDestinazione,
-        JsonDeserializationContext contesto
-    ) throws JsonParseException {
-        JsonObject oggettoJson = jsonElemento.getAsJsonObject();
-        JsonArray arrayMetricheJson = oggettoJson.getAsJsonArray("metriche");
+    public StatisticheAzienda deserialize(JsonElement json, Type tipo, JsonDeserializationContext contesto)
+        throws JsonParseException {
+        JsonObject jsonStatistiche = json.getAsJsonObject();
+        JsonArray metricheJson = jsonStatistiche.getAsJsonArray("metriche");
 
-        List<MetricaModificabile> listaMetriche = new ArrayList<>();
-
-        for (JsonElement elementoMetrica : arrayMetricheJson) {
-            listaMetriche.add(estraiMetricaDaJson(elementoMetrica.getAsJsonObject()));
+        List<MetricaModificabile> metriche = new ArrayList<>();
+        for (JsonElement elemento : metricheJson) {
+            metriche.add(leggiMetrica(elemento.getAsJsonObject()));
         }
 
-        return new StatisticheAziendaBase(listaMetriche);
+        return new StatisticheAziendaBase(metriche);
     }
 
-    private MetricaModificabile estraiMetricaDaJson(JsonObject metricaJsonObj) {
-        String nomeMetrica = metricaJsonObj.get("nome").getAsString();
-        int valoreMetrica = metricaJsonObj.get("valore").getAsInt();
+    private MetricaModificabile leggiMetrica(JsonObject jsonMetrica) {
+        String nome = jsonMetrica.get("nome").getAsString();
+        int valore = jsonMetrica.get("valore").getAsInt();
+        int minimo = jsonMetrica.has("valoreMinimo")
+            ? jsonMetrica.get("valoreMinimo").getAsInt()
+            : MINIMO_DEFAULT;
+        int massimo = jsonMetrica.has("valoreMassimo")
+            ? jsonMetrica.get("valoreMassimo").getAsInt()
+            : MASSIMO_DEFAULT;
+        boolean criticaAlMassimo = jsonMetrica.has("criticaAlMassimo")
+            && jsonMetrica.get("criticaAlMassimo").getAsBoolean();
 
-        if (metricaJsonObj.has("valoreMinimo") && metricaJsonObj.has("valoreMassimo")) {
-            int min = metricaJsonObj.get("valoreMinimo").getAsInt();
-            int max = metricaJsonObj.get("valoreMassimo").getAsInt();
-            return new MetricaBase(nomeMetrica, valoreMetrica, min, max);
-        }
-
-        return new MetricaBase(nomeMetrica, valoreMetrica);
+        return new MetricaBase(nome, valore, minimo, massimo, criticaAlMassimo);
     }
 }
