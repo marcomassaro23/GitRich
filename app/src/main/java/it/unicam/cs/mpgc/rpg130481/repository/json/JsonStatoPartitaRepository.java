@@ -6,31 +6,19 @@ import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 import it.unicam.cs.mpgc.rpg130481.repository.interfaces.StatoPartitaRepository;
 import it.unicam.cs.mpgc.rpg130481.utility.PathResolver;
-
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.io.File;
 
-/**
- * Implementazione di StatoPartitaRepository che utilizza un file JSON per la persistenza dello stato della partita.
- * Questa classe gestisce il caricamento e il salvataggio dello stato della partita in formato JSON.
- */
 public class JsonStatoPartitaRepository implements StatoPartitaRepository {
+
     private final String percorsoFileJson;
     private final Gson gson;
 
-    /**
-     * Costruttore che accetta il percorso del file JSON, lo stato di default e una lista di regole.
-     * Utilizza GsonFactory per creare un'istanza di Gson configurata con l'adapter personalizzato per StatoPartita.
-     *
-     * @param percorsoFileJson Il percorso del file JSON dove salvare/caricare lo stato della partita.
-     * @param statoDefault     Lo stato di default da utilizzare nell'adapter.
-     * @param regole           La lista di regole da cui derivare ulteriori stati disponibili.
-     */
     public JsonStatoPartitaRepository(String percorsoFileJson, StatoPartita statoDefault, List<RegolaStato> regole) {
         if (percorsoFileJson == null || percorsoFileJson.isBlank()) {
             throw new IllegalArgumentException("Il percorso del file JSON non può essere nullo o vuoto.");
@@ -39,13 +27,6 @@ public class JsonStatoPartitaRepository implements StatoPartitaRepository {
         this.gson = GsonFactory.creaGsonConfigurato(statoDefault, regole);
     }
 
-    /**
-     * Costruttore che accetta il percorso del file JSON e un'istanza di Gson.
-     * Questo costruttore consente di utilizzare un'istanza di Gson già configurata.
-     *
-     * @param percorsoFileJson Il percorso del file JSON dove salvare/caricare lo stato della partita.
-     * @param gson             L'istanza di Gson da utilizzare per la serializzazione/deserializzazione.
-     */
     public JsonStatoPartitaRepository(String percorsoFileJson, Gson gson) {
         if (percorsoFileJson == null || percorsoFileJson.isBlank()) {
             throw new IllegalArgumentException("Il percorso del file JSON non può essere nullo o vuoto.");
@@ -67,7 +48,10 @@ public class JsonStatoPartitaRepository implements StatoPartitaRepository {
         try (Reader reader = new FileReader(file, StandardCharsets.UTF_8)) {
             return gson.fromJson(reader, StatoGiocoDto.class);
         } catch (Exception e) {
-            throw new RuntimeException("Errore durante il caricamento dello stato da file JSON: " + percorsoFileJson, e);
+            throw new RuntimeException(
+                "Errore durante il caricamento dello stato da file JSON: " + percorsoFileJson,
+                e
+            );
         }
     }
 

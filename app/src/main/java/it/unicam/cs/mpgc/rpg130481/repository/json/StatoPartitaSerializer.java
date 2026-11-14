@@ -6,13 +6,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
-
 import java.lang.reflect.Type;
 
-/**
- * Serializza un'istanza di StatoPartita in un oggetto JSON.
- * Aggiunge il campo "tipoStato" al JSON con il nome dello stato della partita.
- */
 public class StatoPartitaSerializer implements JsonSerializer<StatoPartita> {
 
     @Override

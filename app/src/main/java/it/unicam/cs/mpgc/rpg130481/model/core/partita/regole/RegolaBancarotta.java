@@ -5,10 +5,6 @@ import it.unicam.cs.mpgc.rpg130481.model.core.partita.stati.StatoBancarotta;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.RegolaStato;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.partita.stati.StatoPartita;
 
-/**
- * La classe RegolaBancarotta rappresenta una regola di gioco che determina se una partita è in bancarotta.
- * La regola verifica se le statistiche della partita hanno metriche critiche, indicando che la partita è terminata.
- */
 public class RegolaBancarotta implements RegolaStato {
 
     @Override

@@ -1,29 +1,17 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.eventi;
 
-import java.util.List;
-
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.EventoEseguibile;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.OpzioneEvento;
 import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAzienda;
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.metriche.StatisticheAziendaModificabili;
+import java.util.List;
 
-/**
- * Classe astratta che rappresenta un evento di base nel gioco.
- * Contiene il titolo, la descrizione e le opzioni disponibili per l'evento.
- */
-public abstract class EventoBase implements EventoEseguibile {
+public class EventoBase implements EventoEseguibile {
+
     private final String titolo;
     private final String descrizione;
     private final List<OpzioneEvento> opzioni;
 
-    /**
-     * Costruttore per creare un evento di base.
-     *
-     * @param titolo      il titolo dell'evento
-     * @param descrizione la descrizione dell'evento
-     * @param opzioni     le opzioni disponibili per l'evento
-     * @throws IllegalArgumentException se titolo o descrizione sono nulli o vuoti, o se la lista delle opzioni è nulla o vuota
-     */
     public EventoBase(String titolo, String descrizione, List<? extends OpzioneEvento> opzioni) {
         if (titolo == null || titolo.isBlank() || descrizione == null || descrizione.isBlank()) {
             throw new IllegalArgumentException("Titolo e descrizione non possono essere vuoti.");
@@ -36,11 +24,18 @@ public abstract class EventoBase implements EventoEseguibile {
         this.opzioni = List.copyOf(opzioni);
     }
 
-    @Override public String getTitolo() { return titolo; }
-    @Override public String getDescrizione() { return descrizione; }
+    @Override
+    public String getTitolo() {
+        return titolo;
+    }
 
     @Override
-    public List<OpzioneEvento> getOpzioniLeggibili() {
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    @Override
+    public List<OpzioneEvento> getOpzioni() {
         return List.copyOf(this.opzioni);
     }
 
@@ -62,8 +57,8 @@ public abstract class EventoBase implements EventoEseguibile {
         }
 
         OpzioneEvento opzione = opzioni.get(indiceOpzione);
-        opzione.getModifiche().forEach(modifica ->
-                statistiche.applicaVariazione(modifica.nomeMetrica(), modifica.variazione())
-        );
+        opzione
+            .getModifiche()
+            .forEach(modifica -> statistiche.applicaVariazione(modifica.nomeMetrica(), modifica.variazione()));
     }
 }

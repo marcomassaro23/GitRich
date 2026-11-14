@@ -1,26 +1,14 @@
 package it.unicam.cs.mpgc.rpg130481.model.core.eventi;
 
+import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.OpzioneEvento;
 import java.util.List;
 
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.ModificaMetrica;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.OpzioneEvento;
-
-/**
- * Classe che rappresenta un'opzione di un evento nel gioco.
- * Contiene il testo dell'opzione e le modifiche alle metriche associate all'opzione.
- */
 public class OpzioneEventoBase implements OpzioneEvento {
-    private final String testo;
-    private final List<ModificaMetrica> modifiche;
 
-    /**
-     * Costruttore per creare un'opzione di un evento.
-     *
-     * @param testo     il testo dell'opzione
-     * @param modifiche le modifiche alle metriche associate all'opzione
-     * @throws IllegalArgumentException se il testo è nullo o vuoto, o se la lista delle modifiche è nulla
-     */
-    public OpzioneEventoBase(String testo, List<? extends ModificaMetrica> modifiche) {
+    private final String testo;
+    private final List<VariazioneMetrica> modifiche;
+
+    public OpzioneEventoBase(String testo, List<? extends VariazioneMetrica> modifiche) {
         if (testo == null || testo.isBlank()) {
             throw new IllegalArgumentException("Il testo dell'opzione non può essere nullo o vuoto.");
         }
@@ -37,7 +25,7 @@ public class OpzioneEventoBase implements OpzioneEvento {
     }
 
     @Override
-    public List<ModificaMetrica> getModifiche() {
+    public List<VariazioneMetrica> getModifiche() {
         return List.copyOf(this.modifiche);
     }
 }

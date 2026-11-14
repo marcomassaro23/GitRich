@@ -6,23 +6,18 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import it.unicam.cs.mpgc.rpg130481.model.core.eventi.EventoGenerico;
+import it.unicam.cs.mpgc.rpg130481.model.core.eventi.EventoBase;
 import it.unicam.cs.mpgc.rpg130481.model.core.eventi.OpzioneEventoBase;
 import it.unicam.cs.mpgc.rpg130481.model.core.eventi.VariazioneMetrica;
-import it.unicam.cs.mpgc.rpg130481.model.interfaces.eventi.Evento;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Deserializer personalizzato per deserializzare oggetti di tipo EventoLeggibile da JSON.
- * Estende JsonDeserializer<EventoLeggibile> e implementa il metodo deserialize per convertire un oggetto JSON in un'istanza di EventoLeggibile.
- */
-public class EventoDeserializer implements JsonDeserializer<Evento> {
+public class EventoDeserializer implements JsonDeserializer<EventoBase> {
 
     @Override
-    public Evento deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public EventoBase deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+        throws JsonParseException {
         if (json == null || !json.isJsonObject()) {
             return null;
         }
@@ -57,15 +52,9 @@ public class EventoDeserializer implements JsonDeserializer<Evento> {
             }
         }
 
-        return new EventoGenerico(titolo, descrizione, listaOpzioni);
+        return new EventoBase(titolo, descrizione, listaOpzioni);
     }
 
-    /**
-     * Estrae un'opzione evento da un oggetto JSON.
-     *
-     * @param opzioneJsonObj L'oggetto JSON rappresentante l'opzione.
-     * @return Un'istanza di OpzioneEvento.
-     */
     private OpzioneEventoBase estraiOpzioneDaJson(JsonObject opzioneJsonObj) {
         String testo = "";
         if (opzioneJsonObj.has("testo")) {
@@ -85,12 +74,6 @@ public class EventoDeserializer implements JsonDeserializer<Evento> {
         return new OpzioneEventoBase(testo, listaModifiche);
     }
 
-    /**
-     * Estrae una variazione metrica da un oggetto JSON.
-     *
-     * @param modificaJsonObj L'oggetto JSON rappresentante la variazione metrica.
-     * @return Un'istanza di VariazioneMetrica.
-     */
     private VariazioneMetrica estraiVariazioneMetricaDaJson(JsonObject modificaJsonObj) {
         String nomeMetrica = "";
         if (modificaJsonObj.has("nomeMetrica")) {
