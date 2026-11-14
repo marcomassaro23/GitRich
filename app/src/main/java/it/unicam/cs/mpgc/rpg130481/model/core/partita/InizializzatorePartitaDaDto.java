@@ -68,7 +68,8 @@ public class InizializzatorePartitaDaDto implements InizializzatorePartita {
             sorgente.getNome(),
             sorgente.getValore(),
             sorgente.getValoreMinimo(),
-            sorgente.getValoreMassimo()
+            sorgente.getValoreMassimo(),
+            sorgente.isCriticaAlMassimo()
         );
     }
 }

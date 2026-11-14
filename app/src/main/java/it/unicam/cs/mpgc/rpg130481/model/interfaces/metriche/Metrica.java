@@ -5,6 +5,11 @@ public interface Metrica {
     int getValore();
     int getValoreMinimo();
     int getValoreMassimo();
+    boolean isInStatoCritico();
+
+    default boolean isCriticaAlMassimo() {
+        return false;
+    }
 
     default boolean isMin() {
         return getValore() <= getValoreMinimo();
@@ -13,6 +18,4 @@ public interface Metrica {
     default boolean isMax() {
         return getValore() >= getValoreMassimo();
     }
-
-    boolean isInStatoCritico();
 }

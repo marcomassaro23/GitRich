@@ -59,6 +59,11 @@ public class MetricaBase implements MetricaModificabile {
     }
 
     @Override
+    public boolean isCriticaAlMassimo() {
+        return criticaAlMassimo;
+    }
+
+    @Override
     public boolean isInStatoCritico() {
         return criticaAlMassimo ? isMax() : isMin();
     }
