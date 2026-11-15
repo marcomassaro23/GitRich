@@ -9,8 +9,9 @@ import it.unicam.cs.mpgc.rpg130481.model.partita.Turno;
 import it.unicam.cs.mpgc.rpg130481.model.partita.regole.ValutatoreStatoPartita;
 import it.unicam.cs.mpgc.rpg130481.model.partita.selettori.SelettoreEventi;
 import it.unicam.cs.mpgc.rpg130481.model.partita.stati.StatoPartita;
-import it.unicam.cs.mpgc.rpg130481.persistenza.DatiSalvataggioPartita;
-import it.unicam.cs.mpgc.rpg130481.persistenza.DatiSalvataggioPartita.DatiMetrica;
+import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita;
+import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita.DatiMetrica;
+
 import java.util.List;
 import java.util.Objects;
 

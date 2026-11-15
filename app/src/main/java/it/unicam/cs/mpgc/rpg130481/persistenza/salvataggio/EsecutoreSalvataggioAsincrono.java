@@ -1,35 +1,25 @@
-package it.unicam.cs.mpgc.rpg130481.persistenza;
+package it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class EsecutoreSalvataggioAsincrono implements EsecutoreSalvataggio {
 
-    private static final Logger LOGGER = Logger.getLogger(EsecutoreSalvataggioAsincrono.class.getName());
     private static final int TIMEOUT_ARRESTO_SECONDI = 2;
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor(runnable -> {
-        Thread thread = new Thread(runnable, "PartitaController-IOThread");
+        Thread thread = new Thread(runnable, "SalvataggioPartita-IOThread");
         thread.setDaemon(true);
         return thread;
     });
 
     @Override
     public void accodaSalvataggio(Runnable operazioneSalvataggio) {
-        if (executor.isShutdown()) {
+        if (executor.isShutdown() || operazioneSalvataggio == null) {
             return;
         }
-
-        executor.submit(() -> {
-            try {
-                operazioneSalvataggio.run();
-            } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Errore nel salvataggio asincrono della partita", e);
-            }
-        });
+        executor.submit(operazioneSalvataggio);
     }
 
     @Override

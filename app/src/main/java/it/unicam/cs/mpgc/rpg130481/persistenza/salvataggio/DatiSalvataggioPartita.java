@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg130481.persistenza;
+package it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio;
 
 import java.util.List;
 

@@ -2,6 +2,10 @@ package it.unicam.cs.mpgc.rpg130481.persistenza;
 
 import it.unicam.cs.mpgc.rpg130481.controller.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.model.eventi.EventoEseguibile;
+import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita;
+import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.EsecutoreSalvataggio;
+import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.SorgenteStatoPartita;
+import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.StatoPartitaRepository;
 
 import java.util.Collections;
 import java.util.List;

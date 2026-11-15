@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.rpg130481.persistenza;
+package it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio;
 
 import it.unicam.cs.mpgc.rpg130481.controller.StatoGiocoDto;
 

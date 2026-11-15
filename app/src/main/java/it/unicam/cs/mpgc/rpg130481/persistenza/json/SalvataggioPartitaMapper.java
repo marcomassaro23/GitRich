@@ -1,9 +1,9 @@
 package it.unicam.cs.mpgc.rpg130481.persistenza.json;
 
 import it.unicam.cs.mpgc.rpg130481.controller.StatoGiocoDto;
-import it.unicam.cs.mpgc.rpg130481.persistenza.DatiSalvataggioPartita;
-import it.unicam.cs.mpgc.rpg130481.persistenza.DatiSalvataggioPartita.DatiMetrica;
-import it.unicam.cs.mpgc.rpg130481.persistenza.DatiSalvataggioPartita.DatiTurno;
+import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita;
+import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita.DatiMetrica;
+import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita.DatiTurno;
 
 import java.util.List;
 import java.util.Objects;

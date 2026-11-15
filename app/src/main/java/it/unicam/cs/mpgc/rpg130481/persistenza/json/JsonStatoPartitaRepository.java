@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import it.unicam.cs.mpgc.rpg130481.controller.StatoGiocoDto;
-import it.unicam.cs.mpgc.rpg130481.persistenza.DatiSalvataggioPartita;
-import it.unicam.cs.mpgc.rpg130481.persistenza.StatoPartitaRepository;
+import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita;
+import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.StatoPartitaRepository;
 
 import java.io.File;
 import java.io.FileReader;
