@@ -4,122 +4,84 @@ import it.unicam.cs.mpgc.rpg130481.model.eventi.EventoEseguibile;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.MetricaBase;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.MetricaModificabile;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAziendaBase;
-import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAziendaModificabili;
 import it.unicam.cs.mpgc.rpg130481.model.partita.PartitaBase;
-import it.unicam.cs.mpgc.rpg130481.model.partita.RegolaStato;
 import it.unicam.cs.mpgc.rpg130481.model.partita.Turno;
 import it.unicam.cs.mpgc.rpg130481.model.partita.regole.ValutatoreStatoPartita;
 import it.unicam.cs.mpgc.rpg130481.model.partita.selettori.SelettoreEventi;
 import it.unicam.cs.mpgc.rpg130481.model.partita.stati.StatoPartita;
 import it.unicam.cs.mpgc.rpg130481.persistenza.DatiSalvataggioPartita;
 import it.unicam.cs.mpgc.rpg130481.persistenza.DatiSalvataggioPartita.DatiMetrica;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class InizializzatorePartita {
 
-    private static final int TURNI_MASSIMI_DEFAULT = 24;
-
     private final ValutatoreStatoPartita valutatore;
     private final SelettoreEventi selettoreEventi;
-    private final StatoPartita statoDefault;
     private final List<StatoPartita> statiDisponibili;
 
     public InizializzatorePartita(
         ValutatoreStatoPartita valutatore,
         SelettoreEventi selettoreEventi,
-        StatoPartita statoDefault,
-        List<RegolaStato> regole
+        List<StatoPartita> statiDisponibili
     ) {
         this.valutatore = Objects.requireNonNull(valutatore, "Il valutatore non può essere nullo.");
         this.selettoreEventi = Objects.requireNonNull(selettoreEventi, "Il selettore eventi non può essere nullo.");
-        this.statoDefault = Objects.requireNonNull(statoDefault, "Lo stato di default non può essere nullo.");
-
-        List<StatoPartita> stati = new ArrayList<>();
-        stati.add(statoDefault);
-        if (regole != null) {
-            regole.stream()
-                .filter(Objects::nonNull)
-                .map(RegolaStato::getStatoRisultante)
-                .filter(Objects::nonNull)
-                .forEach(stati::add);
+        if (statiDisponibili == null || statiDisponibili.isEmpty()) {
+            throw new IllegalArgumentException("Gli stati disponibili non possono essere nulli o vuoti.");
         }
-        this.statiDisponibili = List.copyOf(stati);
+        this.statiDisponibili = List.copyOf(statiDisponibili);
     }
 
-    public GestoreStatoPartita creaNuovaPartita(
-        DatiSalvataggioPartita datiIniziali,
+    public GestoreStatoPartita creaPartita(
+        DatiSalvataggioPartita dati,
         List<EventoEseguibile> mazzoEventi
     ) {
-        Objects.requireNonNull(datiIniziali, "I dati iniziali non possono essere nulli.");
-        int turniMassimi = datiIniziali.turno() != null
-            ? datiIniziali.turno().massimo()
-            : TURNI_MASSIMI_DEFAULT;
+        Objects.requireNonNull(dati, "I dati della partita non possono essere nulli.");
+        Objects.requireNonNull(dati.turno(), "I dati del turno non possono essere nulli.");
+        if (dati.metriche() == null || dati.metriche().isEmpty()) {
+            throw new IllegalArgumentException("Le metriche non possono essere nulle o vuote.");
+        }
+
+        List<MetricaModificabile> metriche = dati.metriche().stream()
+            .map(this::creaMetrica)
+            .toList();
 
         PartitaBase partita = new PartitaBase(
-            creaStatistiche(datiIniziali.metriche()),
+            new StatisticheAziendaBase(metriche),
             mazzoEventi,
-            new Turno(1, turniMassimi),
+            new Turno(dati.turno().corrente(), dati.turno().massimo()),
             selettoreEventi,
-            null,
-            statoDefault
+            trovaEvento(dati.titoloEventoCorrente(), mazzoEventi),
+            risolviStato(dati.codiceStato())
         );
         return new GestoreStatoPartita(partita, valutatore);
     }
 
-    public GestoreStatoPartita ripristinaPartita(
-        DatiSalvataggioPartita datiSalvati,
-        List<EventoEseguibile> mazzoEventi
-    ) {
-        Objects.requireNonNull(datiSalvati, "I dati salvati non possono essere nulli.");
-        Turno turnoSalvato = datiSalvati.turno() != null
-            ? new Turno(datiSalvati.turno().corrente(), datiSalvati.turno().massimo())
-            : new Turno(1, TURNI_MASSIMI_DEFAULT);
-
-        EventoEseguibile eventoRipristinato = trovaEventoNelMazzo(datiSalvati.titoloEventoCorrente(), mazzoEventi);
-        StatoPartita statoRipristinato = risolviStato(datiSalvati.codiceStato());
-
-        PartitaBase partita = new PartitaBase(
-            creaStatistiche(datiSalvati.metriche()),
-            mazzoEventi,
-            turnoSalvato,
-            selettoreEventi,
-            eventoRipristinato,
-            statoRipristinato
+    private MetricaModificabile creaMetrica(DatiMetrica dati) {
+        return new MetricaBase(
+            dati.nome(),
+            dati.valore(),
+            dati.valoreMinimo(),
+            dati.valoreMassimo(),
+            dati.criticaAlMassimo()
         );
-        return new GestoreStatoPartita(partita, valutatore);
     }
 
-    private EventoEseguibile trovaEventoNelMazzo(String titoloEvento, List<EventoEseguibile> mazzoEventi) {
-        if (titoloEvento == null || titoloEvento.isBlank() || mazzoEventi == null) {
+    private EventoEseguibile trovaEvento(String titolo, List<EventoEseguibile> mazzoEventi) {
+        if (titolo == null || titolo.isBlank() || mazzoEventi == null) {
             return null;
         }
         return mazzoEventi.stream()
-            .filter(evento -> evento.getTitolo().equals(titoloEvento))
+            .filter(evento -> evento.getTitolo().equals(titolo))
             .findFirst()
             .orElse(null);
     }
 
     private StatoPartita risolviStato(String codiceStato) {
         return statiDisponibili.stream()
-            .filter(s -> s.getCodice().equalsIgnoreCase(codiceStato))
+            .filter(stato -> stato.getCodice().equalsIgnoreCase(codiceStato))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("Stato partita non riconosciuto: " + codiceStato));
-    }
-
-    private StatisticheAziendaModificabili creaStatistiche(List<DatiMetrica> datiMetriche) {
-        if (datiMetriche == null || datiMetriche.isEmpty()) {
-            throw new IllegalArgumentException("La lista delle metriche salvate non può essere nulla o vuota.");
-        }
-        List<MetricaModificabile> metriche = datiMetriche.stream().map(this::creaMetrica).toList();
-        return new StatisticheAziendaBase(metriche);
-    }
-
-    private MetricaModificabile creaMetrica(DatiMetrica dati) {
-        int min = dati.valoreMassimo() == 0 && dati.valoreMinimo() == 0 ? 0 : dati.valoreMinimo();
-        int max = dati.valoreMassimo() == 0 && dati.valoreMinimo() == 0 ? 100 : dati.valoreMassimo();
-        return new MetricaBase(dati.nome(), dati.valore(), min, max, dati.criticaAlMassimo());
     }
 }
