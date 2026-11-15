@@ -1,18 +1,18 @@
 package it.unicam.cs.mpgc.rpg130481.model.eventi;
 
-import java.util.List;
-
 import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAzienda;
-import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAziendaModificabili;
+import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAziendaBase;
+import java.util.List;
+import java.util.Objects;
 
-public class EventoBase implements EventoEseguibile {
+public class EventoBase implements Evento {
 
     private final String titolo;
     private final String descrizione;
     private final List<OpzioneEvento> opzioni;
 
     public EventoBase(String titolo, String descrizione, List<OpzioneEvento> opzioni) {
-        if (isTestoAssente(titolo) || isTestoAssente(descrizione)) {
+        if (titolo == null || titolo.isBlank() || descrizione == null || descrizione.isBlank()) {
             throw new IllegalArgumentException("Titolo e descrizione non possono essere vuoti.");
         }
         if (opzioni == null || opzioni.isEmpty()) {
@@ -40,32 +40,19 @@ public class EventoBase implements EventoEseguibile {
 
     @Override
     public boolean isAttivabileCon(StatisticheAzienda statistiche) {
-        if (statistiche == null) {
-            throw new IllegalArgumentException("Le statistiche aziendali non possono essere nulle.");
-        }
+        Objects.requireNonNull(statistiche, "Le statistiche aziendali non possono essere nulle.");
         return true;
     }
 
     @Override
-    public void eseguiOpzione(int indiceOpzione, StatisticheAziendaModificabili statistiche) {
-        if (statistiche == null) {
-            throw new IllegalArgumentException("Le statistiche aziendali non possono essere nulle.");
-        }
-        if (isIndiceFuoriIntervallo(indiceOpzione)) {
+    public void eseguiOpzione(int indiceOpzione, StatisticheAziendaBase statistiche) {
+        Objects.requireNonNull(statistiche, "Le statistiche aziendali non possono essere nulle.");
+        if (indiceOpzione < 0 || indiceOpzione >= opzioni.size()) {
             throw new IllegalArgumentException("Indice opzione non valido: " + indiceOpzione);
         }
 
-        OpzioneEvento opzioneScelta = opzioni.get(indiceOpzione);
-        opzioneScelta
-            .variazioni()
-            .forEach(variazione -> statistiche.applicaVariazione(variazione.nomeMetrica(), variazione.variazione()));
-    }
-
-    private boolean isTestoAssente(String testo) {
-        return testo == null || testo.isBlank();
-    }
-
-    private boolean isIndiceFuoriIntervallo(int indice) {
-        return indice < 0 || indice >= opzioni.size();
+        opzioni.get(indiceOpzione)
+                .variazioni()
+                .forEach(v -> statistiche.applicaVariazione(v.nomeMetrica(), v.variazione()));
     }
 }

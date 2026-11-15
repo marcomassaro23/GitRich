@@ -2,11 +2,11 @@ package it.unicam.cs.mpgc.rpg130481.model.metriche;
 
 import java.util.List;
 
-public class StatisticheAziendaBase implements StatisticheAziendaModificabili {
+public class StatisticheAziendaBase implements StatisticheAzienda {
 
-    private final List<MetricaModificabile> metriche;
+    private final List<MetricaBase> metriche;
 
-    public StatisticheAziendaBase(List<MetricaModificabile> metriche) {
+    public StatisticheAziendaBase(List<MetricaBase> metriche) {
         if (metriche == null || metriche.isEmpty()) {
             throw new IllegalArgumentException("La lista delle metriche non può essere nulla o vuota.");
         }
@@ -19,30 +19,19 @@ public class StatisticheAziendaBase implements StatisticheAziendaModificabili {
     }
 
     @Override
-    public Metrica getMetrica(String nome) {
-        if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("Il nome della metrica non può essere nullo o vuoto.");
-        }
-        return cercaMetricaPerNome(nome);
-    }
-
-    @Override
-    public Metrica applicaVariazione(String nome, int delta) {
-        MetricaModificabile metrica = cercaMetricaPerNome(nome);
-        metrica.applicaVariazione(delta);
-        return metrica;
-    }
-
-    @Override
     public boolean hasMetricheCritiche() {
         return metriche.stream().anyMatch(Metrica::isInStatoCritico);
     }
 
-    private MetricaModificabile cercaMetricaPerNome(String nome) {
-        return metriche
-            .stream()
-            .filter(metrica -> metrica.getNome().equals(nome))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("Metrica con nome '" + nome + "' non trovata."));
+    public Metrica applicaVariazione(String nome, int delta) {
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("Il nome della metrica non può essere nullo o vuoto.");
+        }
+        MetricaBase metrica = metriche.stream()
+                .filter(m -> m.getNome().equals(nome))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Metrica con nome '" + nome + "' non trovata."));
+        metrica.applicaVariazione(delta);
+        return metrica;
     }
 }

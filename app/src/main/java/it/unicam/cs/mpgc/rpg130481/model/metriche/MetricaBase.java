@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.metriche;
 
-public class MetricaBase implements MetricaModificabile {
+public class MetricaBase implements Metrica {
 
     private final String nome;
     private final int valoreMinimo;
@@ -9,12 +9,11 @@ public class MetricaBase implements MetricaModificabile {
     private int valore;
 
     public MetricaBase(
-        String nome,
-        int valoreIniziale,
-        int valoreMinimo,
-        int valoreMassimo,
-        boolean criticaAlMassimo
-    ) {
+            String nome,
+            int valoreIniziale,
+            int valoreMinimo,
+            int valoreMassimo,
+            boolean criticaAlMassimo) {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Il nome della metrica non può essere nullo o vuoto.");
         }
@@ -26,10 +25,6 @@ public class MetricaBase implements MetricaModificabile {
         this.valoreMassimo = valoreMassimo;
         this.criticaAlMassimo = criticaAlMassimo;
         this.valore = Math.clamp(valoreIniziale, valoreMinimo, valoreMassimo);
-    }
-
-    public MetricaBase(String nome, int valoreIniziale, int valoreMinimo, int valoreMassimo) {
-        this(nome, valoreIniziale, valoreMinimo, valoreMassimo, false);
     }
 
     public MetricaBase(String nome, int valoreIniziale) {
@@ -63,17 +58,11 @@ public class MetricaBase implements MetricaModificabile {
 
     @Override
     public boolean isInStatoCritico() {
-        return criticaAlMassimo ? isMax() : isMin();
+        return criticaAlMassimo ? valore >= valoreMassimo : valore <= valoreMinimo;
     }
 
-    @Override
     public int applicaVariazione(int variazione) {
         this.valore = Math.clamp(this.valore + variazione, valoreMinimo, valoreMassimo);
         return this.valore;
-    }
-
-    @Override
-    public void setValore(int nuovoValore) {
-        this.valore = Math.clamp(nuovoValore, valoreMinimo, valoreMassimo);
     }
 }
