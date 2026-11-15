@@ -1,10 +1,5 @@
 package it.unicam.cs.mpgc.rpg130481.persistenza.xml;
 
-import it.unicam.cs.mpgc.rpg130481.eventi.EventoBase;
-import it.unicam.cs.mpgc.rpg130481.eventi.EventoEseguibile;
-import it.unicam.cs.mpgc.rpg130481.eventi.OpzioneEvento;
-import it.unicam.cs.mpgc.rpg130481.eventi.VariazioneMetrica;
-
 import java.io.InputStream;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -14,6 +9,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import it.unicam.cs.mpgc.rpg130481.model.eventi.EventoBase;
+import it.unicam.cs.mpgc.rpg130481.model.eventi.EventoEseguibile;
+import it.unicam.cs.mpgc.rpg130481.model.eventi.OpzioneEvento;
+import it.unicam.cs.mpgc.rpg130481.model.eventi.VariazioneMetrica;
 
 public class XmlEventoMapper {
 

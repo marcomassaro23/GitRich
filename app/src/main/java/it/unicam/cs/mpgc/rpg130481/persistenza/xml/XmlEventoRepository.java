@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.persistenza.xml;
 
-import it.unicam.cs.mpgc.rpg130481.eventi.EventoEseguibile;
+import it.unicam.cs.mpgc.rpg130481.model.eventi.EventoEseguibile;
 import it.unicam.cs.mpgc.rpg130481.persistenza.EventoRepository;
 
 import java.io.File;

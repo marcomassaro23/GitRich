@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg130481.persistenza;
 
-import it.unicam.cs.mpgc.rpg130481.eventi.EventoEseguibile;
-import it.unicam.cs.mpgc.rpg130481.partita.StatoGiocoDto;
+import it.unicam.cs.mpgc.rpg130481.controller.StatoGiocoDto;
+import it.unicam.cs.mpgc.rpg130481.model.eventi.EventoEseguibile;
 
 import java.util.List;
 
