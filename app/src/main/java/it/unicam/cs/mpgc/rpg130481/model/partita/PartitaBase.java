@@ -1,75 +1,64 @@
 package it.unicam.cs.mpgc.rpg130481.model.partita;
 
-import it.unicam.cs.mpgc.rpg130481.model.eventi.EventoEseguibile;
+import it.unicam.cs.mpgc.rpg130481.model.eventi.Evento;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAzienda;
-import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAziendaModificabili;
+import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAziendaBase;
+import it.unicam.cs.mpgc.rpg130481.model.partita.regole.ValutatoreStatoPartita;
 import it.unicam.cs.mpgc.rpg130481.model.partita.selettori.SelettoreEventi;
-import it.unicam.cs.mpgc.rpg130481.model.partita.stati.StatoInCorso;
-import it.unicam.cs.mpgc.rpg130481.model.partita.stati.StatoPartita;
 import java.util.List;
+import java.util.Objects;
 
-public class PartitaBase implements PartitaModificabile {
+public class PartitaBase implements Partita {
 
-    private final StatisticheAziendaModificabili statistiche;
-    private final List<EventoEseguibile> mazzoEventi;
+    private final StatisticheAziendaBase statistiche;
+    private final List<Evento> mazzoEventi;
     private final SelettoreEventi selettoreEventi;
+    private final ValutatoreStatoPartita valutatoreStato;
     private Turno turno;
-    private EventoEseguibile eventoCorrente;
+    private Evento eventoCorrente;
     private StatoPartita stato;
 
     public PartitaBase(
-        StatisticheAziendaModificabili statistiche,
-        List<EventoEseguibile> mazzoEventi,
-        Turno turno,
-        SelettoreEventi selettoreEventi,
-        EventoEseguibile eventoIniziale,
-        StatoPartita statoIniziale
-    ) {
-        if (statistiche == null || mazzoEventi == null || mazzoEventi.isEmpty()) {
-            throw new IllegalArgumentException("Statistiche e mazzo eventi non possono essere nulli o vuoti.");
+            StatisticheAziendaBase statistiche,
+            List<Evento> mazzoEventi,
+            Turno turno,
+            SelettoreEventi selettoreEventi,
+            ValutatoreStatoPartita valutatoreStato,
+            Evento eventoIniziale,
+            StatoPartita statoIniziale) {
+        this.statistiche = Objects.requireNonNull(statistiche, "Le statistiche non possono essere nulle.");
+        if (mazzoEventi == null || mazzoEventi.isEmpty()) {
+            throw new IllegalArgumentException("Il mazzo eventi non può essere nullo o vuoto.");
         }
-        if (turno == null || selettoreEventi == null) {
-            throw new IllegalArgumentException("Turno e SelettoreEventi non possono essere nulli.");
-        }
-
-        this.statistiche = statistiche;
         this.mazzoEventi = List.copyOf(mazzoEventi);
-        this.turno = turno;
-        this.selettoreEventi = selettoreEventi;
-        this.stato = statoIniziale != null ? statoIniziale : new StatoInCorso();
+        this.turno = Objects.requireNonNull(turno, "Il turno non può essere nullo.");
+        this.selettoreEventi = Objects.requireNonNull(selettoreEventi, "Il selettore eventi non può essere nullo.");
+        this.valutatoreStato = Objects.requireNonNull(valutatoreStato, "Il valutatore stato non può essere nullo.");
+        this.stato = statoIniziale != null ? statoIniziale : StatoPartita.IN_CORSO;
         this.eventoCorrente = eventoIniziale != null ? eventoIniziale : selezionaProssimoEvento();
     }
 
     public PartitaBase(
-        StatisticheAziendaModificabili statistiche,
-        List<EventoEseguibile> mazzoEventi,
-        Turno turno,
-        SelettoreEventi selettoreEventi
-    ) {
-        this(statistiche, mazzoEventi, turno, selettoreEventi, null, new StatoInCorso());
+            StatisticheAziendaBase statistiche,
+            List<Evento> mazzoEventi,
+            Turno turno,
+            SelettoreEventi selettoreEventi,
+            ValutatoreStatoPartita valutatoreStato) {
+        this(statistiche, mazzoEventi, turno, selettoreEventi, valutatoreStato, null, StatoPartita.IN_CORSO);
     }
 
-    @Override
-    public void applicaScelta(int indiceOpzione) {
+    public void giocaTurnoConScelta(int indiceOpzione) {
+        if (isTerminata()) {
+            throw new IllegalStateException("Impossibile avanzare: la partita è terminata.");
+        }
         if (eventoCorrente != null) {
             eventoCorrente.eseguiOpzione(indiceOpzione, statistiche);
         }
-    }
-
-    @Override
-    public void avanzaTurno() {
-        if (!turno.isUltimo()) {
+        valutatoreStato.determinaProssimoStato(this).ifPresent(nuovoStato -> this.stato = nuovoStato);
+        if (!isTerminata() && !turno.isUltimo()) {
             this.turno = turno.successivo();
             this.eventoCorrente = selezionaProssimoEvento();
         }
-    }
-
-    @Override
-    public void setStato(StatoPartita nuovoStato) {
-        if (nuovoStato == null) {
-            throw new IllegalArgumentException("Lo stato della partita non può essere nullo.");
-        }
-        this.stato = nuovoStato;
     }
 
     @Override
@@ -83,7 +72,7 @@ public class PartitaBase implements PartitaModificabile {
     }
 
     @Override
-    public EventoEseguibile getEventoCorrente() {
+    public Evento getEventoCorrente() {
         return eventoCorrente;
     }
 
@@ -97,7 +86,7 @@ public class PartitaBase implements PartitaModificabile {
         return stato;
     }
 
-    private EventoEseguibile selezionaProssimoEvento() {
+    private Evento selezionaProssimoEvento() {
         return selettoreEventi.selezionaProssimo(mazzoEventi, statistiche, turno);
     }
 }

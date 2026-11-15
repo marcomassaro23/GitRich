@@ -1,10 +1,10 @@
 package it.unicam.cs.mpgc.rpg130481.model.partita.regole;
 
-import java.util.List;
-import java.util.Optional;
-
 import it.unicam.cs.mpgc.rpg130481.model.partita.Partita;
-import it.unicam.cs.mpgc.rpg130481.model.partita.stati.StatoPartita;
+import it.unicam.cs.mpgc.rpg130481.model.partita.StatoPartita;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class ValutatoreStatoPartita {
 
@@ -18,14 +18,10 @@ public class ValutatoreStatoPartita {
     }
 
     public Optional<StatoPartita> determinaProssimoStato(Partita partita) {
-        if (partita == null) {
-            throw new IllegalArgumentException("La partita non può essere nulla.");
-        }
-
-        return regole
-            .stream()
-            .filter(regola -> regola.isSoddisfattaDa(partita))
-            .map(RegolaStato::getStatoRisultante)
-            .findFirst();
+        Objects.requireNonNull(partita, "La partita non può essere nulla.");
+        return regole.stream()
+                .filter(regola -> regola.isSoddisfattaDa(partita))
+                .map(RegolaStato::getStatoRisultante)
+                .findFirst();
     }
 }
