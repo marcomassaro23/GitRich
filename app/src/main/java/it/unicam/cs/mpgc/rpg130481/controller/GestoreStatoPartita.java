@@ -1,14 +1,14 @@
 package it.unicam.cs.mpgc.rpg130481.controller;
 
-import it.unicam.cs.mpgc.rpg130481.model.partita.PartitaBase;
+import it.unicam.cs.mpgc.rpg130481.model.partita.PartitaModificabile;
 import it.unicam.cs.mpgc.rpg130481.model.partita.regole.ValutatoreStatoPartita;
 
 public class GestoreStatoPartita {
 
-    private final PartitaBase partita;
+    private final PartitaModificabile partita;
     private final ValutatoreStatoPartita valutatoreStato;
 
-    public GestoreStatoPartita(PartitaBase partita, ValutatoreStatoPartita valutatoreStato) {
+    public GestoreStatoPartita(PartitaModificabile partita, ValutatoreStatoPartita valutatoreStato) {
         if (partita == null || valutatoreStato == null) {
             throw new IllegalArgumentException("Partita e ValutatoreStato non possono essere nulli.");
         }

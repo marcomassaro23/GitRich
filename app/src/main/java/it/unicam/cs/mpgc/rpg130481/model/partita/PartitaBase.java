@@ -6,10 +6,9 @@ import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAziendaModificabili
 import it.unicam.cs.mpgc.rpg130481.model.partita.selettori.SelettoreEventi;
 import it.unicam.cs.mpgc.rpg130481.model.partita.stati.StatoInCorso;
 import it.unicam.cs.mpgc.rpg130481.model.partita.stati.StatoPartita;
-
 import java.util.List;
 
-public class PartitaBase implements Partita {
+public class PartitaBase implements PartitaModificabile {
 
     private final StatisticheAziendaModificabili statistiche;
     private final List<EventoEseguibile> mazzoEventi;
@@ -50,12 +49,14 @@ public class PartitaBase implements Partita {
         this(statistiche, mazzoEventi, turno, selettoreEventi, null, new StatoInCorso());
     }
 
+    @Override
     public void applicaScelta(int indiceOpzione) {
         if (eventoCorrente != null) {
             eventoCorrente.eseguiOpzione(indiceOpzione, statistiche);
         }
     }
 
+    @Override
     public void avanzaTurno() {
         if (!turno.isUltimo()) {
             this.turno = turno.successivo();
@@ -63,6 +64,7 @@ public class PartitaBase implements Partita {
         }
     }
 
+    @Override
     public void setStato(StatoPartita nuovoStato) {
         if (nuovoStato == null) {
             throw new IllegalArgumentException("Lo stato della partita non può essere nullo.");
