@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg130481.controller;
 
-import it.unicam.cs.mpgc.rpg130481.model.eventi.EventoEseguibile;
-import it.unicam.cs.mpgc.rpg130481.model.partita.GestoreStatoPartita;
+import it.unicam.cs.mpgc.rpg130481.model.eventi.Evento;
+import it.unicam.cs.mpgc.rpg130481.model.partita.PartitaBase;
 import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.persistenza.GestorePersistenzaPartita;
 import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita;
@@ -12,16 +12,15 @@ import java.util.Objects;
 
 public class PartitaController implements GestoreAzioniPartita {
 
-    private GestoreStatoPartita gestore;
+    private PartitaBase partita;
     private final VistaPartita vista;
     private final InizializzatorePartita inizializzatore;
     private final GestorePersistenzaPartita persistenza;
 
     public PartitaController(
-        VistaPartita vista,
-        InizializzatorePartita inizializzatore,
-        GestorePersistenzaPartita persistenza
-    ) {
+            VistaPartita vista,
+            InizializzatorePartita inizializzatore,
+            GestorePersistenzaPartita persistenza) {
         this.vista = Objects.requireNonNull(vista, "La vista della partita non può essere nulla.");
         this.inizializzatore = Objects.requireNonNull(inizializzatore, "L'inizializzatore non può essere nullo.");
         this.persistenza = Objects.requireNonNull(persistenza, "Il gestore persistenza non può essere nullo.");
@@ -52,26 +51,19 @@ public class PartitaController implements GestoreAzioniPartita {
 
     @Override
     public void elaboraSceltaGiocatore(int indiceOpzione) {
-        gestore.giocaTurnoConScelta(indiceOpzione);
+        partita.giocaTurnoConScelta(indiceOpzione);
         sincronizzaStato();
     }
 
     private void inizializzaPartita(DatiSalvataggioPartita dati) {
-        List<EventoEseguibile> mazzoEventi = persistenza.caricaMazzoEventi();
-        this.gestore = inizializzatore.creaPartita(dati, mazzoEventi);
+        List<Evento> mazzoEventi = persistenza.caricaMazzoEventi();
+        this.partita = inizializzatore.creaPartita(dati, mazzoEventi);
         sincronizzaStato();
     }
 
     private void sincronizzaStato() {
-        StatoGiocoDto statoAttuale = gestore.getStatoAttuale();
+        StatoGiocoDto statoAttuale = StatoGiocoDto.daPartita(partita);
         persistenza.salvaInBackground(statoAttuale);
-        aggiornaVista(statoAttuale);
-    }
-
-    private void aggiornaVista(StatoGiocoDto statoAttuale) {
-        if (statoAttuale == null) {
-            return;
-        }
         if (statoAttuale.isTerminata()) {
             vista.mostraFinePartita(statoAttuale);
         } else {

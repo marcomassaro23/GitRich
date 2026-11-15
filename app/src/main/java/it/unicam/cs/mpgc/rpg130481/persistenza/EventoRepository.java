@@ -1,10 +1,9 @@
 package it.unicam.cs.mpgc.rpg130481.persistenza;
 
+import it.unicam.cs.mpgc.rpg130481.model.eventi.Evento;
 import java.util.List;
-
-import it.unicam.cs.mpgc.rpg130481.model.eventi.EventoEseguibile;
 
 @FunctionalInterface
 public interface EventoRepository {
-    List<EventoEseguibile> carica();
+    List<Evento> carica();
 }

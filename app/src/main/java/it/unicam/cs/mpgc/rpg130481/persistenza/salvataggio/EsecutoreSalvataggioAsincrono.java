@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class EsecutoreSalvataggioAsincrono implements EsecutoreSalvataggio {
+public class EsecutoreSalvataggioAsincrono {
 
     private static final int TIMEOUT_ARRESTO_SECONDI = 2;
 
@@ -14,20 +14,16 @@ public class EsecutoreSalvataggioAsincrono implements EsecutoreSalvataggio {
         return thread;
     });
 
-    @Override
     public void accodaSalvataggio(Runnable operazioneSalvataggio) {
-        if (executor.isShutdown() || operazioneSalvataggio == null) {
-            return;
+        if (!executor.isShutdown() && operazioneSalvataggio != null) {
+            executor.submit(operazioneSalvataggio);
         }
-        executor.submit(operazioneSalvataggio);
     }
 
-    @Override
     public void arrestaEAttendi() {
         if (executor.isShutdown()) {
             return;
         }
-
         executor.shutdown();
         try {
             if (!executor.awaitTermination(TIMEOUT_ARRESTO_SECONDI, TimeUnit.SECONDS)) {
