@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.view;
 
-import it.unicam.cs.mpgc.rpg130481.controller.StatoGiocoDto;
+import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 
 public interface VistaPartita {
     void mostraMenu(boolean salvataggioDisponibile);

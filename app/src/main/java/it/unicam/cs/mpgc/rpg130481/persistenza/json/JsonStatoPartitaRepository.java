@@ -3,7 +3,7 @@ package it.unicam.cs.mpgc.rpg130481.persistenza.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import it.unicam.cs.mpgc.rpg130481.controller.StatoGiocoDto;
+import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita;
 import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.StatoPartitaRepository;
 

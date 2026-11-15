@@ -4,6 +4,7 @@ import it.unicam.cs.mpgc.rpg130481.model.eventi.EventoEseguibile;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.MetricaBase;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.MetricaModificabile;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAziendaBase;
+import it.unicam.cs.mpgc.rpg130481.model.partita.GestoreStatoPartita;
 import it.unicam.cs.mpgc.rpg130481.model.partita.PartitaBase;
 import it.unicam.cs.mpgc.rpg130481.model.partita.Turno;
 import it.unicam.cs.mpgc.rpg130481.model.partita.regole.ValutatoreStatoPartita;

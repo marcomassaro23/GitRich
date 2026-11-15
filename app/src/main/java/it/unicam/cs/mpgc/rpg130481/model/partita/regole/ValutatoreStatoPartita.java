@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unicam.cs.mpgc.rpg130481.model.partita.Partita;
-import it.unicam.cs.mpgc.rpg130481.model.partita.RegolaStato;
 import it.unicam.cs.mpgc.rpg130481.model.partita.stati.StatoPartita;
 
 public class ValutatoreStatoPartita {

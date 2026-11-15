@@ -1,6 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.persistenza.json;
 
-import it.unicam.cs.mpgc.rpg130481.controller.StatoGiocoDto;
+import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita;
 import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita.DatiMetrica;
 import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita.DatiTurno;

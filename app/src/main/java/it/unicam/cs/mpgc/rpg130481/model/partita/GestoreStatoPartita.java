@@ -1,7 +1,8 @@
-package it.unicam.cs.mpgc.rpg130481.controller;
+package it.unicam.cs.mpgc.rpg130481.model.partita;
 
-import it.unicam.cs.mpgc.rpg130481.model.partita.PartitaModificabile;
 import it.unicam.cs.mpgc.rpg130481.model.partita.regole.ValutatoreStatoPartita;
+
+import java.util.Objects;
 
 public class GestoreStatoPartita {
 
@@ -9,11 +10,8 @@ public class GestoreStatoPartita {
     private final ValutatoreStatoPartita valutatoreStato;
 
     public GestoreStatoPartita(PartitaModificabile partita, ValutatoreStatoPartita valutatoreStato) {
-        if (partita == null || valutatoreStato == null) {
-            throw new IllegalArgumentException("Partita e ValutatoreStato non possono essere nulli.");
-        }
-        this.partita = partita;
-        this.valutatoreStato = valutatoreStato;
+        this.partita = Objects.requireNonNull(partita, "La partita non può essere nulla.");
+        this.valutatoreStato = Objects.requireNonNull(valutatoreStato, "Il valutatore stato non può essere nullo.");
     }
 
     public void giocaTurnoConScelta(int indiceOpzione) {
@@ -30,6 +28,6 @@ public class GestoreStatoPartita {
     }
 
     public StatoGiocoDto getStatoAttuale() {
-        return StatoGiocoMapper.daPartita(partita);
+        return StatoGiocoDto.daPartita(partita);
     }
 }

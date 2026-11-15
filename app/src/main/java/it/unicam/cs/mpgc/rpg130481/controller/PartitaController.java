@@ -1,6 +1,8 @@
 package it.unicam.cs.mpgc.rpg130481.controller;
 
 import it.unicam.cs.mpgc.rpg130481.model.eventi.EventoEseguibile;
+import it.unicam.cs.mpgc.rpg130481.model.partita.GestoreStatoPartita;
+import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.persistenza.GestorePersistenzaPartita;
 import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita;
 import it.unicam.cs.mpgc.rpg130481.view.VistaPartita;
