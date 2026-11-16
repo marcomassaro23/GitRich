@@ -2,16 +2,18 @@ package it.unicam.cs.mpgc.rpg130481.persistenza.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita;
 import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.StatoPartitaRepository;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 public class JsonStatoPartitaRepository implements StatoPartitaRepository {
@@ -20,15 +22,11 @@ public class JsonStatoPartitaRepository implements StatoPartitaRepository {
     private final Gson gson;
 
     public JsonStatoPartitaRepository(String percorsoFile) {
-        this(percorsoFile, new GsonBuilder().setPrettyPrinting().create());
-    }
-
-    public JsonStatoPartitaRepository(String percorsoFile, Gson gson) {
         if (percorsoFile == null || percorsoFile.isBlank()) {
             throw new IllegalArgumentException("Il percorso del file JSON non può essere nullo o vuoto.");
         }
         this.percorsoFile = percorsoFile;
-        this.gson = Objects.requireNonNull(gson, "L'istanza di Gson non può essere nulla.");
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
     @Override
@@ -47,21 +45,45 @@ public class JsonStatoPartitaRepository implements StatoPartitaRepository {
     }
 
     @Override
-    public void salva(StatoGiocoDto stato) {
-        Objects.requireNonNull(stato, "Lo stato da salvare non può essere nullo.");
+    public void salva(DatiSalvataggioPartita dati) {
+        Objects.requireNonNull(dati, "I dati da salvare non possono essere nulli.");
 
-        File destinazione = RisolutorePercorsi.risolviPercorsoDestinazione(percorsoFile);
-        File cartellaPadre = destinazione.getParentFile();
-        if (cartellaPadre != null && !cartellaPadre.exists()) {
-            cartellaPadre.mkdirs();
-        }
+        Path destinazione = RisolutorePercorsi.risolviPercorsoDestinazione(percorsoFile).toPath();
+        Path cartellaPadre = destinazione.getParent();
+        Path fileTemporaneo = null;
 
-        try (Writer writer = new FileWriter(destinazione, StandardCharsets.UTF_8)) {
-            gson.toJson(DatiSalvataggioPartita.daDto(stato), writer);
-        } catch (Exception e) {
+        try {
+            if (cartellaPadre != null) {
+                Files.createDirectories(cartellaPadre);
+                fileTemporaneo = Files.createTempFile(cartellaPadre, "salvataggio_", ".tmp");
+            } else {
+                fileTemporaneo = Files.createTempFile("salvataggio_", ".tmp");
+            }
+
+            try (Writer writer = Files.newBufferedWriter(fileTemporaneo, StandardCharsets.UTF_8)) {
+                gson.toJson(dati, writer);
+            }
+
+            try {
+                Files.move(
+                        fileTemporaneo,
+                        destinazione,
+                        StandardCopyOption.REPLACE_EXISTING,
+                        StandardCopyOption.ATOMIC_MOVE);
+            } catch (AtomicMoveNotSupportedException e) {
+                Files.move(fileTemporaneo, destinazione, StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException e) {
             throw new RuntimeException(
-                    "Errore durante il salvataggio dello stato su JSON: " + destinazione.getPath(),
+                    "Errore durante il salvataggio dello stato su JSON: " + destinazione,
                     e);
+        } finally {
+            if (fileTemporaneo != null) {
+                try {
+                    Files.deleteIfExists(fileTemporaneo);
+                } catch (IOException ignored) {
+                }
+            }
         }
     }
 }

@@ -33,7 +33,24 @@ public class PartitaController implements GestoreAzioniPartita {
 
     @Override
     public void avviaNuovaPartita() {
-        inizializzaPartita(persistenza.caricaStatoIniziale());
+        try {
+            inizializzaPartita(persistenza.caricaStatoIniziale());
+        } catch (Exception e) {
+            vista.mostraMessaggio("Errore durante l'avvio della nuova partita: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void elaboraSceltaGiocatore(int indiceOpzione) {
+        if (partita == null || partita.isTerminata()) {
+            return;
+        }
+        try {
+            partita.giocaTurnoConScelta(indiceOpzione);
+            sincronizzaStato();
+        } catch (Exception e) {
+            vista.mostraMessaggio("Errore durante l'elaborazione del turno: " + e.getMessage());
+        }
     }
 
     @Override
@@ -47,12 +64,6 @@ public class PartitaController implements GestoreAzioniPartita {
         } catch (Exception e) {
             vista.mostraMessaggio("Errore durante il ripristino della partita.");
         }
-    }
-
-    @Override
-    public void elaboraSceltaGiocatore(int indiceOpzione) {
-        partita.giocaTurnoConScelta(indiceOpzione);
-        sincronizzaStato();
     }
 
     private void inizializzaPartita(DatiSalvataggioPartita dati) {

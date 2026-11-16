@@ -52,7 +52,8 @@ public class GestorePersistenzaPartita {
 
     public void salvaInBackground(StatoGiocoDto stato) {
         if (stato != null) {
-            esecutoreSalvataggio.accodaSalvataggio(() -> salvataggioRepository.salva(stato));
+            DatiSalvataggioPartita snapshot = DatiSalvataggioPartita.daDto(stato);
+            esecutoreSalvataggio.accodaSalvataggio(() -> salvataggioRepository.salva(snapshot));
         }
     }
 
