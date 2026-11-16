@@ -13,6 +13,7 @@ public record StatoGiocoDto(
         Objects.requireNonNull(turno, "Il turno non può essere nullo.");
         Objects.requireNonNull(statistiche, "Le statistiche non possono essere nulle.");
         Objects.requireNonNull(statoPartita, "Lo stato della partita non può essere nullo.");
+        Objects.requireNonNull(eventoCorrente, "L'evento corrente non può essere nullo.");
     }
 
     public static StatoGiocoDto daPartita(Partita partita) {
