@@ -5,32 +5,19 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #0D1B2A;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.rpg130481.view.gui.MenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #0D1B2A;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.rpg130481.view.gui.MenuView">
    <children>
-      <ImageView fitHeight="726.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.8778076171875" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/background.png" />
          </image>
       </ImageView>
       <VBox alignment="CENTER" spacing="15.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="400.0">
          <children>
-            <Button fx:id="btnNuovaPartita" mnemonicParsing="false" onAction="#handleNuovaPartita" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: #0D1B2A, #22C55E; -fx-background-insets: 0, 3; -fx-background-radius: 10, 7; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;" text="NUOVA PARTITA">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnRiprendiPartita" mnemonicParsing="false" onAction="#handleRiprendiPartita" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: #0D1B2A, #3B82F6; -fx-background-insets: 0, 3; -fx-background-radius: 10, 7; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;" text="RIPRENDI PARTITA">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnEsci" mnemonicParsing="false" onAction="#handleEsci" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: #0D1B2A, #EF4444; -fx-background-insets: 0, 3; -fx-background-radius: 10, 7; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;" text="ESCI">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Button>
+            <Button mnemonicParsing="false" onAction="#handleNuovaPartita" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: #0D1B2A, #22C55E; -fx-background-insets: 0, 3; -fx-background-radius: 10, 7; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;" text="NUOVA PARTITA" />
+            <Button fx:id="btnRiprendiPartita" mnemonicParsing="false" onAction="#handleRiprendiPartita" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: #0D1B2A, #3B82F6; -fx-background-insets: 0, 3; -fx-background-radius: 10, 7; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;" text="RIPRENDI PARTITA" />
+            <Button mnemonicParsing="false" onAction="#handleEsci" prefHeight="45.0" prefWidth="260.0" style="-fx-background-color: #0D1B2A, #EF4444; -fx-background-insets: 0, 3; -fx-background-radius: 10, 7; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;" text="ESCI" />
          </children>
       </VBox>
    </children>

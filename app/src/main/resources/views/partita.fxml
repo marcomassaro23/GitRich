@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #0D1B2A;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.rpg130481.view.gui.EventoView">
+   <children>
+      <VBox spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <FlowPane fx:id="boxStatistiche" alignment="CENTER_LEFT" hgap="15.0" vgap="8.0" />
+            <VBox alignment="CENTER" prefHeight="160.0" spacing="8.0" style="-fx-background-color: #0D1B2A, #1E293B; -fx-background-insets: 0, 3; -fx-background-radius: 12, 9; -fx-border-color: #FCD34D; -fx-border-width: 2; -fx-border-radius: 12;">
+               <children>
+                  <Label fx:id="lblTurno" style="-fx-text-fill: #FCD34D; -fx-font-size: 14px; -fx-font-weight: bold;" text="Turno 1/24" textAlignment="CENTER" />
+                  <Label fx:id="lblTitoloEvento" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Titolo Evento" textAlignment="CENTER" wrapText="true" />
+                  <Label fx:id="lblDescrizioneEvento" style="-fx-text-fill: #E2E8F0; -fx-font-size: 16px; -fx-font-weight: bold;" text="Caricamento evento..." textAlignment="CENTER" wrapText="true" />
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="25.0" right="25.0" top="15.0" />
+               </padding>
+            </VBox>
+            <GridPane hgap="15.0" vgap="15.0" VBox.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints percentHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints percentHeight="50.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="btnOpzione1" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #0D1B2A, #1E293B; -fx-background-insets: 0, 3; -fx-background-radius: 12, 9; -fx-border-color: #FCD34D; -fx-border-width: 2; -fx-border-radius: 12; -fx-padding: 12 15; -fx-content-display: graphic-only; -fx-alignment: top-left; -fx-cursor: hand;">
+                     <graphic>
+                        <VBox spacing="10.0">
+                           <children>
+                              <Label fx:id="lblOpzione1" style="-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;" text="1. Opzione 1" wrapText="true" />
+                              <Region VBox.vgrow="ALWAYS" />
+                              <FlowPane fx:id="boxVariazioni1" hgap="6.0" vgap="6.0" />
+                           </children>
+                        </VBox>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnOpzione2" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #0D1B2A, #1E293B; -fx-background-insets: 0, 3; -fx-background-radius: 12, 9; -fx-border-color: #FCD34D; -fx-border-width: 2; -fx-border-radius: 12; -fx-padding: 12 15; -fx-content-display: graphic-only; -fx-alignment: top-left; -fx-cursor: hand;" GridPane.columnIndex="1">
+                     <graphic>
+                        <VBox spacing="10.0">
+                           <children>
+                              <Label fx:id="lblOpzione2" style="-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;" text="2. Opzione 2" wrapText="true" />
+                              <Region VBox.vgrow="ALWAYS" />
+                              <FlowPane fx:id="boxVariazioni2" hgap="6.0" vgap="6.0" />
+                           </children>
+                        </VBox>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnOpzione3" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #0D1B2A, #1E293B; -fx-background-insets: 0, 3; -fx-background-radius: 12, 9; -fx-border-color: #FCD34D; -fx-border-width: 2; -fx-border-radius: 12; -fx-padding: 12 15; -fx-content-display: graphic-only; -fx-alignment: top-left; -fx-cursor: hand;" GridPane.rowIndex="1">
+                     <graphic>
+                        <VBox spacing="10.0">
+                           <children>
+                              <Label fx:id="lblOpzione3" style="-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;" text="3. Opzione 3" wrapText="true" />
+                              <Region VBox.vgrow="ALWAYS" />
+                              <FlowPane fx:id="boxVariazioni3" hgap="6.0" vgap="6.0" />
+                           </children>
+                        </VBox>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnOpzione4" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #0D1B2A, #1E293B; -fx-background-insets: 0, 3; -fx-background-radius: 12, 9; -fx-border-color: #FCD34D; -fx-border-width: 2; -fx-border-radius: 12; -fx-padding: 12 15; -fx-content-display: graphic-only; -fx-alignment: top-left; -fx-cursor: hand;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <graphic>
+                        <VBox spacing="10.0">
+                           <children>
+                              <Label fx:id="lblOpzione4" style="-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;" text="4. Opzione 4" wrapText="true" />
+                              <Region VBox.vgrow="ALWAYS" />
+                              <FlowPane fx:id="boxVariazioni4" hgap="6.0" vgap="6.0" />
+                           </children>
+                        </VBox>
+                     </graphic>
+                  </Button>
+               </children>
+            </GridPane>
+            <HBox alignment="BOTTOM_RIGHT">
+               <children>
+                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleTornaMenu" prefHeight="42.0" prefWidth="190.0" style="-fx-background-color: #0D1B2A, #1E293B; -fx-background-insets: 0, 2; -fx-background-radius: 10, 8; -fx-border-color: #F97316; -fx-border-width: 1.8; -fx-border-radius: 10; -fx-text-fill: #FDBA74; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 18; -fx-cursor: hand;" text="← Torna al Menu" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
