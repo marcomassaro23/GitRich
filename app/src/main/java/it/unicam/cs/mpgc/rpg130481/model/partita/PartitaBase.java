@@ -47,6 +47,7 @@ public class PartitaBase implements Partita {
         this(statistiche, mazzoEventi, turno, selettoreEventi, valutatoreStato, null, StatoPartita.IN_CORSO);
     }
 
+    @Override
     public void giocaTurnoConScelta(int indiceOpzione) {
         if (isTerminata()) {
             throw new IllegalStateException("Impossibile avanzare: la partita è terminata.");

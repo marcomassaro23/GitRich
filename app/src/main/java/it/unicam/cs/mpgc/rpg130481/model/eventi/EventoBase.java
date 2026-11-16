@@ -1,7 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.eventi;
 
 import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAzienda;
-import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAziendaBase;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,18 +38,11 @@ public class EventoBase implements Evento {
     }
 
     @Override
-    public boolean isAttivabileCon(StatisticheAzienda statistiche) {
-        Objects.requireNonNull(statistiche, "Le statistiche aziendali non possono essere nulle.");
-        return true;
-    }
-
-    @Override
-    public void eseguiOpzione(int indiceOpzione, StatisticheAziendaBase statistiche) {
+    public void eseguiOpzione(int indiceOpzione, StatisticheAzienda statistiche) {
         Objects.requireNonNull(statistiche, "Le statistiche aziendali non possono essere nulle.");
         if (indiceOpzione < 0 || indiceOpzione >= opzioni.size()) {
             throw new IllegalArgumentException("Indice opzione non valido: " + indiceOpzione);
         }
-
         opzioni.get(indiceOpzione)
                 .variazioni()
                 .forEach(v -> statistiche.applicaVariazione(v.nomeMetrica(), v.variazione()));

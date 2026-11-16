@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.model.metriche;
 
+import java.util.Collections;
 import java.util.List;
 
 public class StatisticheAziendaBase implements StatisticheAzienda {
@@ -15,7 +16,7 @@ public class StatisticheAziendaBase implements StatisticheAzienda {
 
     @Override
     public List<Metrica> getMetriche() {
-        return List.copyOf(this.metriche);
+        return Collections.unmodifiableList(this.metriche);
     }
 
     @Override
@@ -23,6 +24,7 @@ public class StatisticheAziendaBase implements StatisticheAzienda {
         return metriche.stream().anyMatch(Metrica::isInStatoCritico);
     }
 
+    @Override
     public Metrica applicaVariazione(String nome, int delta) {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Il nome della metrica non può essere nullo o vuoto.");

@@ -9,4 +9,5 @@ public interface Partita {
     Evento getEventoCorrente();
     StatoPartita getStato();
     boolean isTerminata();
+    void giocaTurnoConScelta(int indiceOpzione);
 }
