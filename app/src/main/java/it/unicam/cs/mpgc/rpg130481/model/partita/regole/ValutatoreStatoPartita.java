@@ -4,12 +4,12 @@ import it.unicam.cs.mpgc.rpg130481.model.partita.Partita;
 import it.unicam.cs.mpgc.rpg130481.model.partita.StatoPartita;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class ValutatoreStatoPartita {
 
     private final List<RegolaStato> regole;
 
+    /** L'ordine delle regole è la loro priorità: vale la prima soddisfatta. */
     public ValutatoreStatoPartita(List<RegolaStato> regole) {
         if (regole == null || regole.isEmpty()) {
             throw new IllegalArgumentException("La lista delle regole non può essere nulla o vuota.");
@@ -17,11 +17,13 @@ public class ValutatoreStatoPartita {
         this.regole = List.copyOf(regole);
     }
 
-    public Optional<StatoPartita> determinaProssimoStato(Partita partita) {
+    public StatoPartita determinaProssimoStato(Partita partita) {
         Objects.requireNonNull(partita, "La partita non può essere nulla.");
-        return regole.stream()
-                .filter(regola -> regola.isSoddisfattaDa(partita))
-                .map(RegolaStato::getStatoRisultante)
-                .findFirst();
+        for (RegolaStato regola : regole) {
+            if (regola.isSoddisfattaDa(partita)) {
+                return regola.getStatoRisultante();
+            }
+        }
+        return StatoPartita.IN_CORSO;
     }
 }

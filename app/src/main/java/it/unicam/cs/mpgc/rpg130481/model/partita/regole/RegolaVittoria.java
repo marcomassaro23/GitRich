@@ -9,7 +9,7 @@ public class RegolaVittoria implements RegolaStato {
     @Override
     public boolean isSoddisfattaDa(Partita partita) {
         Objects.requireNonNull(partita, "La partita non può essere nulla.");
-        return partita.getTurno().isUltimo() && !partita.getStatistiche().hasMetricheCritiche();
+        return partita.getTurno().isUltimo();
     }
 
     @Override
