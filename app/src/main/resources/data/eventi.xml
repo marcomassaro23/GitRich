@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventi>
+
+    <!-- TURNO 1 -->
+    <evento>
+        <titolo>Crisi di Liquidità Iniziale</titolo>
+        <descrizione>Le vendite del trimestre sono crollate. La cassa aziendale è a rischio, come intendi procedere?</descrizione>
+        <opzione>
+            <testo>Richiedi un finanziamento bancario ad alto interesse</testo>
+            <modificaMetrica statistica="BUDGET" valore="30"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-10"/>
+            <modificaMetrica statistica="STRESS" valore="15"/>
+        </opzione>
+        <opzione>
+            <testo>Taglia i costi operativi e rinegozia i contratti fornitori</testo>
+            <modificaMetrica statistica="BUDGET" valore="15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-15"/>
+            <modificaMetrica statistica="STRESS" valore="20"/>
+        </opzione>
+        <opzione>
+            <testo>Lancia una campagna di prevendita con forti sconti</testo>
+            <modificaMetrica statistica="BUDGET" valore="20"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="5"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Chiedi supporto a un Business Angel cedendo quote</testo>
+            <modificaMetrica statistica="BUDGET" valore="40"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="-5"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 2 -->
+    <evento>
+        <titolo>Campagna Marketing Virale</titolo>
+        <descrizione>Un contenuto aziendale è diventato virale sui social network. Come ne approfitti?</descrizione>
+        <opzione>
+            <testo>Investi massicciamente nell'infrastruttura di promozione</testo>
+            <modificaMetrica statistica="BUDGET" valore="-25"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="35"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Mantieni la comunicazione organica senza ulteriori spese</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="15"/>
+            <modificaMetrica statistica="STRESS" valore="0"/>
+        </opzione>
+        <opzione>
+            <testo>Stringi sponsorizzazioni esclusive con influencer di settore</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="25"/>
+            <modificaMetrica statistica="STRESS" valore="5"/>
+        </opzione>
+        <opzione>
+            <testo>Sfrutta l'onda per vendere merchandising in edizione limitata</testo>
+            <modificaMetrica statistica="BUDGET" valore="15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="5"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 3 -->
+    <evento>
+        <titolo>Sciopero del Personale</titolo>
+        <descrizione>I dipendenti chiedono un adeguamento del carico di lavoro e un bonus straordinario.</descrizione>
+        <opzione>
+            <testo>Accetta tutte le richieste e concedi i bonus full</testo>
+            <modificaMetrica statistica="BUDGET" valore="-20"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="20"/>
+            <modificaMetrica statistica="STRESS" valore="-30"/>
+        </opzione>
+        <opzione>
+            <testo>Rifiuta la trattativa e imponi il rientro immediato</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-30"/>
+            <modificaMetrica statistica="STRESS" valore="40"/>
+        </opzione>
+        <opzione>
+            <testo>Proponi orari flessibili e lavoro da remoto senza bonus</testo>
+            <modificaMetrica statistica="BUDGET" valore="-5"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="-15"/>
+        </opzione>
+        <opzione>
+            <testo>Offri piani di azionariato diffuso (Stock Options) ai team lead</testo>
+            <modificaMetrica statistica="BUDGET" valore="-10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="15"/>
+            <modificaMetrica statistica="STRESS" valore="-20"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 4 -->
+    <evento>
+        <titolo>Fuga di Dati Sensibili</titolo>
+        <descrizione>Un hacker ha sottratto frammenti del database utenti. Come gestisci la crisi di comunicazione?</descrizione>
+        <opzione>
+            <testo>Rilascia una dichiarazione pubblica immediata assumendo piena responsabilità</testo>
+            <modificaMetrica statistica="BUDGET" valore="-10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="25"/>
+        </opzione>
+        <opzione>
+            <testo>Assumi uno studio di cyber-security per contenere il danno in silenzio</testo>
+            <modificaMetrica statistica="BUDGET" valore="-30"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-10"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Nega l'incidente ed attribuisci il problema a una manutenzione esterna</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-40"/>
+            <modificaMetrica statistica="STRESS" valore="30"/>
+        </opzione>
+        <opzione>
+            <testo>Offri un anno di servizi premium gratis agli utenti interessati</testo>
+            <modificaMetrica statistica="BUDGET" valore="-20"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="20"/>
+            <modificaMetrica statistica="STRESS" valore="15"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 5 -->
+    <evento>
+        <titolo>Nuova Normativa di Settore</titolo>
+        <descrizione>L'Unione Europea introduce rigidi regolamenti di compliance che richiedono adeguamenti software.</descrizione>
+        <opzione>
+            <testo>Assumi consulenti esterni legali per la verifica celere</testo>
+            <modificaMetrica statistica="BUDGET" valore="-25"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="15"/>
+            <modificaMetrica statistica="STRESS" valore="-10"/>
+        </opzione>
+        <opzione>
+            <testo>Metti in pausa lo sviluppo prodotto per far lavorare il team interno</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-5"/>
+            <modificaMetrica statistica="STRESS" valore="30"/>
+        </opzione>
+        <opzione>
+            <testo>Richiedi una proroga ufficiale alle autorità di vigilanza</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-15"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Acquista una suite SaaS già certificata ed integrala subito</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="5"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 6 -->
+    <evento>
+        <titolo>Attacco da un Competitor Aggressivo</titolo>
+        <descrizione>Un concorrente lancia un prodotto identico al tuo a metà prezzo per sottrarti quote di mercato.</descrizione>
+        <opzione>
+            <testo>Abbassa immediatamente i prezzi a tua volta accettando margini minimi</testo>
+            <modificaMetrica statistica="BUDGET" valore="-20"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="5"/>
+            <modificaMetrica statistica="STRESS" valore="20"/>
+        </opzione>
+        <opzione>
+            <testo>Punta sulla qualità eccelsa e sulla fidelizzazione Premium</testo>
+            <modificaMetrica statistica="BUDGET" valore="-10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="25"/>
+            <modificaMetrica statistica="STRESS" valore="5"/>
+        </opzione>
+        <opzione>
+            <testo>Avvia un'azione legale per violazione di brevetto</testo>
+            <modificaMetrica statistica="BUDGET" valore="-30"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="25"/>
+        </opzione>
+        <opzione>
+            <testo>Acquisisci la startup avversaria offrendo una fusione</testo>
+            <modificaMetrica statistica="BUDGET" valore="-40"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="30"/>
+            <modificaMetrica statistica="STRESS" valore="-10"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 7 -->
+    <evento>
+        <titolo>Opportunità di Espansione Estera</titolo>
+        <descrizione>Un partner commerciale propone di distribuire i tuoi prodotti nel mercato asiatico.</descrizione>
+        <opzione>
+            <testo>Firma l'accordo ed invia una delegazione sul posto</testo>
+            <modificaMetrica statistica="BUDGET" valore="-30"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="40"/>
+            <modificaMetrica statistica="STRESS" valore="25"/>
+        </opzione>
+        <opzione>
+            <testo>Vendi i diritti di licenza senza investimenti diretti</testo>
+            <modificaMetrica statistica="BUDGET" valore="35"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="15"/>
+            <modificaMetrica statistica="STRESS" valore="5"/>
+        </opzione>
+        <opzione>
+            <testo>Declina per concentrare le risorse sul mercato locale</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-10"/>
+            <modificaMetrica statistica="STRESS" valore="-15"/>
+        </opzione>
+        <opzione>
+            <testo>Avvia una joint-venture al 50% condivisa</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="25"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 8 -->
+    <evento>
+        <titolo>Guasto all'Infrastruttura Cloud</titolo>
+        <descrizione>I server principali sono offline da 6 ore, impedendo agli utenti di accedere al servizio.</descrizione>
+        <opzione>
+            <testo>Paga il supplemento emergency al provider cloud per ripristino istantaneo</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="5"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Affida la gestione della riparazione agli sviluppatori interni lavorando di notte</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-15"/>
+            <modificaMetrica statistica="STRESS" valore="35"/>
+        </opzione>
+        <opzione>
+            <testo>Migra l'intero sistema su un secondo fornitore concorrente</testo>
+            <modificaMetrica statistica="BUDGET" valore="-25"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="15"/>
+            <modificaMetrica statistica="STRESS" valore="20"/>
+        </opzione>
+        <opzione>
+            <testo>Rimborsa i clienti per il disservizio subito</testo>
+            <modificaMetrica statistica="BUDGET" valore="-20"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="30"/>
+            <modificaMetrica statistica="STRESS" valore="-5"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 9 -->
+    <evento>
+        <titolo>Dimissioni del CTO</titolo>
+        <descrizione>Il Direttore Tecnico decide di abbandonare l'azienda per una big tech.</descrizione>
+        <opzione>
+            <testo>Offri una controposta economica generosa per farlo rimanere</testo>
+            <modificaMetrica statistica="BUDGET" valore="-25"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="5"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Promuovi il lead developer interno a nuovo CTO</testo>
+            <modificaMetrica statistica="BUDGET" valore="-5"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="-15"/>
+        </opzione>
+        <opzione>
+            <testo>Avvia una selezione tramite una società di Headhunting</testo>
+            <modificaMetrica statistica="BUDGET" valore="-20"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="15"/>
+            <modificaMetrica statistica="STRESS" valore="15"/>
+        </opzione>
+        <opzione>
+            <testo>Riorganizza il reparto senza nominare un singolo sostituto</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-20"/>
+            <modificaMetrica statistica="STRESS" valore="25"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 10 -->
+    <evento>
+        <titolo>Fiera Tecnologica Annuale</titolo>
+        <descrizione>È arrivato il momento dell'evento fieristico più importante dell'anno.</descrizione>
+        <opzione>
+            <testo>Prenota lo stand principale ed organizza un party esclusivo</testo>
+            <modificaMetrica statistica="BUDGET" valore="-35"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="45"/>
+            <modificaMetrica statistica="STRESS" valore="15"/>
+        </opzione>
+        <opzione>
+            <testo>Partecipa con uno stand standard di medie dimensioni</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="20"/>
+            <modificaMetrica statistica="STRESS" valore="5"/>
+        </opzione>
+        <opzione>
+            <testo>Partecipa solo come visitatori inviando i venditori</testo>
+            <modificaMetrica statistica="BUDGET" valore="-5"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="5"/>
+            <modificaMetrica statistica="STRESS" valore="-5"/>
+        </opzione>
+        <opzione>
+            <testo>Organizza un keynote in streaming autonomo online</testo>
+            <modificaMetrica statistica="BUDGET" valore="-10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="25"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 11 -->
+    <evento>
+        <titolo>Proposta di Acquisizione</titolo>
+        <descrizione>Un gigante industriale offre di acquistare il 30% delle tue quote societarie.</descrizione>
+        <opzione>
+            <testo>Accetta l'offerta per incassare liquidità importante</testo>
+            <modificaMetrica statistica="BUDGET" valore="50"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="20"/>
+            <modificaMetrica statistica="STRESS" valore="-20"/>
+        </opzione>
+        <opzione>
+            <testo>Rifiuta recisamente per mantenere la totale indipendenza</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="15"/>
+            <modificaMetrica statistica="STRESS" valore="15"/>
+        </opzione>
+        <opzione>
+            <testo>Controproponi la vendita solo del 10% con diritti speciali</testo>
+            <modificaMetrica statistica="BUDGET" valore="20"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="5"/>
+        </opzione>
+        <opzione>
+            <testo>Prendi tempo e richiedi una due diligence approfondita</testo>
+            <modificaMetrica statistica="BUDGET" valore="-10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="5"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 12 -->
+    <evento>
+        <titolo>Scandalo Ambientale dei Fornitori</titolo>
+        <descrizione>Il tuo principale fornitore di componenti hardware è accusato di inquinamento illegale.</descrizione>
+        <opzione>
+            <testo>Interrompi immediatamente il contratto cambiando fornitore a costi maggiori</testo>
+            <modificaMetrica statistica="BUDGET" valore="-25"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="30"/>
+            <modificaMetrica statistica="STRESS" valore="15"/>
+        </opzione>
+        <opzione>
+            <testo>Imponi un audit di sostenibilità mantenendo temporaneamente le forniture</testo>
+            <modificaMetrica statistica="BUDGET" valore="-10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="5"/>
+        </opzione>
+        <opzione>
+            <testo>Ignora la vicenda finché non ci saranno condanne ufficiali</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-35"/>
+            <modificaMetrica statistica="STRESS" valore="20"/>
+        </opzione>
+        <opzione>
+            <testo>Crea un fondo green aziendale per compensare le emissioni</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="20"/>
+            <modificaMetrica statistica="STRESS" valore="-5"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 13 -->
+    <evento>
+        <titolo>Richiesta di Brevetto Contestata</titolo>
+        <descrizione>Una società concorrente dichiara che il vostro prodotto principale viola un loro brevetto del 2018.</descrizione>
+        <opzione>
+            <testo>Patteggia una royalty annuale sulle vendite</testo>
+            <modificaMetrica statistica="BUDGET" valore="-20"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-10"/>
+            <modificaMetrica statistica="STRESS" valore="-10"/>
+        </opzione>
+        <opzione>
+            <testo>Combatti in tribunale per invalidare il loro brevetto</testo>
+            <modificaMetrica statistica="BUDGET" valore="-35"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="15"/>
+            <modificaMetrica statistica="STRESS" valore="30"/>
+        </opzione>
+        <opzione>
+            <testo>Ridisegna le componenti software per aggirare il brevetto</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="5"/>
+            <modificaMetrica statistica="STRESS" valore="25"/>
+        </opzione>
+        <opzione>
+            <testo>Lancia un accordo di cross-licensing condiviso</testo>
+            <modificaMetrica statistica="BUDGET" valore="-5"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="0"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 14 -->
+    <evento>
+        <titolo>Burnout di Squadra</titolo>
+        <descrizione>I ritmi di lavoro serrati hanno causato un picco di assenze per malattia ed infortuni da stress.</descrizione>
+        <opzione>
+            <testo>Organizza un ritiro aziendale (Team Building) e concedi 3 giorni di ferie extra</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="20"/>
+            <modificaMetrica statistica="STRESS" valore="-40"/>
+        </opzione>
+        <opzione>
+            <testo>Assumi lavoratori interinali per alleggerire i carichi immediati</testo>
+            <modificaMetrica statistica="BUDGET" valore="-25"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="-25"/>
+        </opzione>
+        <opzione>
+            <testo>Posticipa le scadenze dei progetti concordando un ritardo con i clienti</testo>
+            <modificaMetrica statistica="BUDGET" valore="-10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-20"/>
+            <modificaMetrica statistica="STRESS" valore="-15"/>
+        </opzione>
+        <opzione>
+            <testo>Ignora il fenomeno richiedendo uno sforzo finale per il trimestre</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-30"/>
+            <modificaMetrica statistica="STRESS" valore="50"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 15 -->
+    <evento>
+        <titolo>Lancio dell'Intelligenza Artificiale</titolo>
+        <descrizione>Nuovi strumenti di IA generativa potrebbero automatizzare gran parte dei vostri processi aziendali.</descrizione>
+        <opzione>
+            <testo>Investi massicciamente nell'integrazione completa dell'IA</testo>
+            <modificaMetrica statistica="BUDGET" valore="-30"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="30"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Forma i dipendenti sull'uso dell'IA senza tagli al personale</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="25"/>
+            <modificaMetrica statistica="STRESS" valore="-10"/>
+        </opzione>
+        <opzione>
+            <testo>Licenzia il 20% del personale operativo per ridurre il budget costi</testo>
+            <modificaMetrica statistica="BUDGET" valore="30"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-35"/>
+            <modificaMetrica statistica="STRESS" valore="30"/>
+        </opzione>
+        <opzione>
+            <testo>Banna l'uso dell'IA in azienda per questioni di riservatezza</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-10"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 16 -->
+    <evento>
+        <titolo>Fluttuazione dei Tassi di Cambio</titolo>
+        <descrizione>La svalutazione della moneta estera riduce del 15% i profitti derivanti dall'export.</descrizione>
+        <opzione>
+            <testo>Acquista strumenti finanziari derivati di copertura valutaria</testo>
+            <modificaMetrica statistica="BUDGET" valore="-10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="5"/>
+            <modificaMetrica statistica="STRESS" valore="-5"/>
+        </opzione>
+        <opzione>
+            <testo>Aumenta i prezzi di listino nei paesi interessati dalla svalutazione</testo>
+            <modificaMetrica statistica="BUDGET" valore="15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-15"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Sposta la produzione direttamente nei paesi di vendita</testo>
+            <modificaMetrica statistica="BUDGET" valore="-35"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="20"/>
+            <modificaMetrica statistica="STRESS" valore="20"/>
+        </opzione>
+        <opzione>
+            <testo>Assorbi le perdite di cambio senza alcuna variazione strategica</testo>
+            <modificaMetrica statistica="BUDGET" valore="-20"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="0"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 17 -->
+    <evento>
+        <titolo>Recensione Distruttiva da Stampa Specializzata</titolo>
+        <descrizione>La principale rivista del settore pubblica un articolo severo bollando il vostro prodotto come obsoleto.</descrizione>
+        <opzione>
+            <testo>Acquista spazi pubblicitari sulla rivista chiedendo un diritto di replica</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Rilascia un aggiornamento software gratuito che risolve tutte le criticità</testo>
+            <modificaMetrica statistica="BUDGET" valore="-10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="35"/>
+            <modificaMetrica statistica="STRESS" valore="15"/>
+        </opzione>
+        <opzione>
+            <testo>Attacca pubblicamente il giornalista accusandolo di conflitto di interessi</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-40"/>
+            <modificaMetrica statistica="STRESS" valore="35"/>
+        </opzione>
+        <opzione>
+            <testo>Invita i recensori presso la sede aziendale per un demo privato</testo>
+            <modificaMetrica statistica="BUDGET" valore="-5"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="20"/>
+            <modificaMetrica statistica="STRESS" valore="-5"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 18 -->
+    <evento>
+        <titolo>Richiesta Sponsorizzazione Evento di Beneficenza</titolo>
+        <descrizione>Una nota ONG propone all'azienda di essere main sponsor per un'iniziativa contro il cambio climatico.</descrizione>
+        <opzione>
+            <testo>Diventa Main Sponsor donando una somma cospicua</testo>
+            <modificaMetrica statistica="BUDGET" valore="-30"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="40"/>
+            <modificaMetrica statistica="STRESS" valore="-10"/>
+        </opzione>
+        <opzione>
+            <testo>Partecipa come sponsor tecnico fornendo servizi gratuiti</testo>
+            <modificaMetrica statistica="BUDGET" valore="-10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="20"/>
+            <modificaMetrica statistica="STRESS" valore="5"/>
+        </opzione>
+        <opzione>
+            <testo>Coinvolgi i dipendenti in giornate di volontariato retribuito</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="30"/>
+            <modificaMetrica statistica="STRESS" valore="-20"/>
+        </opzione>
+        <opzione>
+            <testo>Rifiuta l'invito per mancanza di fondi a bilancio</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-15"/>
+            <modificaMetrica statistica="STRESS" valore="0"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 19 -->
+    <evento>
+        <titolo>Problema di Logistica globale</titolo>
+        <descrizione>Un blocco nei porti principali ritarda le consegne dei prodotti fisici di oltre un mese.</descrizione>
+        <opzione>
+            <testo>Organizza spedizioni via aerea d'urgenza molto costose</testo>
+            <modificaMetrica statistica="BUDGET" valore="-35"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="20"/>
+            <modificaMetrica statistica="STRESS" valore="15"/>
+        </opzione>
+        <opzione>
+            <testo>Offri buoni sconto sui futuri acquisti agli utenti in attesa</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Converti la vendita fisica in licenze digitali ove possibile</testo>
+            <modificaMetrica statistica="BUDGET" valore="10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="15"/>
+            <modificaMetrica statistica="STRESS" valore="-5"/>
+        </opzione>
+        <opzione>
+            <testo>Attendi che il blocco si risolva spontaneamente</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-25"/>
+            <modificaMetrica statistica="STRESS" valore="30"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 20 -->
+    <evento>
+        <titolo>Audit Fiscale Inaspettato</titolo>
+        <descrizione>L'Agenzia delle Entrate avvia un controllo fiscale approfondito sugli ultimi tre anni di bilancio.</descrizione>
+        <opzione>
+            <testo>Affidati a uno studio commercialista top di gamma</testo>
+            <modificaMetrica statistica="BUDGET" valore="-25"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="-15"/>
+        </opzione>
+        <opzione>
+            <testo>Gestisci l'ispezione con il personale amministrativo interno</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-5"/>
+            <modificaMetrica statistica="STRESS" valore="35"/>
+        </opzione>
+        <opzione>
+            <testo>Paga la sanzione preventiva per chiudere la verifica in anticipo</testo>
+            <modificaMetrica statistica="BUDGET" valore="-30"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-10"/>
+            <modificaMetrica statistica="STRESS" valore="-20"/>
+        </opzione>
+        <opzione>
+            <testo>Presenta un ricorso immediato contro l'atto di verifica</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="5"/>
+            <modificaMetrica statistica="STRESS" valore="20"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 21 -->
+    <evento>
+        <titolo>Aumento Improvviso dell'Inflazione</titolo>
+        <descrizione>I costi delle materie prime e dell'energia crescono del 20% in tutto il paese.</descrizione>
+        <opzione>
+            <testo>Aumenta proporzionalmente i listini prezzi finali</testo>
+            <modificaMetrica statistica="BUDGET" valore="20"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-20"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Riduci la quantità/dimensione delle confezioni prodotto</testo>
+            <modificaMetrica statistica="BUDGET" valore="10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-25"/>
+            <modificaMetrica statistica="STRESS" valore="15"/>
+        </opzione>
+        <opzione>
+            <testo>Investi in efficienza energetica ed impianti fotovoltaici</testo>
+            <modificaMetrica statistica="BUDGET" valore="-30"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="25"/>
+            <modificaMetrica statistica="STRESS" valore="-10"/>
+        </opzione>
+        <opzione>
+            <testo>Riduci i margini di guadagno per mantenere invariati i prezzi</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="30"/>
+            <modificaMetrica statistica="STRESS" valore="5"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 22 -->
+    <evento>
+        <titolo>Lancio del Progetto Innovation Lab</titolo>
+        <descrizione>Il team di Ricerca e Sviluppo propone una tecnologia rivoluzionaria ma ad altissimo rischio.</descrizione>
+        <opzione>
+            <testo>Finanzia interamente il progetto di ricerca pionieristico</testo>
+            <modificaMetrica statistica="BUDGET" valore="-40"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="45"/>
+            <modificaMetrica statistica="STRESS" valore="15"/>
+        </opzione>
+        <opzione>
+            <testo>Richiedi un bando di finanziamento pubblico a fondo perduto</testo>
+            <modificaMetrica statistica="BUDGET" valore="15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="15"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Testa un prototipo su scala ridotta limitando i costi</testo>
+            <modificaMetrica statistica="BUDGET" valore="-15"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="20"/>
+            <modificaMetrica statistica="STRESS" valore="0"/>
+        </opzione>
+        <opzione>
+            <testo>Boccia la proposta ritenendola troppo avventata</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="-15"/>
+            <modificaMetrica statistica="STRESS" valore="-10"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 23 -->
+    <evento>
+        <titolo>Voci di Fusione Industriale</titolo>
+        <descrizione>I giornali finanziari ipotizzano imminenti nozze societarie tra il tuo gruppo ed una multinazionale.</descrizione>
+        <opzione>
+            <testo>Conferma ufficialmente le trattative facendo decollare il titolo</testo>
+            <modificaMetrica statistica="BUDGET" valore="25"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="25"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+        <opzione>
+            <testo>Smentisci categoricamente le indiscrezioni di stampa</testo>
+            <modificaMetrica statistica="BUDGET" valore="0"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="10"/>
+            <modificaMetrica statistica="STRESS" valore="-10"/>
+        </opzione>
+        <opzione>
+            <testo>Rilascia un "No Comment" strategico agli analisti</testo>
+            <modificaMetrica statistica="BUDGET" valore="10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="0"/>
+            <modificaMetrica statistica="STRESS" valore="5"/>
+        </opzione>
+        <opzione>
+            <testo>Avvia un piano di buyback delle azioni proprie</testo>
+            <modificaMetrica statistica="BUDGET" valore="-30"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="30"/>
+            <modificaMetrica statistica="STRESS" valore="-5"/>
+        </opzione>
+    </evento>
+
+    <!-- TURNO 24 -->
+    <evento>
+        <titolo>Resoconto di Chiusura Esercizio</titolo>
+        <descrizione>Siamo al turno finale dell'anno fiscale. Come intendi presentare i risultati agli azionisti?</descrizione>
+        <opzione>
+            <testo>Distribuisci dividendi straordinari agli azionisti</testo>
+            <modificaMetrica statistica="BUDGET" valore="-30"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="50"/>
+            <modificaMetrica statistica="STRESS" valore="-30"/>
+        </opzione>
+        <opzione>
+            <testo>Reinvesti tutti gli utili nel fondo riserva dell'azienda</testo>
+            <modificaMetrica statistica="BUDGET" valore="35"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="20"/>
+            <modificaMetrica statistica="STRESS" valore="0"/>
+        </opzione>
+        <opzione>
+            <testo>Eroga un premio produzione pari a tre mensilità per ogni dipendente</testo>
+            <modificaMetrica statistica="BUDGET" valore="-25"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="40"/>
+            <modificaMetrica statistica="STRESS" valore="-40"/>
+        </opzione>
+        <opzione>
+            <testo>Presenta un piano industriale decennale per la borsa</testo>
+            <modificaMetrica statistica="BUDGET" valore="10"/>
+            <modificaMetrica statistica="REPUTAZIONE" valore="30"/>
+            <modificaMetrica statistica="STRESS" valore="10"/>
+        </opzione>
+    </evento>
+
+</eventi>

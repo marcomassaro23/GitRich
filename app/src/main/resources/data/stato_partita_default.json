@@ -1,0 +1,31 @@
+{
+  "turno": {
+    "corrente": 1,
+    "massimo": 24
+  },
+  "metriche": [
+    {
+      "nome": "BUDGET",
+      "valore": 50,
+      "valoreMinimo": 0,
+      "valoreMassimo": 100,
+      "criticaAlMassimo": false
+    },
+    {
+      "nome": "REPUTAZIONE",
+      "valore": 50,
+      "valoreMinimo": 0,
+      "valoreMassimo": 100,
+      "criticaAlMassimo": false
+    },
+    {
+      "nome": "STRESS",
+      "valore": 10,
+      "valoreMinimo": 0,
+      "valoreMassimo": 100,
+      "criticaAlMassimo": true
+    }
+  ],
+  "titoloEventoCorrente": null,
+  "codiceStato": "IN_CORSO"
+}
