@@ -1,13 +1,12 @@
 package it.unicam.cs.mpgc.rpg130481.model.metriche;
 
-import java.util.Collections;
 import java.util.List;
 
 public class StatisticheAziendaBase implements StatisticheAzienda {
 
-    private final List<MetricaBase> metriche;
+    private final List<Metrica> metriche;
 
-    public StatisticheAziendaBase(List<MetricaBase> metriche) {
+    public StatisticheAziendaBase(List<? extends Metrica> metriche) {
         if (metriche == null || metriche.isEmpty()) {
             throw new IllegalArgumentException("La lista delle metriche non può essere nulla o vuota.");
         }
@@ -16,7 +15,7 @@ public class StatisticheAziendaBase implements StatisticheAzienda {
 
     @Override
     public List<Metrica> getMetriche() {
-        return Collections.unmodifiableList(this.metriche);
+        return metriche;
     }
 
     @Override
@@ -29,7 +28,7 @@ public class StatisticheAziendaBase implements StatisticheAzienda {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Il nome della metrica non può essere nullo o vuoto.");
         }
-        MetricaBase metrica = metriche.stream()
+        Metrica metrica = metriche.stream()
                 .filter(m -> m.getNome().equals(nome))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Metrica con nome '" + nome + "' non trovata."));

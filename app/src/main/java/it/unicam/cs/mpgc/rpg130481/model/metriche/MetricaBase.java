@@ -61,6 +61,7 @@ public class MetricaBase implements Metrica {
         return criticaAlMassimo ? valore >= valoreMassimo : valore <= valoreMinimo;
     }
 
+    @Override
     public int applicaVariazione(int variazione) {
         this.valore = Math.clamp(this.valore + variazione, valoreMinimo, valoreMassimo);
         return this.valore;

@@ -55,7 +55,7 @@ public class PartitaBase implements Partita {
         if (eventoCorrente != null) {
             eventoCorrente.eseguiOpzione(indiceOpzione, statistiche);
         }
-        valutatoreStato.determinaProssimoStato(this).ifPresent(nuovoStato -> this.stato = nuovoStato);
+        this.stato = valutatoreStato.determinaProssimoStato(this);
         if (!isTerminata() && !turno.isUltimo()) {
             this.turno = turno.successivo();
             this.eventoCorrente = selezionaProssimoEvento();
@@ -88,6 +88,6 @@ public class PartitaBase implements Partita {
     }
 
     private Evento selezionaProssimoEvento() {
-        return selettoreEventi.selezionaProssimo(mazzoEventi, statistiche, turno);
+        return selettoreEventi.selezionaProssimo(mazzoEventi, turno);
     }
 }

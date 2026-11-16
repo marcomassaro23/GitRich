@@ -7,4 +7,5 @@ public interface Metrica {
     int getValoreMassimo();
     boolean isCriticaAlMassimo();
     boolean isInStatoCritico();
+    int applicaVariazione(int variazione);
 }
