@@ -2,7 +2,6 @@ package it.unicam.cs.mpgc.rpg130481.model.partita;
 
 import it.unicam.cs.mpgc.rpg130481.model.eventi.Evento;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAzienda;
-import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAziendaBase;
 import it.unicam.cs.mpgc.rpg130481.model.partita.regole.ValutatoreStatoPartita;
 import it.unicam.cs.mpgc.rpg130481.model.partita.selettori.SelettoreEventi;
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.Objects;
 
 public class PartitaBase implements Partita {
 
-    private final StatisticheAziendaBase statistiche;
+    private final StatisticheAzienda statistiche;
     private final List<Evento> mazzoEventi;
     private final SelettoreEventi selettoreEventi;
     private final ValutatoreStatoPartita valutatoreStato;
@@ -19,7 +18,7 @@ public class PartitaBase implements Partita {
     private StatoPartita stato;
 
     public PartitaBase(
-            StatisticheAziendaBase statistiche,
+            StatisticheAzienda statistiche,
             List<Evento> mazzoEventi,
             Turno turno,
             SelettoreEventi selettoreEventi,
@@ -39,7 +38,7 @@ public class PartitaBase implements Partita {
     }
 
     public PartitaBase(
-            StatisticheAziendaBase statistiche,
+            StatisticheAzienda statistiche,
             List<Evento> mazzoEventi,
             Turno turno,
             SelettoreEventi selettoreEventi,
