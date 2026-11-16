@@ -1,22 +1,26 @@
 package it.unicam.cs.mpgc.rpg130481.view.gui;
 
 import it.unicam.cs.mpgc.rpg130481.controller.GestoreAzioniPartita;
-import it.unicam.cs.mpgc.rpg130481.model.metriche.Metrica;
 import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import java.util.Objects;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 public class FinePartitaView implements FxView {
 
     @FXML
     private FlowPane boxMetriche;
 
+    private final CreatoreBadgeMetrica creatoreBadge;
     private GestoreAzioniPartita gestoreAzioni;
+
+    public FinePartitaView() {
+        this(new CreatoreBadgeMetrica());
+    }
+
+    public FinePartitaView(CreatoreBadgeMetrica creatoreBadge) {
+        this.creatoreBadge = Objects.requireNonNull(creatoreBadge, "Il creatore badge non può essere nullo.");
+    }
 
     @Override
     public void setGestoreAzioni(GestoreAzioniPartita gestoreAzioni) {
@@ -25,9 +29,7 @@ public class FinePartitaView implements FxView {
 
     public void mostraEsito(StatoGiocoDto statoFinale) {
         Objects.requireNonNull(statoFinale, "Lo stato finale non può essere nullo.");
-        boxMetriche.getChildren().clear();
-        statoFinale.statistiche().getMetriche()
-                .forEach(metrica -> boxMetriche.getChildren().add(creaEtichettaMetrica(metrica)));
+        boxMetriche.getChildren().setAll(creatoreBadge.perMetriche(statoFinale.statistiche().getMetriche()));
     }
 
     @FXML
@@ -38,12 +40,5 @@ public class FinePartitaView implements FxView {
     @FXML
     public void handleMenuPrincipale() {
         gestoreAzioni.apriMenuPrincipale();
-    }
-
-    private Label creaEtichettaMetrica(Metrica metrica) {
-        Label etichetta = new Label(metrica.getNome() + ": " + metrica.getValore());
-        etichetta.setFont(Font.font("System", FontWeight.BOLD, 15));
-        etichetta.setTextFill(Color.MIDNIGHTBLUE);
-        return etichetta;
     }
 }
