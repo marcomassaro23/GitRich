@@ -8,4 +8,4 @@ build
 .kotlin
 
 # Ignore game saves
-saves/
+app/saves/salvataggio_partita.json
