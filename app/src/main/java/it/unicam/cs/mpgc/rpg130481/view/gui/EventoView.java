@@ -65,7 +65,7 @@ public class EventoView implements FxView {
 
     public void mostraStato(StatoGiocoDto stato) {
         Objects.requireNonNull(stato, "Lo stato di gioco non può essere nullo.");
-        List<Metrica> metriche = stato.statistiche().getMetriche();
+        List<Metrica> metriche = stato.metriche();
         mostraMetriche(metriche);
         mostraTurno(stato.turno());
         mostraEvento(stato.eventoCorrente(), metriche);

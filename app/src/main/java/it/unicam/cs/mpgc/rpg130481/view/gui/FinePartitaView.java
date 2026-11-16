@@ -29,7 +29,7 @@ public class FinePartitaView implements FxView {
 
     public void mostraEsito(StatoGiocoDto statoFinale) {
         Objects.requireNonNull(statoFinale, "Lo stato finale non può essere nullo.");
-        boxMetriche.getChildren().setAll(creatoreBadge.perMetriche(statoFinale.statistiche().getMetriche()));
+        boxMetriche.getChildren().setAll(creatoreBadge.perMetriche(statoFinale.metriche()));
     }
 
     @FXML
