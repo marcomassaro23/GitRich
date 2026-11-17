@@ -1,43 +1,41 @@
 package it.unicam.cs.mpgc.rpg130481.controller;
 
-import it.unicam.cs.mpgc.rpg130481.model.eventi.Evento;
-import it.unicam.cs.mpgc.rpg130481.model.partita.PartitaBase;
+import it.unicam.cs.mpgc.rpg130481.model.partita.Partita;
 import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
-import it.unicam.cs.mpgc.rpg130481.persistenza.GestorePersistenzaPartita;
-import it.unicam.cs.mpgc.rpg130481.persistenza.salvataggio.DatiSalvataggioPartita;
+import it.unicam.cs.mpgc.rpg130481.persistenza.ArchivioPartita;
 import it.unicam.cs.mpgc.rpg130481.view.VistaPartita;
-
-import java.util.List;
 import java.util.Objects;
 
 public class PartitaController implements GestoreAzioniPartita {
 
-    private PartitaBase partita;
+    private Partita partita;
     private final VistaPartita vista;
-    private final InizializzatorePartita inizializzatore;
-    private final GestorePersistenzaPartita persistenza;
+    private final ArchivioPartita persistenza;
 
-    public PartitaController(
-            VistaPartita vista,
-            InizializzatorePartita inizializzatore,
-            GestorePersistenzaPartita persistenza) {
+    public PartitaController(VistaPartita vista, ArchivioPartita persistenza) {
         this.vista = Objects.requireNonNull(vista, "La vista della partita non può essere nulla.");
-        this.inizializzatore = Objects.requireNonNull(inizializzatore, "L'inizializzatore non può essere nullo.");
-        this.persistenza = Objects.requireNonNull(persistenza, "Il gestore persistenza non può essere nullo.");
+        this.persistenza = Objects.requireNonNull(persistenza, "L'archivio della partita non può essere nullo.");
     }
 
     @Override
     public void apriMenuPrincipale() {
-        vista.mostraMenu(persistenza.hasSalvataggioRiprendibile());
+        vista.mostraMenu(persistenza.esistePartitaRiprendibile());
+    }
+
+   @Override
+    public void avviaNuovaPartita() {
+        esegui("Impossibile avviare una nuova partita", () -> {
+            partita = persistenza.creaNuovaPartita();
+            salvaEAggiornaVista();
+        });
     }
 
     @Override
-    public void avviaNuovaPartita() {
-        try {
-            inizializzaPartita(persistenza.caricaStatoIniziale());
-        } catch (Exception e) {
-            vista.mostraMessaggio("Errore durante l'avvio della nuova partita: " + e.getMessage());
-        }
+    public void caricaPartita() {
+        esegui("Impossibile ripristinare la partita", () -> {
+            partita = persistenza.riprendiPartitaSalvata();
+            aggiornaVista(StatoGiocoDto.daPartita(partita));
+        });
     }
 
     @Override
@@ -45,40 +43,31 @@ public class PartitaController implements GestoreAzioniPartita {
         if (partita == null || partita.isTerminata()) {
             return;
         }
-        try {
+        esegui("Azione non valida", () -> {
             partita.giocaTurnoConScelta(indiceOpzione);
-            sincronizzaStato();
-        } catch (Exception e) {
-            vista.mostraMessaggio("Errore durante l'elaborazione del turno: " + e.getMessage());
-        }
+            salvaEAggiornaVista();
+        });
     }
 
-    @Override
-    public void caricaPartita() {
-        if (!persistenza.hasSalvataggioRiprendibile()) {
-            avviaNuovaPartita();
-            return;
-        }
+    private void esegui(String contestoErrore, Runnable azione) {
         try {
-            inizializzaPartita(persistenza.caricaStatoSalvato());
-        } catch (Exception e) {
-            vista.mostraMessaggio("Errore durante il ripristino della partita.");
+            azione.run();
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            vista.mostraMessaggio(contestoErrore + ": " + e.getMessage());
         }
     }
 
-    private void inizializzaPartita(DatiSalvataggioPartita dati) {
-        List<Evento> mazzoEventi = persistenza.caricaMazzoEventi();
-        this.partita = inizializzatore.creaPartita(dati, mazzoEventi);
-        sincronizzaStato();
+    private void salvaEAggiornaVista() {
+        StatoGiocoDto stato = StatoGiocoDto.daPartita(partita);
+        persistenza.salvaStato(stato);
+        aggiornaVista(stato);
     }
 
-    private void sincronizzaStato() {
-        StatoGiocoDto statoAttuale = StatoGiocoDto.daPartita(partita);
-        persistenza.salvaInBackground(statoAttuale);
-        if (statoAttuale.isTerminata()) {
-            vista.mostraFinePartita(statoAttuale);
+    private void aggiornaVista(StatoGiocoDto stato) {
+        if (stato.isTerminata()) {
+            vista.mostraFinePartita(stato);
         } else {
-            vista.mostraSchermataGioco(statoAttuale);
+            vista.mostraSchermataGioco(stato);
         }
     }
 }

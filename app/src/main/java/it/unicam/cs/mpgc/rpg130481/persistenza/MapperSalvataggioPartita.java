@@ -1,33 +1,33 @@
 package it.unicam.cs.mpgc.rpg130481.persistenza;
 
 import it.unicam.cs.mpgc.rpg130481.model.eventi.Evento;
-import it.unicam.cs.mpgc.rpg130481.model.partita.FabbricaPartita;
+import it.unicam.cs.mpgc.rpg130481.model.metriche.MetricaBase;
+import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAziendaBase;
 import it.unicam.cs.mpgc.rpg130481.model.partita.Partita;
+import it.unicam.cs.mpgc.rpg130481.model.partita.PartitaBase;
 import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import java.util.List;
 import java.util.Objects;
 
 public class MapperSalvataggioPartita {
 
-    private final FabbricaPartita fabbricaPartita;
-
-    public MapperSalvataggioPartita(FabbricaPartita fabbricaPartita) {
-        this.fabbricaPartita = Objects.requireNonNull(fabbricaPartita, "La fabbrica partita non può essere nulla.");
-    }
-
     public DatiSalvataggioPartita versoDatiSalvataggio(StatoGiocoDto stato) {
         Objects.requireNonNull(stato, "Lo stato di gioco non può essere nullo.");
+        List<MetricaBase> metriche = stato.statistiche().getMetriche().stream()
+                .map(DatiSalvataggioPartita::copia)
+                .toList();
         return new DatiSalvataggioPartita(
                 stato.turno(),
-                stato.metriche().stream().map(DatiSalvataggioPartita::copia).toList(),
+                metriche,
                 stato.eventoCorrente().getTitolo(),
                 stato.statoPartita());
     }
 
     public Partita versoPartita(DatiSalvataggioPartita dati, List<Evento> mazzoEventi) {
         Objects.requireNonNull(dati, "I dati di salvataggio non possono essere nulli.");
-        return fabbricaPartita.crea(
-                dati.metriche(),
+        Objects.requireNonNull(mazzoEventi, "Il mazzo eventi non può essere nullo.");
+        return new PartitaBase(
+                new StatisticheAziendaBase(dati.metriche()),
                 mazzoEventi,
                 dati.turno(),
                 trovaEventoPerTitolo(dati.titoloEventoCorrente(), mazzoEventi),

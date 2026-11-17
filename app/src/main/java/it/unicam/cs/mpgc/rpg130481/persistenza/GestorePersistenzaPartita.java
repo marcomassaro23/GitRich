@@ -1,7 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.persistenza;
 
 import it.unicam.cs.mpgc.rpg130481.model.eventi.Evento;
-import it.unicam.cs.mpgc.rpg130481.model.partita.FabbricaPartitaBase;
 import it.unicam.cs.mpgc.rpg130481.model.partita.Partita;
 import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import java.util.List;
@@ -19,7 +18,7 @@ public class GestorePersistenzaPartita implements ArchivioPartita, AutoCloseable
                 new ArchivioDatiAsincrono<>(new JsonStatoPartitaRepository("saves/salvataggio_partita.json")),
                 new JsonStatoPartitaRepository("data/stato_partita_default.json"),
                 new XmlEventoRepository("data/eventi.xml"),
-                new MapperSalvataggioPartita(new FabbricaPartitaBase()));
+                new MapperSalvataggioPartita());
     }
 
     public GestorePersistenzaPartita(
