@@ -2,8 +2,11 @@ package it.unicam.cs.mpgc.rpg130481.model.partita;
 
 import it.unicam.cs.mpgc.rpg130481.model.eventi.Evento;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAzienda;
+import it.unicam.cs.mpgc.rpg130481.model.partita.regole.RegolaBancarotta;
+import it.unicam.cs.mpgc.rpg130481.model.partita.regole.RegolaVittoria;
 import it.unicam.cs.mpgc.rpg130481.model.partita.regole.ValutatoreStatoPartita;
 import it.unicam.cs.mpgc.rpg130481.model.partita.selettori.SelettoreEventi;
+import it.unicam.cs.mpgc.rpg130481.model.partita.selettori.SelettoreEventiDeterministico;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,6 +38,22 @@ public class PartitaBase implements Partita {
         this.valutatoreStato = Objects.requireNonNull(valutatoreStato, "Il valutatore stato non può essere nullo.");
         this.stato = statoIniziale != null ? statoIniziale : StatoPartita.IN_CORSO;
         this.eventoCorrente = eventoIniziale != null ? eventoIniziale : selezionaProssimoEvento();
+    }
+
+    public PartitaBase(
+            StatisticheAzienda statistiche,
+            List<Evento> mazzoEventi,
+            Turno turno,
+            Evento eventoIniziale,
+            StatoPartita statoIniziale) {
+        this(
+                statistiche,
+                mazzoEventi,
+                turno,
+                new SelettoreEventiDeterministico(),
+                new ValutatoreStatoPartita(List.of(new RegolaBancarotta(), new RegolaVittoria())),
+                eventoIniziale,
+                statoIniziale);
     }
 
     public PartitaBase(
