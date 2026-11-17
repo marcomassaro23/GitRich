@@ -1,6 +1,7 @@
 package it.unicam.cs.mpgc.rpg130481;
 
 import it.unicam.cs.mpgc.rpg130481.controller.PartitaController;
+import it.unicam.cs.mpgc.rpg130481.persistenza.ArchivioPartita;
 import it.unicam.cs.mpgc.rpg130481.persistenza.GestorePersistenzaPartita;
 import it.unicam.cs.mpgc.rpg130481.view.gui.GestoreScene;
 import it.unicam.cs.mpgc.rpg130481.view.gui.VistaGui;
@@ -9,7 +10,7 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
-    private GestorePersistenzaPartita persistenza;
+    private ArchivioPartita persistenza;
 
     @Override
     public void start(Stage stage) {
