@@ -6,30 +6,27 @@ import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import java.util.List;
 import java.util.Objects;
 
-public class GestorePersistenzaPartita implements ArchivioPartita, AutoCloseable {
+public class GestorePersistenzaPartita implements ArchivioPartita {
 
     private final ArchivioDati<DatiSalvataggioPartita> salvataggioRepository;
     private final SorgenteDati<DatiSalvataggioPartita> sorgenteDefault;
     private final List<Evento> mazzoEventi;
-    private final MapperSalvataggioPartita mapper;
+    private final MapperSalvataggioPartita mapper = new MapperSalvataggioPartita();
 
     public GestorePersistenzaPartita() {
         this(
                 new ArchivioDatiAsincrono<>(new JsonStatoPartitaRepository("saves/salvataggio_partita.json")),
                 new JsonStatoPartitaRepository("data/stato_partita_default.json"),
-                new XmlEventoRepository("data/eventi.xml"),
-                new MapperSalvataggioPartita());
+                new XmlEventoRepository("data/eventi.xml"));
     }
 
     public GestorePersistenzaPartita(
             ArchivioDati<DatiSalvataggioPartita> salvataggioRepository,
             SorgenteDati<DatiSalvataggioPartita> sorgenteDefault,
-            SorgenteDati<List<Evento>> eventoRepository,
-            MapperSalvataggioPartita mapper) {
+            SorgenteDati<List<Evento>> eventoRepository) {
         this.salvataggioRepository = Objects.requireNonNull(salvataggioRepository);
         this.sorgenteDefault = Objects.requireNonNull(sorgenteDefault);
         this.mazzoEventi = List.copyOf(Objects.requireNonNull(eventoRepository).carica());
-        this.mapper = Objects.requireNonNull(mapper);
     }
 
     @Override

@@ -2,33 +2,68 @@ package it.unicam.cs.mpgc.rpg130481.persistenza;
 
 import it.unicam.cs.mpgc.rpg130481.model.metriche.Metrica;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.MetricaBase;
+import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.model.partita.StatoPartita;
 import it.unicam.cs.mpgc.rpg130481.model.partita.Turno;
 import java.util.List;
 import java.util.Objects;
 
-public record DatiSalvataggioPartita(
+record DatiSalvataggioPartita(
         Turno turno,
-        List<MetricaBase> metriche,
+        List<DatiMetrica> metriche,
         String titoloEventoCorrente,
         StatoPartita codiceStato) {
 
-    public DatiSalvataggioPartita {
-        Objects.requireNonNull(turno, "Il turno non può essere nullo.");
-        if (metriche == null || metriche.isEmpty()) {
-            throw new IllegalArgumentException("Dati di salvataggio incompleti o corrotti.");
+    record DatiMetrica(
+            String nome,
+            int valore,
+            int valoreMinimo,
+            int valoreMassimo,
+            boolean criticaAlMassimo) {
+
+        static DatiMetrica daMetrica(Metrica metrica) {
+            Objects.requireNonNull(metrica, "La metrica non può essere nulla.");
+            return new DatiMetrica(
+                    metrica.getNome(),
+                    metrica.getValore(),
+                    metrica.getValoreMinimo(),
+                    metrica.getValoreMassimo(),
+                    metrica.isCriticaAlMassimo());
         }
-        metriche = metriche.stream().map(DatiSalvataggioPartita::copia).toList();
-        codiceStato = Objects.requireNonNullElse(codiceStato, StatoPartita.IN_CORSO);
+
+        Metrica toMetrica() {
+            return new MetricaBase(nome, valore, valoreMinimo, valoreMassimo, criticaAlMassimo);
+        }
+
+        boolean isValida() {
+            return nome != null && !nome.isBlank() && valoreMinimo < valoreMassimo;
+        }
     }
 
-    public boolean isTerminata() {
-        return codiceStato.isTerminata();
+    static DatiSalvataggioPartita daStatoGioco(StatoGiocoDto stato) {
+        Objects.requireNonNull(stato, "Lo stato di gioco non può essere nullo.");
+        List<DatiMetrica> lista = stato.statistiche().getMetriche().stream()
+                .map(DatiMetrica::daMetrica)
+                .toList();
+        return new DatiSalvataggioPartita(
+                stato.turno(),
+                lista,
+                stato.eventoCorrente().getTitolo(),
+                stato.statoPartita());
     }
 
-    static MetricaBase copia(Metrica m) {
-        Objects.requireNonNull(m, "La metrica non può essere nulla.");
-        return new MetricaBase(
-                m.getNome(), m.getValore(), m.getValoreMinimo(), m.getValoreMassimo(), m.isCriticaAlMassimo());
+    List<Metrica> toMetriche() {
+        return metriche.stream().map(DatiMetrica::toMetrica).toList();
+    }
+
+    boolean isTerminata() {
+        return codiceStato != null && codiceStato.isTerminata();
+    }
+
+    boolean isValido() {
+        return turno != null
+                && metriche != null
+                && !metriche.isEmpty()
+                && metriche.stream().allMatch(metrica -> metrica != null && metrica.isValida());
     }
 }

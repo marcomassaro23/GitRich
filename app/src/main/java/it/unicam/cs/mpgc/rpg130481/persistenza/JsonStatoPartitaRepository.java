@@ -2,7 +2,6 @@ package it.unicam.cs.mpgc.rpg130481.persistenza;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,8 +29,8 @@ public class JsonStatoPartitaRepository implements ArchivioDati<DatiSalvataggioP
         try (InputStream stream = RisolutoreRisorse.apriStreamLettura(percorsoFile);
                 Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
             DatiSalvataggioPartita dati = gson.fromJson(reader, DatiSalvataggioPartita.class);
-            if (dati == null) {
-                throw new IllegalArgumentException("File JSON vuoto.");
+            if (dati == null || !dati.isValido()) {
+                throw new IllegalArgumentException("Dati di salvataggio incompleti o corrotti.");
             }
             return dati;
         } catch (IOException | RuntimeException e) {
