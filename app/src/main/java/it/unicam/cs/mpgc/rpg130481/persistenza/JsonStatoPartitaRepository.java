@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
-public class JsonStatoPartitaRepository implements ArchivioDati<DatiSalvataggioPartita> {
+public class JsonStatoPartitaRepository implements ArchivioDati<ContenitoreDati> {
 
     private final String percorsoFile;
     private final Gson gson;
@@ -21,15 +21,15 @@ public class JsonStatoPartitaRepository implements ArchivioDati<DatiSalvataggioP
             throw new IllegalArgumentException("Il percorso del file JSON non può essere nullo o vuoto.");
         }
         this.percorsoFile = percorsoFile;
-        this.gson = new GsonBuilder().setPrettyPrinting().create();
+        this.gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
     }
 
     @Override
-    public DatiSalvataggioPartita carica() {
+    public ContenitoreDati carica() {
         try (InputStream stream = RisolutoreRisorse.apriStreamLettura(percorsoFile);
                 Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-            DatiSalvataggioPartita dati = gson.fromJson(reader, DatiSalvataggioPartita.class);
-            if (dati == null || !dati.isValido()) {
+            ContenitoreDati dati = gson.fromJson(reader, ContenitoreDati.class);
+            if (dati == null || dati.turno() == null || dati.metriche() == null) {
                 throw new IllegalArgumentException("Dati di salvataggio incompleti o corrotti.");
             }
             return dati;
@@ -39,7 +39,7 @@ public class JsonStatoPartitaRepository implements ArchivioDati<DatiSalvataggioP
     }
 
     @Override
-    public void salva(DatiSalvataggioPartita dati) {
+    public void salva(ContenitoreDati dati) {
         Objects.requireNonNull(dati, "I dati da salvare non possono essere nulli.");
         Path destinazione = Path.of(percorsoFile);
         try {

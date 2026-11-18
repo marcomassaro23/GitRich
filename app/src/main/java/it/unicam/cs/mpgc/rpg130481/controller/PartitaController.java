@@ -1,7 +1,6 @@
 package it.unicam.cs.mpgc.rpg130481.controller;
 
 import it.unicam.cs.mpgc.rpg130481.model.partita.Partita;
-import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.persistenza.ArchivioPartita;
 import it.unicam.cs.mpgc.rpg130481.view.VistaPartita;
 import java.util.Objects;
@@ -19,14 +18,16 @@ public class PartitaController implements GestoreAzioniPartita {
 
     @Override
     public void apriMenuPrincipale() {
+        salvaPartita();
+        partita = null;
         vista.mostraMenu(persistenza.esistePartitaRiprendibile());
     }
 
-   @Override
+    @Override
     public void avviaNuovaPartita() {
         esegui("Impossibile avviare una nuova partita", () -> {
             partita = persistenza.creaNuovaPartita();
-            salvaEAggiornaVista();
+            aggiornaVista();
         });
     }
 
@@ -34,7 +35,7 @@ public class PartitaController implements GestoreAzioniPartita {
     public void caricaPartita() {
         esegui("Impossibile ripristinare la partita", () -> {
             partita = persistenza.riprendiPartitaSalvata();
-            aggiornaVista(StatoGiocoDto.daPartita(partita));
+            aggiornaVista();
         });
     }
 
@@ -45,8 +46,14 @@ public class PartitaController implements GestoreAzioniPartita {
         }
         esegui("Azione non valida", () -> {
             partita.giocaTurnoConScelta(indiceOpzione);
-            salvaEAggiornaVista();
+            aggiornaVista();
         });
+    }
+
+    public void salvaPartita() {
+        if (partita != null) {
+            esegui("Impossibile salvare la partita", () -> persistenza.salvaPartita(partita));
+        }
     }
 
     private void esegui(String contestoErrore, Runnable azione) {
@@ -57,17 +64,11 @@ public class PartitaController implements GestoreAzioniPartita {
         }
     }
 
-    private void salvaEAggiornaVista() {
-        StatoGiocoDto stato = StatoGiocoDto.daPartita(partita);
-        persistenza.salvaStato(stato);
-        aggiornaVista(stato);
-    }
-
-    private void aggiornaVista(StatoGiocoDto stato) {
-        if (stato.isTerminata()) {
-            vista.mostraFinePartita(stato);
+    private void aggiornaVista() {
+        if (partita.isTerminata()) {
+            vista.mostraFinePartita(partita);
         } else {
-            vista.mostraSchermataGioco(stato);
+            vista.mostraSchermataGioco(partita);
         }
     }
 }
