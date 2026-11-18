@@ -32,5 +32,5 @@ Tutti i suggerimenti proposti sono stati analizzati, compresi e adattati manualm
 
 ---
 
-📌 Per una descrizione più dettagliata dell’uso dell’AI, consultare la sezione [**Uso AI**](https://github.com/marcomassaro23/GitRich/wiki/Uso-AI) della **Wiki del repository**.
+📌 Per una descrizione più dettagliata dell’uso dell’AI, consultare la sezione [**Dichiarazione Uso AI**](https://github.com/marcomassaro23/GitRich/wiki/Dichiarazione-Uso-AI) della **Wiki del repository**.
 
