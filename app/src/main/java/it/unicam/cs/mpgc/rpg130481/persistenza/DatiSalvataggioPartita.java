@@ -2,7 +2,6 @@ package it.unicam.cs.mpgc.rpg130481.persistenza;
 
 import it.unicam.cs.mpgc.rpg130481.model.metriche.Metrica;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.MetricaBase;
-import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.model.partita.StatoPartita;
 import it.unicam.cs.mpgc.rpg130481.model.partita.Turno;
 import java.util.List;
@@ -38,18 +37,6 @@ record DatiSalvataggioPartita(
         boolean isValida() {
             return nome != null && !nome.isBlank() && valoreMinimo < valoreMassimo;
         }
-    }
-
-    static DatiSalvataggioPartita daStatoGioco(StatoGiocoDto stato) {
-        Objects.requireNonNull(stato, "Lo stato di gioco non può essere nullo.");
-        List<DatiMetrica> lista = stato.statistiche().getMetriche().stream()
-                .map(DatiMetrica::daMetrica)
-                .toList();
-        return new DatiSalvataggioPartita(
-                stato.turno(),
-                lista,
-                stato.eventoCorrente().getTitolo(),
-                stato.statoPartita());
     }
 
     List<Metrica> toMetriche() {
