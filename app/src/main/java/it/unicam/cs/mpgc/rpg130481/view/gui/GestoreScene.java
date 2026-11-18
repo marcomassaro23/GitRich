@@ -18,9 +18,9 @@ public class GestoreScene {
         this.stage = Objects.requireNonNull(stage, "Lo stage non può essere nullo.");
     }
 
-    public <T extends FxView> T mostraScena(String nomeFileFxml, Class<T> tipoController) {
-        if (nomeFileFxml.equals(fxmlAttivo) && tipoController.isInstance(controllerAttivo)) {
-            return tipoController.cast(controllerAttivo);
+    public FxView mostraScena(String nomeFileFxml) {
+        if (nomeFileFxml.equals(fxmlAttivo) && controllerAttivo != null) {
+            return controllerAttivo;
         }
         try {
             URL risorsaFxml = Objects.requireNonNull(
@@ -28,7 +28,7 @@ public class GestoreScene {
                     "File FXML non trovato: " + nomeFileFxml);
             FXMLLoader loader = new FXMLLoader(risorsaFxml);
             Parent radice = loader.load();
-            T controller = tipoController.cast(loader.getController());
+            FxView controller = loader.getController();
 
             this.fxmlAttivo = nomeFileFxml;
             this.controllerAttivo = controller;

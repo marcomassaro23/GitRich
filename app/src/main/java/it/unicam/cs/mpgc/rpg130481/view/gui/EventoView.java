@@ -4,7 +4,7 @@ import it.unicam.cs.mpgc.rpg130481.controller.GestoreAzioniPartita;
 import it.unicam.cs.mpgc.rpg130481.model.eventi.Evento;
 import it.unicam.cs.mpgc.rpg130481.model.eventi.OpzioneEvento;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAzienda;
-import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
+import it.unicam.cs.mpgc.rpg130481.model.partita.Partita;
 import it.unicam.cs.mpgc.rpg130481.model.partita.Turno;
 import java.util.List;
 import java.util.Objects;
@@ -63,11 +63,11 @@ public class EventoView implements FxView {
         this.gestoreAzioni = Objects.requireNonNull(gestoreAzioni, "Il gestore azioni non può essere nullo.");
     }
 
-    public void mostraStato(StatoGiocoDto stato) {
-        Objects.requireNonNull(stato, "Lo stato di gioco non può essere nullo.");
-        mostraMetriche(stato.statistiche());
-        mostraTurno(stato.turno());
-        mostraEvento(stato.eventoCorrente(), stato.statistiche());
+    public void mostraStato(Partita partita) {
+        Objects.requireNonNull(partita, "La partita non può essere nulla.");
+        mostraMetriche(partita.getStatistiche());
+        mostraTurno(partita.getTurno());
+        mostraEvento(partita.getEventoCorrente(), partita.getStatistiche());
     }
 
     @FXML

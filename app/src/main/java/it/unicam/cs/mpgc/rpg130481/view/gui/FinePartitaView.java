@@ -1,7 +1,7 @@
 package it.unicam.cs.mpgc.rpg130481.view.gui;
 
 import it.unicam.cs.mpgc.rpg130481.controller.GestoreAzioniPartita;
-import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
+import it.unicam.cs.mpgc.rpg130481.model.partita.Partita;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
@@ -27,9 +27,9 @@ public class FinePartitaView implements FxView {
         this.gestoreAzioni = Objects.requireNonNull(gestoreAzioni, "Il gestore azioni non può essere nullo.");
     }
 
-    public void mostraEsito(StatoGiocoDto statoFinale) {
-        Objects.requireNonNull(statoFinale, "Lo stato finale non può essere nullo.");
-        boxMetriche.getChildren().setAll(creatoreBadge.perMetriche(statoFinale.statistiche()));
+    public void mostraEsito(Partita partita) {
+        Objects.requireNonNull(partita, "La partita non può essere nulla.");
+        boxMetriche.getChildren().setAll(creatoreBadge.perMetriche(partita.getStatistiche()));
     }
 
     @FXML

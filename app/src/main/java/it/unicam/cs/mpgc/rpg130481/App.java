@@ -10,13 +10,13 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
-    private ArchivioPartita persistenza;
+    private PartitaController controller;
 
     @Override
     public void start(Stage stage) {
-        this.persistenza = new GestorePersistenzaPartita();
+        ArchivioPartita persistenza = new GestorePersistenzaPartita();
         VistaGui vista = new VistaGui(new GestoreScene(stage));
-        PartitaController controller = new PartitaController(vista, persistenza);
+        this.controller = new PartitaController(vista, persistenza);
         vista.setGestoreAzioni(controller);
 
         stage.setTitle("GitRich");
@@ -25,9 +25,9 @@ public class App extends Application {
     }
 
     @Override
-    public void stop() throws Exception {
-        if (persistenza != null) {
-            persistenza.close();
+    public void stop() {
+        if (controller != null) {
+            controller.salvaPartita();
         }
     }
 

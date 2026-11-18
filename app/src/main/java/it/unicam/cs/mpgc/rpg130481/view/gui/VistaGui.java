@@ -1,11 +1,10 @@
 package it.unicam.cs.mpgc.rpg130481.view.gui;
 
 import it.unicam.cs.mpgc.rpg130481.controller.GestoreAzioniPartita;
-import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
-import it.unicam.cs.mpgc.rpg130481.model.partita.StatoPartita;
+import it.unicam.cs.mpgc.rpg130481.model.partita.Partita;
 import it.unicam.cs.mpgc.rpg130481.view.VistaPartita;
+import java.util.Locale;
 import java.util.Objects;
-import java.util.function.Consumer;
 import javafx.scene.control.Alert;
 
 public class VistaGui implements VistaPartita {
@@ -23,18 +22,25 @@ public class VistaGui implements VistaPartita {
 
     @Override
     public void mostraMenu(boolean salvataggioDisponibile) {
-        apriVista("menu.fxml", MenuView.class, v -> v.aggiornaDisponibilitaSalvataggio(salvataggioDisponibile));
+        MenuView view = (MenuView) caricaVista("menu.fxml");
+        view.aggiornaDisponibilitaSalvataggio(salvataggioDisponibile);
     }
 
     @Override
-    public void mostraSchermataGioco(StatoGiocoDto stato) {
-        apriVista("partita.fxml", EventoView.class, v -> v.mostraStato(stato));
+    public void mostraSchermataGioco(Partita partita) {
+        EventoView view = (EventoView) caricaVista("partita.fxml");
+        view.mostraStato(partita);
     }
 
     @Override
-    public void mostraFinePartita(StatoGiocoDto statoFinale) {
-        String fxml = statoFinale.statoPartita() == StatoPartita.VITTORIA ? "vittoria.fxml" : "bancarotta.fxml";
-        apriVista(fxml, FinePartitaView.class, v -> v.mostraEsito(statoFinale));
+    public void mostraFinePartita(Partita partita) {
+        Objects.requireNonNull(partita, "La partita non può essere nulla.");
+        if (!partita.isTerminata()) {
+            throw new IllegalArgumentException("La partita non è ancora terminata.");
+        }
+        String fxml = partita.getStato().name().toLowerCase(Locale.ROOT) + ".fxml";
+        FinePartitaView view = (FinePartitaView) caricaVista(fxml);
+        view.mostraEsito(partita);
     }
 
     @Override
@@ -46,10 +52,10 @@ public class VistaGui implements VistaPartita {
         avviso.showAndWait();
     }
 
-    private <T extends FxView> void apriVista(String fxml, Class<T> tipo, Consumer<T> azione) {
+    private FxView caricaVista(String fxml) {
         Objects.requireNonNull(gestoreAzioni, "GestoreAzioniPartita non configurato.");
-        T view = gestoreScene.mostraScena(fxml, tipo);
+        FxView view = gestoreScene.mostraScena(fxml);
         view.setGestoreAzioni(gestoreAzioni);
-        azione.accept(view);
+        return view;
     }
 }
