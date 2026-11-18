@@ -3,7 +3,7 @@ package it.unicam.cs.mpgc.rpg130481.view.gui;
 import it.unicam.cs.mpgc.rpg130481.controller.GestoreAzioniPartita;
 import it.unicam.cs.mpgc.rpg130481.model.eventi.Evento;
 import it.unicam.cs.mpgc.rpg130481.model.eventi.OpzioneEvento;
-import it.unicam.cs.mpgc.rpg130481.model.metriche.Metrica;
+import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAzienda;
 import it.unicam.cs.mpgc.rpg130481.model.partita.StatoGiocoDto;
 import it.unicam.cs.mpgc.rpg130481.model.partita.Turno;
 import java.util.List;
@@ -65,10 +65,9 @@ public class EventoView implements FxView {
 
     public void mostraStato(StatoGiocoDto stato) {
         Objects.requireNonNull(stato, "Lo stato di gioco non può essere nullo.");
-        List<Metrica> metriche = stato.statistiche().getMetriche();
-        mostraMetriche(metriche);
+        mostraMetriche(stato.statistiche());
         mostraTurno(stato.turno());
-        mostraEvento(stato.eventoCorrente(), metriche);
+        mostraEvento(stato.eventoCorrente(), stato.statistiche());
     }
 
     @FXML
@@ -76,35 +75,35 @@ public class EventoView implements FxView {
         gestoreAzioni.apriMenuPrincipale();
     }
 
-    private void mostraMetriche(List<Metrica> metriche) {
-        boxStatistiche.getChildren().setAll(creatoreBadge.perMetriche(metriche));
+    private void mostraMetriche(StatisticheAzienda statistiche) {
+        boxStatistiche.getChildren().setAll(creatoreBadge.perMetriche(statistiche));
     }
 
     private void mostraTurno(Turno turno) {
         lblTurno.setText("Turno " + turno.corrente() + "/" + turno.massimo());
     }
 
-    private void mostraEvento(Evento evento, List<Metrica> metriche) {
+    private void mostraEvento(Evento evento, StatisticheAzienda statistiche) {
         lblTitoloEvento.setText(evento.getTitolo());
         lblDescrizioneEvento.setText(evento.getDescrizione());
-        mostraOpzioni(evento.getOpzioni(), metriche);
+        mostraOpzioni(evento.getOpzioni(), statistiche);
     }
 
-    private void mostraOpzioni(List<OpzioneEvento> opzioni, List<Metrica> metriche) {
+    private void mostraOpzioni(List<OpzioneEvento> opzioni, StatisticheAzienda statistiche) {
         for (int i = 0; i < cards.size(); i++) {
             if (i < opzioni.size()) {
-                popolaCard(cards.get(i), opzioni.get(i), i + 1, metriche);
+                popolaCard(cards.get(i), opzioni.get(i), i + 1, statistiche);
             } else {
                 nascondiCard(cards.get(i));
             }
         }
     }
 
-    private void popolaCard(CardOpzione card, OpzioneEvento opzione, int numero, List<Metrica> metriche) {
+    private void popolaCard(CardOpzione card, OpzioneEvento opzione, int numero, StatisticheAzienda statistiche) {
         card.pulsante().setVisible(true);
         card.pulsante().setDisable(false);
         card.testo().setText(numero + ". " + opzione.testo());
-        card.variazioni().getChildren().setAll(creatoreBadge.perVariazioni(opzione.variazioni(), metriche));
+        card.variazioni().getChildren().setAll(creatoreBadge.perVariazioni(opzione.variazioni(), statistiche));
     }
 
     private void nascondiCard(CardOpzione card) {

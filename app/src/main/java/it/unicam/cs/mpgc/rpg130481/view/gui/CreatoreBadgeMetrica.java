@@ -2,7 +2,9 @@ package it.unicam.cs.mpgc.rpg130481.view.gui;
 
 import it.unicam.cs.mpgc.rpg130481.model.eventi.VariazioneMetrica;
 import it.unicam.cs.mpgc.rpg130481.model.metriche.Metrica;
+import it.unicam.cs.mpgc.rpg130481.model.metriche.StatisticheAzienda;
 import java.util.List;
+import java.util.Objects;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
@@ -43,24 +45,27 @@ public class CreatoreBadgeMetrica {
         this.colori = List.copyOf(colori);
     }
 
-    public List<Label> perMetriche(List<Metrica> metriche) {
-        return metriche.stream()
+    public List<Label> perMetriche(StatisticheAzienda statistiche) {
+        Objects.requireNonNull(statistiche, "Le statistiche aziendali non possono essere nulle.");
+        return statistiche.getMetriche().stream()
                 .map(m -> creaBadge(
                         m.getNome() + ": " + m.getValore(),
-                        coloreDi(m.getNome(), metriche),
+                        coloreDi(m.getNome(), statistiche),
                         STILE_GRANDE))
                 .toList();
     }
 
-    public List<Label> perVariazioni(List<VariazioneMetrica> variazioni, List<Metrica> metriche) {
+    public List<Label> perVariazioni(List<VariazioneMetrica> variazioni, StatisticheAzienda statistiche) {
+        Objects.requireNonNull(variazioni, "La lista delle variazioni non può essere nulla.");
+        Objects.requireNonNull(statistiche, "Le statistiche aziendali non possono essere nulle.");
         return variazioni.stream()
-                .map(variazione -> perVariazione(variazione, metriche))
+                .map(variazione -> perVariazione(variazione, statistiche))
                 .toList();
     }
 
-    private Label perVariazione(VariazioneMetrica variazione, List<Metrica> metriche) {
+    private Label perVariazione(VariazioneMetrica variazione, StatisticheAzienda statistiche) {
         String testo = String.format("%s: %+d", variazione.nomeMetrica(), variazione.variazione());
-        Color colore = coloreDi(variazione.nomeMetrica(), metriche);
+        Color colore = coloreDi(variazione.nomeMetrica(), statistiche);
         return creaBadge(testo, colore, STILE_PICCOLO);
     }
 
@@ -76,7 +81,8 @@ public class CreatoreBadgeMetrica {
         return badge;
     }
 
-    private Color coloreDi(String nomeMetrica, List<Metrica> metriche) {
+    private Color coloreDi(String nomeMetrica, StatisticheAzienda statistiche) {
+        List<Metrica> metriche = statistiche.getMetriche();
         for (int i = 0; i < metriche.size(); i++) {
             if (metriche.get(i).getNome().equals(nomeMetrica)) {
                 return colori.get(i % colori.size());
