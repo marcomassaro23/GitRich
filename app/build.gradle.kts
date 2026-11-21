@@ -22,14 +22,6 @@ javafx {
 }
 
 dependencies {
-    // Use JUnit Jupiter for testing.
-    testImplementation(libs.junit.jupiter)
-
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    // This dependency is used by the application.
-    implementation(libs.guava)
-
     implementation("com.google.code.gson:gson:2.10.1")
 }
 
@@ -43,9 +35,4 @@ java {
 application {
     // Define the main class for the application.
     mainClass = "it.unicam.cs.mpgc.rpg130481.App"
-}
-
-tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
 }
